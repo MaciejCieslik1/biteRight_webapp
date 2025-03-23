@@ -1,11 +1,9 @@
-# BD2-25L-Z06
-
 ## BiteRight!
 
-Ustestnicy projektu:
+Uczestnicy projektu:
 - Hanna Biegacz
 - Anna Wierzbik
-- Keira 
+- Keira Kabongo-Barazzoli
 - Maciej Cieślik
 - Michał Iwanow-Kołakowski
 
