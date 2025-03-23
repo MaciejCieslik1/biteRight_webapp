@@ -7,6 +7,12 @@ Uczestnicy projektu:
 - Maciej Cieślik
 - Michał Iwanow-Kołakowski
 
+## Wybrany temat --- Aplikacja do Śledzenia i Planowania Diety
+Użytkownicy mogą tworzyć dzienniki posiłków, przeliczać kalorie oraz wartości odżywcze, ustawiać cele dietetyczne, oraz monitorować swoje postępy.
+
+## Link do tablicy z wstępnym planem bazy danych
+https://miro.com/welcomeonboard/UWQxcno4bmIzUUlFbzkzU25uWHR2azA5R1dnNXNHdDdiRlJEalVXQnhYdThiQ05UN250YmJQVVRGOTBSMnhXck8vbjFtcHFlKzRjblk1K1hVRnlEN0JCZXBmTGt1QmVBWlhjWkt5bEZ2R1lmdWJpTGIxNytkSTZ1b1pBblBkNkpQdGo1ZEV3bUdPQWRZUHQzSGl6V2NBPT0hdjE=?share_link_id=503795444197
+
 ## Zaplanowane funkcjonalności aplikacji:
 - logowanie (także z zewnętrznych platform),
 - kalkulator dziennego limitu kalorii na podstawie podanego przez użytkownika celu i stylu życia, 
