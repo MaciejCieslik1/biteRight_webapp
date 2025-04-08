@@ -1,12 +1,13 @@
 import "./App.scss";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>To jest nasza super apka</h1>
-      </header>
-    </div>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 
