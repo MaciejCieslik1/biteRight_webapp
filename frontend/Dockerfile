@@ -19,7 +19,10 @@ COPY --from=build-stage /react-front-end/build/ /usr/share/nginx/html
 # Change ownership of relevant directories to nginx user
 RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
 
-USER nginx
+# Give permissions to /var/run and other relevant directories
+RUN chmod -R 755 /var/cache/nginx /var/log/nginx /usr/share/nginx/html /etc/nginx/conf.d /var/run
+
+# USER nginx
 
 EXPOSE 80
 
