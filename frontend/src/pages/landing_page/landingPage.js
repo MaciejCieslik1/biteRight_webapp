@@ -17,43 +17,47 @@ const LandingPage = () => {
         <img className="picture-avocado" src={avocado} alt="Avocado" />
         <div className="welcome-text top-text">Eat, track</div>
         <div className="welcome-text bottom-text">Succeed</div>
+        <button className="button start">Get started</button>
       </div>
+      <div className="feature-text">Start a healthy lifestyle with us</div>
       <div className="features-container">
         <div class="feature calorie">
-          <img className="calorie-icon" src={calorie_icon} alt="Calorie Icon" />
-          <div className="feature red text">
+          <img className="icon calorie" src={calorie_icon} alt="Calorie Icon" />
+          <div className="feature calorie text">
             Calculate your recommended calorie intake
           </div>
         </div>
         <div class="feature meal-plan">
           <img
-            className="meal-plan-icon"
+            className="icon meal-plan"
             src={meal_plan_icon}
             alt="Meal Plan Icon"
           />
-          <div className="feature green text">Track your meals and macros</div>
+          <div className="feature meal-plan text">
+            Track your meals and macros
+          </div>
         </div>
         <div class="feature weight">
-          <img className="scale-icon" src={scale_icon} alt="Scale Icon" />
-          <div className="feature blue text">
+          <img className="icon scale" src={scale_icon} alt="Scale Icon" />
+          <div className="feature weight text">
             Monitor your weight and measurements
           </div>
         </div>
         <div class="feature workout">
-          <img className="workout-icon" src={workout_icon} alt="Workout Icon" />
-          <div className="feature yellow text">
+          <img className="icon workout" src={workout_icon} alt="Workout Icon" />
+          <div className="feature workout text">
             Track your workouts and progress
           </div>
         </div>
         <div class="feature recipe">
-          <img className="recipe-icon" src={recipe_icon} alt="Recipe Icon" />
-          <div className="feature orange text">
+          <img className="icon recipe" src={recipe_icon} alt="Recipe Icon" />
+          <div className="feature recipe text">
             Get healthy recipes and meal ideas
           </div>
         </div>
         <div class="feature friend">
-          <img className="friend-icon" src={friend_icon} alt="Friend Icon" />
-          <div className="feature purple text">
+          <img className="icon friend" src={friend_icon} alt="Friend Icon" />
+          <div className="feature friend text">
             Share your progress with friends
           </div>
         </div>

@@ -1,12 +1,13 @@
 .landing-page-container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: whitesmoke;
 }
 
 .picture-avocado {
   width: 100%;
-  height: auto;
+  max-height: 700px;
+  object-fit: cover;
 }
 
 .welcome-container {
@@ -21,25 +22,51 @@
 }
 
 .top-text {
-  top: 40%;
+  top: 30%;
   font-size: 5vw;
   left: 55%;
   transform: translateX(-50%);
 }
 
 .bottom-text {
-  top: 50%;
+  top: 45%;
   left: 56.5%;
   font-weight: bold;
   font-size: 6vw;
   transform: translateX(-50%);
 }
 
+.start {
+  margin-top: 2.5%;
+  background: radial-gradient(circle, #f7fdf7, #dcdddc);
+  position: absolute;
+  top: 70%;
+  left: 45%;
+  border: 0px;
+  border-radius: 40px;
+  height: 7vh;
+  width: 20vw;
+  font-size: 2vh;
+  font-weight: 450;
+}
+
+.start:hover {
+  background-color: #cfcfcf;
+  transform: scale(1.2) translateY(-10%) translateX(10%);
+}
+
+.feature-text {
+  margin-top: 5%;
+  margin-left: 3%;
+  font-size: 4vh;
+  margin-bottom: 2%;
+}
+
 .features-container {
   display: grid;
   background-color: whitesmoke;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
+  grid-gap: 30px;
   padding: 20px;
 }
 
@@ -47,37 +74,12 @@
   background-color: rgb(238, 238, 238);
   padding: 20px;
   color: rgb(0, 0, 0);
-  font-size: 1.5vh;
+  font-size: 2vh;
   text-align: center;
   border-radius: 8px;
 }
 
-.calorie-icon {
+.icon {
   width: 50%;
-  height: auto;
-}
-
-.meal-plan-icon {
-  width: 50%;
-  height: auto;
-}
-
-.scale-icon {
-  width: 50%;
-  height: auto;
-}
-
-.workout-icon {
-  width: 50%;
-  height: auto;
-}
-
-.recipe-icon {
-  width: 50%;
-  height: auto;
-}
-
-.friend-icon {
-  width: 50%;
-  height: auto;
+  max-height: 200px;
 }
