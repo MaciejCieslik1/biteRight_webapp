@@ -5,10 +5,79 @@
 }
 
 .picture-avocado {
-  width: auto;
-  height: 500px;
+  width: 100%;
+  height: auto;
 }
 
 .welcome-container {
-  background-color: #f1bbcd;
+  width: 100%;
+  position: relative;
+  display: inline-block;
+}
+
+.welcome-text {
+  position: absolute;
+  color: rgb(0, 0, 0);
+}
+
+.top-text {
+  top: 40%;
+  font-size: 5vw;
+  left: 55%;
+  transform: translateX(-50%);
+}
+
+.bottom-text {
+  top: 50%;
+  left: 56.5%;
+  font-weight: bold;
+  font-size: 6vw;
+  transform: translateX(-50%);
+}
+
+.features-container {
+  display: grid;
+  background-color: whitesmoke;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  padding: 20px;
+}
+
+.feature {
+  background-color: rgb(238, 238, 238);
+  padding: 20px;
+  color: rgb(0, 0, 0);
+  font-size: 1.5vh;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.calorie-icon {
+  width: 50%;
+  height: auto;
+}
+
+.meal-plan-icon {
+  width: 50%;
+  height: auto;
+}
+
+.scale-icon {
+  width: 50%;
+  height: auto;
+}
+
+.workout-icon {
+  width: 50%;
+  height: auto;
+}
+
+.recipe-icon {
+  width: 50%;
+  height: auto;
+}
+
+.friend-icon {
+  width: 50%;
+  height: auto;
 }
