@@ -1,6 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
-import "./landingPage.css";
+import "./LandingPage.css";
 import avocado from "../../assets/avocado.svg";
 import calorie_icon from "../../assets/calorie-icon.svg";
 import meal_plan_icon from "../../assets/meal-plan-icon.svg";

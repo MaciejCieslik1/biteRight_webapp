@@ -19,20 +19,20 @@
 
 .button {
   height: 5.5vh;
-  width: 7vw;
+  width: 10vw;
   min-width: 100px;
   font-family: "Montserrat", sans-serif, sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-size: 1.3vh;
-  border-radius: 10px;
-  border: 1.5px solid black;
+  border-radius: 30px;
+  border: none;
   cursor: pointer;
   box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
 }
 
 .button:hover {
-  background-color: #f8b0d4;
+  background-color: #fdf28e;
   transform: scale(1.05);
 }
 
@@ -41,9 +41,9 @@
 }
 
 .login {
-  background: linear-gradient(to bottom, #f7fdf7, #d0d1d0);
+  background: rgb(187, 187, 187);
 }
 
 .register {
-  background: linear-gradient(to bottom, #cacaca, #a3a3a3);
+  background: pink;
 }

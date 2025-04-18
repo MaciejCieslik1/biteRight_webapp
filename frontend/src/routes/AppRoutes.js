@@ -1,11 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import TestPage from "../pages/landing_page/landingPage";
+import LandingPage from "../pages/LandingPage/LandingPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<TestPage />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
     </Routes>
   );
 };
