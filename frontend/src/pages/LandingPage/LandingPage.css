@@ -24,7 +24,7 @@
 .top-text {
   top: 30%;
   font-size: 5vw;
-  left: 55%;
+  left: 45%;
   transform: translateX(-50%);
 }
 
@@ -82,4 +82,28 @@
 .icon {
   width: 50%;
   max-height: 200px;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

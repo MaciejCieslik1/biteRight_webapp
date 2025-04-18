@@ -18,10 +18,10 @@ const NavBar = ({ showButtons = true }) => {
       </Link>
       {showButtons && (
         <div class="button-container">
-          <button class="button login" onClick={handleLoginClick}>
+          <button class="button login fade-in" onClick={handleLoginClick}>
             Login
           </button>
-          <button class="button register" onClick={handleRegisterClick}>
+          <button class="button register fade-in" onClick={handleRegisterClick}>
             Register
           </button>
         </div>

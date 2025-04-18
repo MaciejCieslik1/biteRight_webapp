@@ -20,23 +20,29 @@ const LandingPage = () => {
       <NavBar />
       <div className="welcome-container">
         <img className="picture-avocado" src={avocado} alt="Avocado" />
-        <div className="welcome-text top-text">Eat, track</div>
-        <div className="welcome-text bottom-text">Succeed</div>
-        <button className="button start" onClick={handleGetStarted}>
+        <div className="welcome-text top-text slide-in">Eat, track</div>
+        <div className="welcome-text bottom-text ">Succeed</div>
+        <button className="button start fade-in" onClick={handleGetStarted}>
           Get started
         </button>
       </div>
-      <div className="feature-text">Start a healthy lifestyle with us</div>
+      <div className="feature-text slide-in">
+        Start a healthy lifestyle with us
+      </div>
       <div className="features-container">
         <div class="feature calorie">
-          <img className="icon calorie" src={calorie_icon} alt="Calorie Icon" />
+          <img
+            className="icon calorie fade-in"
+            src={calorie_icon}
+            alt="Calorie Icon"
+          />
           <div className="feature calorie text">
             Calculate your recommended calorie intake
           </div>
         </div>
         <div class="feature meal-plan">
           <img
-            className="icon meal-plan"
+            className="icon meal-plan  fade-in"
             src={meal_plan_icon}
             alt="Meal Plan Icon"
           />
@@ -45,25 +51,41 @@ const LandingPage = () => {
           </div>
         </div>
         <div class="feature weight">
-          <img className="icon scale" src={scale_icon} alt="Scale Icon" />
+          <img
+            className="icon scale  fade-in"
+            src={scale_icon}
+            alt="Scale Icon"
+          />
           <div className="feature weight text">
             Monitor your weight and measurements
           </div>
         </div>
         <div class="feature workout">
-          <img className="icon workout" src={workout_icon} alt="Workout Icon" />
+          <img
+            className="icon workout fade-in"
+            src={workout_icon}
+            alt="Workout Icon"
+          />
           <div className="feature workout text">
             Track your workouts and progress
           </div>
         </div>
         <div class="feature recipe">
-          <img className="icon recipe" src={recipe_icon} alt="Recipe Icon" />
+          <img
+            className="icon recipe fade-in"
+            src={recipe_icon}
+            alt="Recipe Icon"
+          />
           <div className="feature recipe text">
             Get healthy recipes and meal ideas
           </div>
         </div>
         <div class="feature friend">
-          <img className="icon friend" src={friend_icon} alt="Friend Icon" />
+          <img
+            className="icon friend fade-in"
+            src={friend_icon}
+            alt="Friend Icon"
+          />
           <div className="feature friend text">
             Share your progress with friends
           </div>

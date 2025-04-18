@@ -11,8 +11,8 @@ const RegisterPage = () => {
       <div className="register-page-container">
         <div className="register-container">
           <div className="register-form-container">
-            <div className="register-form-header"> Register </div>
-            <div className="register-form-body">
+            <div className="register-form-header slide-in"> Register </div>
+            <div className="register-form-body fade-in">
               <div className="register-form-field">
                 <input
                   type="email"
@@ -47,7 +47,7 @@ const RegisterPage = () => {
           </div>
           <div className="register-photo-container">
             <img
-              className="register-photo"
+              className="register-photo fade-in"
               src={register_photo}
               alt="Yoghurt bowl"
             />

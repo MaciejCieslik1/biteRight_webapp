@@ -10,8 +10,8 @@ const LoginPage = () => {
       <div className="login-page-container">
         <div className="login-container">
           <div className="login-form-container">
-            <div className="login-form-header"> Login </div>
-            <div className="login-form-body">
+            <div className="login-form-header slide-in"> Login </div>
+            <div className="login-form-body fade-in">
               <div className="login-form-field">
                 <input
                   type="email"
@@ -36,7 +36,7 @@ const LoginPage = () => {
               </div>
             </div>
           </div>
-          <div className="login-photo-container">
+          <div className="login-photo-container fade-in">
             <img className="login-photo" src={login_photo} alt="Yoghurt bowl" />
           </div>
         </div>
