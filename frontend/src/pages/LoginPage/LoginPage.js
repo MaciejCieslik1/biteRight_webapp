@@ -1,10 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import "./LoginPage.css";
 import login_photo from "../../assets/login-photo.jpg";
 const LoginPage = () => {
-  const navigate = useNavigate();
   return (
     <div>
       <NavBar showButtons={false} />
@@ -30,7 +29,10 @@ const LoginPage = () => {
                 />
               </div>
               <div className="register-text">
-                Don't have an account yet? Register here
+                Don't have an account yet?{" "}
+                <Link to="/register" className="register-link">
+                  Register here
+                </Link>
               </div>
             </div>
           </div>

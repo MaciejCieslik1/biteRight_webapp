@@ -11,6 +11,10 @@ import recipe_icon from "../../assets/recipe-icon.svg";
 import friend_icon from "../../assets/friend-icon.svg";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const handleGetStarted = () => {
+    navigate("/register");
+  };
   return (
     <div className="landing-page-container">
       <NavBar />
@@ -18,7 +22,9 @@ const LandingPage = () => {
         <img className="picture-avocado" src={avocado} alt="Avocado" />
         <div className="welcome-text top-text">Eat, track</div>
         <div className="welcome-text bottom-text">Succeed</div>
-        <button className="button start">Get started</button>
+        <button className="button start" onClick={handleGetStarted}>
+          Get started
+        </button>
       </div>
       <div className="feature-text">Start a healthy lifestyle with us</div>
       <div className="features-container">
