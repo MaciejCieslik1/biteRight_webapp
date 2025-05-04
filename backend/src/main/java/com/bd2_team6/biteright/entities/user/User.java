@@ -34,6 +34,12 @@ public class User {
     public void printUser() {
         System.out.println(id + ". username: " + username + ", email: " + email + ", type: "+ type + ".\n");
     }
+
+    // RELATION WITH DAILY SUMMARY
+    @OneToMany(mappedBy = "user")
+    private Set<DailySummary> dailySummaries = new HashSet<>();
+
+
     // GETTERS AND SETTERS
     public Integer getId() {
         return id;
