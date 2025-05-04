@@ -1,28 +1,31 @@
 package com.bd2_team6.biteright.entities.user;
+import com.bd2_team6.biteright.entities.daily_summary.DailySummary;
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "app_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "user_id")
     private Integer id;
 
-    @Column(name = "USERNAME")
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "PASSWORD_HASH")
+    @Column(name = "password_hash")
     private String password_hash; 
 
-    @Column(name="TYPE")
+    @Column(name="type")
     private String type; 
 
     // CONSTRUCTORS
-    public User() {     }
+    public User() { }
 
     public User( String username, String email, String password_hash, String type) {
         this.username = username;
@@ -34,6 +37,12 @@ public class User {
     public void printUser() {
         System.out.println(id + ". username: " + username + ", email: " + email + ", type: "+ type + ".\n");
     }
+
+    // RELATION WITH DAILY SUMMARY
+    @OneToMany(mappedBy = "user")
+    private Set<DailySummary> dailySummaries = new HashSet<>();
+
+
     // GETTERS AND SETTERS
     public Integer getId() {
         return id;
