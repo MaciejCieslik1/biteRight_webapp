@@ -1,6 +1,5 @@
 package com.bd2_team6.biteright.entities.address;
 
-import org.hibernate.annotations.IdGeneratorType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
