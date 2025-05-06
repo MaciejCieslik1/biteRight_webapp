@@ -7,8 +7,8 @@ create database if not exists mysql_database;
 use mysql_database;
 -- ------------------------------------->        tables, primary keys, indexes & unique constraints    <---------------------------------------
 create table address (
-        address_id                  integer not null auto_increment primary key,
-        user_id                     integer not null,
+        address_id                  integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
         address                     varchar(64) not null,
         city                        varchar(64) not null,
         postal_code                 varchar(5) not null,
@@ -16,7 +16,7 @@ create table address (
 );
 
 create table app_user (
-        user_id                     integer not null auto_increment primary key,
+        user_id                     integer unsigned not null auto_increment primary key,
         username                    varchar(64) not null,
         email                       varchar(64) not null,
         password_hash               varchar(255) not null,
@@ -26,13 +26,13 @@ create table app_user (
 alter table app_user add constraint user_username_un unique ( username );
 
 create table daily_limits (
-        daily_limit_id              integer not null auto_increment primary key,
-        user_id                     integer not null,
-        calorie_limit              integer not null,
-        protein_limit               integer not null,
-        fat_limit                   integer not null,
-        carb_limit                  integer not null,
-        water_goal                  integer not null
+        daily_limit_id              integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
+        calorie_limit               integer unsigned not null,
+        protein_limit               integer unsigned not null,
+        fat_limit                   integer unsigned not null,
+        carb_limit                  integer unsigned not null,
+        water_goal                  integer unsigned not null
 );
 
 create unique index daily_limits__idx on
@@ -41,7 +41,7 @@ create unique index daily_limits__idx on
         asc );
 
 create table exercise_info (
-        exercise_id                 integer not null auto_increment primary key,
+        exercise_id                 integer unsigned not null auto_increment primary key,
         metabolic_equivalent        decimal(4, 1) not null,
         name                        varchar(64) not null
 );
@@ -49,34 +49,34 @@ alter table exercise_info add constraint exercise_name_un unique ( name );
 
 
 create table ingredient (
-        ingredient_id               integer not null auto_increment primary key,
+        ingredient_id               integer unsigned not null auto_increment primary key,
         name                        varchar(64) not null, -- UNIQUE
         brand                       varchar(64),
-        portion_size                integer not null,
-        calories                    integer not null,
-        protein                     integer not null,
-        fat                         integer not null,
-        carbs                       integer not null
+        portion_size                integer unsigned not null,
+        calories                    integer unsigned not null,
+        protein                     integer unsigned not null,
+        fat                         integer unsigned not null,
+        carbs                       integer unsigned not null
 );
 
 alter table ingredient add constraint ingredient_name_un unique ( name );
 
 
 create table limit_history (
-        history_id                  integer not null auto_increment primary key,
+        history_id                  integer unsigned not null auto_increment primary key,
         date_changed                date not null,
-        user_id                     integer not null,
-        calorie_lilmit              integer not null,
-        protein_limit               integer not null,
-        fat_limit                   integer not null,
-        carb_limit                  integer not null,
-        water_goal                  integer
+        user_id                     integer unsigned not null,
+        calorie_lilmit              integer unsigned not null,
+        protein_limit               integer unsigned not null,
+        fat_limit                   integer unsigned not null,
+        carb_limit                  integer unsigned not null,
+        water_goal                  integer unsigned
 );
 
 create table meal (
-        meal_id                     integer not null auto_increment primary key,
-        user_id                     integer not null,
-        meal_type_id                integer not null,
+        meal_id                     integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
+        meal_type_id                integer unsigned not null,
         meal_date                   date not null,
         name                        varchar(64) not null,
         description                 varchar(256)
@@ -85,21 +85,21 @@ create table meal (
 alter table meal add constraint users_meal_un unique ( name, user_id );
 
 create table meal_content (
-        meal_content_id             integer not null auto_increment primary key,
-        ingredient_id               integer not null,
-        meal_id                integer not null,
-        ingredient_amount           integer not null
+        meal_content_id             integer unsigned not null auto_increment primary key,
+        ingredient_id               integer unsigned not null,
+        meal_id                     integer unsigned not null,
+        ingredient_amount           integer unsigned not null
 );
 
 create table meal_type (
-        type_id                     integer not null auto_increment primary key,
+        type_id                     integer unsigned not null auto_increment primary key,
         name                        varchar(64) not null -- UNIQUE
 );
 
 alter table meal_type add constraint unique_meal_type_name unique ( name );
 
 create table recipe (
-        recipe_id                   integer not null auto_increment primary key,
+        recipe_id                   integer unsigned not null auto_increment primary key,
         name                        varchar(64) not null, -- UNIQUE
         description                 varchar(255)
 );
@@ -107,44 +107,44 @@ create table recipe (
 alter table recipe add constraint recipe_name_un unique ( name );
 
 create table recipe_content (
-        recipe_content_id           integer not null auto_increment primary key,
-        recipe_id                   integer not null,
-        ingredient_id               integer not null,
-        ingredient_amount           integer not null
+        recipe_content_id           integer unsigned not null auto_increment primary key,
+        recipe_id                   integer unsigned not null,
+        ingredient_id               integer unsigned not null,
+        ingredient_amount           integer unsigned not null
 );
 
 create table user_exercise (
-        user_exercise_id            integer not null auto_increment primary key,
-        user_id                     integer not null,
-        exercise_info_id            integer not null,
+        user_exercise_id            integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
+        exercise_info_id            integer unsigned not null,
         activity_date               date not null,
-        duration                    integer not null,
-        calories_burnt              integer not null
+        duration                    integer unsigned not null,
+        calories_burnt              integer unsigned not null
 );
 
 create table user_goal (
-        user_goal_id                integer not null auto_increment primary key,
+        user_goal_id                integer unsigned not null auto_increment primary key,
         goal_type                   varchar(127) not null,
         goal_weight                 decimal(5, 2) not null,
         deadline                    date not null
 );
 
 create table user_info (
-        user_info_id                integer not null auto_increment primary key,
-        user_id                     integer not null,
-        user_goal_id                integer not null,
+        user_info_id                integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
+        user_goal_id                integer unsigned not null,
         name                        varchar(64) not null,
         surname                     varchar(64) not null,
-        age                         integer not null,
+        age                         integer unsigned not null,
         weight                      decimal(5, 2) not null,
-        height                      integer not null,
+        height                      integer unsigned not null,
         lifestyle                   varchar(64) not null,
         bmi                         decimal(4, 2) not null
 );
 
 create table user_preferences (
-        user_preferences_id         integer not null auto_increment primary key,
-        user_id                     integer not null,
+        user_preferences_id         integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
         language                    varchar(64) not null default("eng"),
         darkmode                    boolean not null default false,
         font                        varchar(64),
@@ -157,15 +157,15 @@ create unique index user_preferences__idx on
         asc );
 
 create table water_intake (
-        water_intake_id             integer not null auto_increment primary key,
+        water_intake_id             integer unsigned not null auto_increment primary key,
         intake_date                 date not null,
-        user_id                     integer not null,
-        water_amount                integer not null
+        user_id                     integer unsigned not null,
+        water_amount                integer unsigned not null
 );
 
 create table weight_history (
-        weight_id                   integer not null auto_increment primary key,
-        user_id                     integer not null,
+        weight_id                   integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
         measurement_date            date not null,
         weight                      decimal(5, 2) not null
 );
