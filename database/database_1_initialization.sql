@@ -264,22 +264,59 @@ group by meal.meal_id,
     meal.name
 ;
 
+CREATE OR REPLACE VIEW daily_summary AS
+WITH --
+water_info AS 
+        (SELECT 
+                user_id,
+                intake_date AS summary_date,
+                SUM(water_amount) AS water_drank
+        FROM water_intake
+        GROUP BY user_id, intake_date),
+exercise_info AS 
+        (SELECT 
+                user_id,
+                activity_date AS summary_date,
+                SUM(calories_burnt) AS calories_burnt
+        FROM user_exercise
+        GROUP BY user_id, activity_date)
 
-create or replace view daily_summary    as
-select app_user.user_id as user_id,
-    water_intake.intake_date as summary_date,
-    sum(meal_info.calories) as calories,
-    sum(meal_info.protein) as protein,
-    sum(meal_info.fat) as fat,
-    sum(meal_info.carbs) as carbs,
-    sum(user_exercise.calories_burnt) as calories_burnt
-from app_user
-    inner join water_intake on app_user.user_id = water_intake.user_id
-    inner join user_exercise on app_user.user_id = user_exercise.user_id,
-    meal_info
-group by app_user.user_id,
-    water_intake.intake_date
-;
+SELECT 
+        u.user_id as user_id,
+        COALESCE(m.meal_date, w.summary_date, e.summary_date) AS summary_date,
+        COALESCE(SUM(mi.calories), 0) AS calories,
+        COALESCE(SUM(mi.protein), 0) AS protein,
+        COALESCE(SUM(mi.fat), 0) AS fat,
+        COALESCE(SUM(mi.carbs), 0) AS carbs,
+        COALESCE(SUM(w.water_drank), 0) AS water_drank,
+        COALESCE(SUM(e.calories_burnt), 0) AS calories_burnt
+FROM app_user u
+        LEFT JOIN meal m ON u.user_id = m.user_id
+        LEFT JOIN meal_info mi ON m.meal_id = mi.meal_id
+        LEFT JOIN water_info w ON u.user_id = w.user_id AND m.meal_date = w.summary_date 
+        LEFT JOIN exercise_info e ON u.user_id = e.user_id AND m.meal_date = e.summary_date
+GROUP BY u.user_id, summary_date
+UNION
+        SELECT 
+                w.user_id,
+                w.summary_date,
+                0, 0, 0, 0, -- empty cal, carbs, protein, fat values
+                w.water_drank, 0
+        FROM water_info w
+        WHERE NOT EXISTS (
+        SELECT 1 FROM meal m 
+        WHERE m.user_id = w.user_id AND m.meal_date = w.summary_date)
+UNION
+        SELECT 
+                e.user_id,
+                e.summary_date,
+                0, 0, 0, 0,
+                0,
+                e.calories_burnt
+        FROM exercise_info e
+        WHERE NOT EXISTS (
+        SELECT 1 FROM meal m 
+        WHERE m.user_id = e.user_id AND m.meal_date = e.summary_date);
 
 
 create or replace view recipe_info ( recipe_id, recipe_name, calories, protein, fat, carbs ) as

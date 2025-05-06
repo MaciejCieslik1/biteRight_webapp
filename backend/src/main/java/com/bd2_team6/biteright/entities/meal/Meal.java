@@ -1,10 +1,6 @@
 package com.bd2_team6.biteright.entities.meal;
-
-import java.sql.Date;
-
-import org.springframework.jdbc.core.SqlReturnType;
-
 import jakarta.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "meal")
