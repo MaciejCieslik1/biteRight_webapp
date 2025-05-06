@@ -46,7 +46,7 @@ create table exercise_info (
         name                        varchar(64) not null
 );
 alter table exercise_info add constraint exercise_name_un unique ( name );
-
+alter table exercise_info add constraint not_negative_met CHECK(metabolic_equivalent >=0);
 
 create table ingredient (
         ingredient_id               integer unsigned not null auto_increment primary key,
@@ -128,6 +128,7 @@ create table user_goal (
         goal_weight                 decimal(5, 2) not null,
         deadline                    date not null
 );
+alter table user_goal add constraint positive_goal_weight CHECK(goal_weight > 0);
 
 create table user_info (
         user_info_id                integer unsigned not null auto_increment primary key,
@@ -141,6 +142,11 @@ create table user_info (
         lifestyle                   varchar(64) not null,
         bmi                         decimal(4, 2) not null
 );
+
+alter table user_info add constraint no_usrs_under_16 CHECK(age >= 16);
+alter table user_info add constraint positive_usr_bmi CHECK(bmi > 0);
+alter table user_info add constraint positive_usr_weight CHECK(weight > 0);
+
 
 create table user_preferences (
         user_preferences_id         integer unsigned not null auto_increment primary key,
@@ -170,6 +176,7 @@ create table weight_history (
         weight                      decimal(5, 2) not null
 );
 
+alter table weight_history add constraint positive_historic_weight CHECK(weight > 0);
 
 
 
