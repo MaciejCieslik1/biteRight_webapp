@@ -1,9 +1,16 @@
 package com.bd2_team6.biteright.entities.meal;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.sql.Date;
 
 @Entity
 @Table(name = "meal")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +31,6 @@ public class Meal {
     
     @Column(name="description")
     private String description;
-    
-    // CONSTRUCTORS
-    public Meal() {     }
 
     public Meal(Integer user_id, Integer meal_type_id, Date meal_date, String name, String description) {
         this.user_id = user_id;

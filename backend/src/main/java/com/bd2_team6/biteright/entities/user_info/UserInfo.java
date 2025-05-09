@@ -1,8 +1,14 @@
 package com.bd2_team6.biteright.entities.user_info;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user_info")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +42,6 @@ public class UserInfo {
     @Column(name = "bmi")
     private Float bmi;      
 
-    // CONSTRUCTORS
-    public UserInfo() {     }
     public UserInfo(Integer user_id, Integer user_goal_id, String name, String surname, Integer age, Float weight, Integer height, String lifestyle, Float bmi) {
         this.user_id = user_id;
         this.user_goal_id = user_goal_id;
@@ -49,6 +53,4 @@ public class UserInfo {
         this.lifestyle = lifestyle;
         this.bmi = bmi;
     }
-
-    // GETTERS AND SETTERS
 }

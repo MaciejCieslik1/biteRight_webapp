@@ -1,7 +1,15 @@
 package com.bd2_team6.biteright.entities.limit_history;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Entity
+@Table(name = "limit_history")
+@Getter
+@Setter
+@NoArgsConstructor
 public class LimitHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +23,7 @@ public class LimitHistory {
     private Integer user_id;
 
     @Column(name = "calorie_limit")
-    private Integer calorie_lilmit;
+    private Integer calorie_limit;
 
     @Column(name = "protein_limit")
     private Integer protein_limit;
@@ -29,7 +37,13 @@ public class LimitHistory {
     @Column(name = "water_goal")
     private Integer water_goal;    
 
-    // CONSTRUCTORS
-    public LimitHistory() {     }
-    
+    public LimitHistory(String data_changed, Integer user_id, Integer calorie_limit, Integer fat_limit,
+                        Integer carb_limit, Integer water_goal) {
+        this.date_changed = data_changed;
+        this.user_id = user_id;
+        this.calorie_limit = calorie_limit;
+        this.fat_limit =  fat_limit;
+        this.carb_limit = carb_limit;
+        this.water_goal = water_goal;
+    }
 }

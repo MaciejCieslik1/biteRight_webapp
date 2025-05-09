@@ -1,9 +1,15 @@
 package com.bd2_team6.biteright.entities.daily_limits;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "daily_limits")
+@Getter
+@Setter
+@NoArgsConstructor
 public class DailyLimits {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +32,7 @@ public class DailyLimits {
     private Integer carb_limit;
 
     @Column(name = "water_goal")
-    private Integer water_goal;   
-
-    // CONSTRUCTORS
-    public DailyLimits() {     }
+    private Integer water_goal;
 
     public DailyLimits(Integer user_id, Integer calorie_lilmit, Integer protein_limit, Integer fat_limit, Integer carb_limit, Integer water_goal) {
         this.user_id = user_id;
@@ -39,6 +42,4 @@ public class DailyLimits {
         this.carb_limit = carb_limit;
         this.water_goal = water_goal;
     }
-
-    //GETTERS AND SETTERS
 }

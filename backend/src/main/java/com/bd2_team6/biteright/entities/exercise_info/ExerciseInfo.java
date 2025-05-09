@@ -1,9 +1,15 @@
 package com.bd2_team6.biteright.entities.exercise_info;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "exercise_info")
+@Getter
+@Setter
+@NoArgsConstructor
 public class ExerciseInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +21,6 @@ public class ExerciseInfo {
 
     @Column(name = "name")
     private String name;
-
-    // CONSTRUCTORS
-    public ExerciseInfo() {     }
 
     public ExerciseInfo(Float metabolic_equivalent, String name) {
         this.metabolic_equivalent = metabolic_equivalent;

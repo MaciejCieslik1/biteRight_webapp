@@ -1,9 +1,15 @@
 package com.bd2_team6.biteright.entities.recipe_content;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "recipe_content")
+@Getter
+@Setter
+@NoArgsConstructor
 public class RecipeContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +25,9 @@ public class RecipeContent {
     @Column(name = "ingredient_amount")
     private Integer ingredient_amount;
 
-    // CONSTRUCTORS
-    public RecipeContent() { }
     public RecipeContent(Integer recipe_id, Integer ingredient_id, Integer ingredient_amount) {
         this.recipe_id = recipe_id;
         this.ingredient_id = ingredient_id;
         this.ingredient_amount = ingredient_amount;
     }
-
-    // GETTERS AND SETTERS
 }

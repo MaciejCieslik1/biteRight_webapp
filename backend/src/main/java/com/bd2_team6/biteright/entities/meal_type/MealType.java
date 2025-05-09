@@ -1,9 +1,15 @@
 package com.bd2_team6.biteright.entities.meal_type;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "meal_type")
+@Getter
+@Setter
+@NoArgsConstructor
 public class MealType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +19,7 @@ public class MealType {
     @Column(name = "name")
     private String name;
 
-    // CONSTRUCTORS
-    public MealType() { }
     public MealType(String name) {
         this.name = name;
     }
-
-    // GETTERS AND SETTERS
 }

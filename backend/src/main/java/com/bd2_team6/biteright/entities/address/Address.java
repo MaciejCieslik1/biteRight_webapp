@@ -7,10 +7,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "address")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Address {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
@@ -31,8 +38,6 @@ public class Address {
     @Column(name="country")
     private String country;
 
-    // CONSTRUCTORS
-    public Address() { }
     public Address(Integer user_id, String address, String city, String postal_code, String country) {
         this.user_id = user_id;
         this.address = address;
@@ -40,5 +45,4 @@ public class Address {
         this.postal_code = postal_code;
         this.country = country;
     }
-    // GETTERS AND SETTERS
 }
