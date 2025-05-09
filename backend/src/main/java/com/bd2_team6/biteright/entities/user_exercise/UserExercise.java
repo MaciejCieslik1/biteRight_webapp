@@ -1,9 +1,16 @@
 package com.bd2_team6.biteright.entities.user_exercise;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
 @Entity
 @Table(name = "user_exercise")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserExercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +31,7 @@ public class UserExercise {
 
     @Column(name = "calories_burnt")
     private Integer calories_burnt; 
-    
-    // CONSTRUCTORS
-    public UserExercise() {     }
+
     public UserExercise(Integer user_id, Integer exercise_info_id, Date activity_date, Integer duration, Integer calories_burnt) {
         this.user_id = user_id;
         this.exercise_info_id = exercise_info_id;
@@ -34,6 +39,4 @@ public class UserExercise {
         this.duration = duration;
         this.calories_burnt = calories_burnt;
     }
-    
-    // GETTERS AND SETTERS
 }

@@ -1,7 +1,6 @@
 package com.bd2_team6.biteright.entities.meal_content;
-import org.springframework.data.repository.CrudRepository;
-import java.io.Serializable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MealContentRepository extends CrudRepository<MealContent, Serializable> {
+public interface MealContentRepository extends JpaRepository<MealContent, Integer> {
     
 }

@@ -1,9 +1,16 @@
 package com.bd2_team6.biteright.entities.weight_history;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
 @Entity
 @Table(name = "weight_history")
+@Getter
+@Setter
+@NoArgsConstructor
 public class WeightHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +26,9 @@ public class WeightHistory {
     @Column(name = "weight")
     private Float weight;
 
-    // CONSTRUCTORS
-    public WeightHistory() {     }
     public WeightHistory(Integer user_id, Date measurement_date, Float weight) {
         this.user_id = user_id;
         this.measurement_date = measurement_date;
         this.weight = weight;
     }
-
-    // GETTERS AND SETTERS
-
 }
