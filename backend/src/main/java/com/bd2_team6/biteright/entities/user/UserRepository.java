@@ -1,10 +1,8 @@
 package com.bd2_team6.biteright.entities.user;
-import org.springframework.data.repository.CrudRepository;
-
-import java.io.Serializable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface UserRepository extends CrudRepository< User , Serializable> {
+public interface UserRepository extends JpaRepository<User , Integer> {
     User findByUsername(String username);
     User findByEmail(String email);
 }
