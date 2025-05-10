@@ -66,7 +66,7 @@ create table limit_history (
         history_id                  integer unsigned not null auto_increment primary key,
         date_changed                date not null,
         user_id                     integer unsigned not null,
-        calorie_lilmit              integer unsigned not null,
+        calorie_limit              integer unsigned not null,
         protein_limit               integer unsigned not null,
         fat_limit                   integer unsigned not null,
         carb_limit                  integer unsigned not null,
@@ -92,7 +92,7 @@ create table meal_content (
 );
 
 create table meal_type (
-        type_id                     integer unsigned not null auto_increment primary key,
+        meal_type_id                     integer unsigned not null auto_increment primary key,
         name                        varchar(64) not null -- UNIQUE
 );
 
@@ -116,7 +116,7 @@ create table recipe_content (
 create table user_exercise (
         user_exercise_id            integer unsigned not null auto_increment primary key,
         user_id                     integer unsigned not null,
-        exercise_info_id            integer unsigned not null,
+        exercise_id            integer unsigned not null,
         activity_date               date not null,
         duration                    integer unsigned not null,
         calories_burnt              integer unsigned not null
