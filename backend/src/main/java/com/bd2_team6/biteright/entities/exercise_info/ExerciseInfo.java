@@ -18,10 +18,10 @@ public class ExerciseInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exercise_id")
-    private Integer exercise_id;
+    private Integer exerciseId;
 
     @Column(name = "metabolic_equivalent")
-    private Float metabolic_equivalent;
+    private Float metabolicEquivalent;
 
     @Column(name = "name")
     private String name;
@@ -29,8 +29,8 @@ public class ExerciseInfo {
     @OneToMany(mappedBy = "exerciseInfo", cascade = CascadeType.ALL)
     private Set<UserExercise> userExercises = new HashSet<>();
 
-    public ExerciseInfo(Float metabolic_equivalent, String name) {
-        this.metabolic_equivalent = metabolic_equivalent;
+    public ExerciseInfo(Float metabolicEquivalent, String name) {
+        this.metabolicEquivalent = metabolicEquivalent;
         this.name = name;
     }
 }

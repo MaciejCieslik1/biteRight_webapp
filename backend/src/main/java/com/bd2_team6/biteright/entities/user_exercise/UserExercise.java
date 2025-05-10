@@ -19,22 +19,16 @@ public class UserExercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_exercise_id")
-    private Integer user_exercise_id;
-
-    @Column(name = "user_id")
-    private Integer user_id;
-
-    @Column(name = "exercise_info_id")
-    private Integer exercise_info_id;
+    private Integer userExerciseId;
 
     @Column(name = "activity_date")
-    private Date activity_date;
+    private Date activityDate;
 
     @Column(name ="duration")
     private Integer duration;        
 
     @Column(name = "calories_burnt")
-    private Integer calories_burnt; 
+    private Integer caloriesBurnt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -44,11 +38,11 @@ public class UserExercise {
     @JoinColumn(name = "exercise_id")
     private ExerciseInfo exerciseInfo;
 
-    public UserExercise(Integer user_id, Integer exercise_info_id, Date activity_date, Integer duration, Integer calories_burnt) {
-        this.user_id = user_id;
-        this.exercise_info_id = exercise_info_id;
-        this.activity_date = activity_date;
+    public UserExercise(User user, ExerciseInfo exerciseInfo, Date activityDate, Integer duration, Integer caloriesBurnt) {
+        this.user = user;
+        this.exerciseInfo = exerciseInfo;
+        this.activityDate = activityDate;
         this.duration = duration;
-        this.calories_burnt = calories_burnt;
+        this.caloriesBurnt = caloriesBurnt;
     }
 }

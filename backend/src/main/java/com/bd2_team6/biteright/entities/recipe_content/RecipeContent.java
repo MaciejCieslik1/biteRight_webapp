@@ -18,16 +18,10 @@ public class RecipeContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipe_content_id")
-    private Integer recipe_content_id;
-
-    @Column(name = "recipe_id")
-    private Integer recipe_id;
-
-    @Column(name = "ingredient_id")
-    private Integer ingredient_id;
+    private Integer recipeContentId;
 
     @Column(name = "ingredient_amount")
-    private Integer ingredient_amount;
+    private Integer ingredientAmount;
 
     @ManyToOne
     @JoinColumn(name = "ingredient_id")
@@ -37,9 +31,9 @@ public class RecipeContent {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-    public RecipeContent(Integer recipe_id, Integer ingredient_id, Integer ingredient_amount) {
-        this.recipe_id = recipe_id;
-        this.ingredient_id = ingredient_id;
-        this.ingredient_amount = ingredient_amount;
+    public RecipeContent(Recipe recipe, Ingredient ingredient, Integer ingredientAmount) {
+        this.recipe = recipe;
+        this.ingredient = ingredient;
+        this.ingredientAmount = ingredientAmount;
     }
 }

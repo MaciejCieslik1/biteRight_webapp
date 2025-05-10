@@ -22,16 +22,10 @@ public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id")
-    private Integer meal_id;
-    
-    @Column(name = "user_id")
-    private Integer user_id;
-    
-    @Column(name = "meal_type_id")
-    private Integer meal_type_id;
+    private Integer mealId;
 
     @Column(name = "meal_date")
-    private Date meal_date;   
+    private Date mealDate;
 
     @Column(name = "name")
     private String name;
@@ -50,10 +44,10 @@ public class Meal {
     @JoinColumn(name = "type_id")
     private MealType mealType;
 
-    public Meal(Integer user_id, Integer meal_type_id, Date meal_date, String name, String description) {
-        this.user_id = user_id;
-        this.meal_type_id = meal_type_id;
-        this.meal_date = meal_date;
+    public Meal(User user, MealType mealType, Date mealDate, String name, String description) {
+        this.user = user;
+        this.mealType = mealType;
+        this.mealDate = mealDate;
         this.name = name;
         this.description = description;
     }

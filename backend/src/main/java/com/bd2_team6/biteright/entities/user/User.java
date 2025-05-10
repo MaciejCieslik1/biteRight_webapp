@@ -37,7 +37,7 @@ public class User {
     private String email;
 
     @Column(name = "password_hash")
-    private String password_hash; 
+    private String passwordHash;
 
     @Column(name = "type")
     private String type;
@@ -69,10 +69,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<WeightHistory> weightHistories = new HashSet<>();
 
-    public User( String username, String email, String password_hash, String type) {
+    public User(String username, String email, String passwordHash, String type) {
         this.username = username;
         this.email = email;
-        this.password_hash = password_hash;
+        this.passwordHash = passwordHash;
         this.type = type;
     }
 }

@@ -19,7 +19,7 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_id")
-    private Integer ingredient_id;
+    private Integer ingredientId;
     
     @Column(name = "name")
     private String name;       
@@ -28,7 +28,7 @@ public class Ingredient {
     private String brand;
     
     @Column(name = "portion_size")
-    private Integer portion_size;
+    private Integer portionSize;
     
     @Column(name = "calories")
     private Integer calories;
@@ -48,10 +48,11 @@ public class Ingredient {
     @OneToMany(mappedBy = "ingredient")
     private Set<RecipeContent> recipeContents = new HashSet<>();
 
-    public Ingredient(String name, String brand, Integer portion_size, Integer calories, Integer protein, Integer fat, Integer carbs) {
+    public Ingredient(String name, String brand, Integer portionSize, Integer calories, Integer protein, Integer fat,
+                      Integer carbs) {
         this.name = name;
         this.brand = brand;
-        this.portion_size = portion_size;
+        this.portionSize = portionSize;
         this.calories = calories;
         this.protein = protein;
         this.fat = fat;

@@ -18,13 +18,10 @@ public class WeightHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weight_id")
-    private Integer weight_id; 
-    
-    @Column(name = "user_id")
-    private Integer user_id; 
+    private Integer weightId;
     
     @Column(name = "measurement_date")
-    private Date measurement_date;
+    private Date measurementDate;
 
     @Column(name = "weight")
     private Float weight;
@@ -33,9 +30,9 @@ public class WeightHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public WeightHistory(Integer user_id, Date measurement_date, Float weight) {
-        this.user_id = user_id;
-        this.measurement_date = measurement_date;
+    public WeightHistory(User user, Date measurementDate, Float weight) {
+        this.user = user;
+        this.measurementDate = measurementDate;
         this.weight = weight;
     }
 }
