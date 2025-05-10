@@ -26,7 +26,7 @@ public class ExerciseInfo {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "exerciseInfo")
+    @OneToMany(mappedBy = "exerciseInfo", cascade = CascadeType.ALL)
     private Set<UserExercise> userExercises = new HashSet<>();
 
     public ExerciseInfo(Float metabolic_equivalent, String name) {

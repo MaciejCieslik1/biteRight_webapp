@@ -39,7 +39,7 @@ public class Meal {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "meal")
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL)
     private Set<MealContent> mealContents = new HashSet<>();
 
     @ManyToOne

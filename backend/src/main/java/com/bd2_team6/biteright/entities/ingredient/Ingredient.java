@@ -42,7 +42,7 @@ public class Ingredient {
     @Column(name = "carbs")
     private Integer carbs;
 
-    @OneToMany(mappedBy = "ingredient")
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
     private Set<MealContent> mealContents = new HashSet<>();
 
     @OneToMany(mappedBy = "ingredient")

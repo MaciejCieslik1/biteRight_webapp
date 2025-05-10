@@ -29,7 +29,8 @@ public class UserGoal {
     @Column(name = "deadline")
     private Date deadline;
 
-    @OneToMany(mappedBy = "userGoal")
+    @OneToMany(mappedBy = "userGoal", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+                                                CascadeType.REFRESH})
     private Set<UserInfo> userInfos = new HashSet<>();
 
     public UserGoal(String goal_type, Float goal_weight, Date deadline) {
