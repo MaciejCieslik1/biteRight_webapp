@@ -14,13 +14,13 @@ import jakarta.persistence.*;
 public class MealInfo {
     @Id
     @Column(name = "meal_id")
-    private Integer meal_id;
+    private Integer mealId;
 
     @Column(name = "user_id")
-    private Integer user_id;
+    private Integer userId;
 
     @Column(name = "meal_name")
-    private String meal_name;
+    private String mealName;
 
     @Column(name = "calories")
     private Float calories;
@@ -34,9 +34,9 @@ public class MealInfo {
     @Column(name = "carbs")
     private Float carbs;
 
-    public MealInfo(Integer user_id, String meal_name, Float calories, Float protein, Float fat, Float carbs) {
-        this.user_id = user_id;
-        this.meal_name = meal_name;
+    public MealInfo(Integer userId, String mealName, Float calories, Float protein, Float fat, Float carbs) {
+        this.userId = userId;
+        this.mealName = mealName;
         this.calories = calories;
         this.protein = protein;
         this.fat = fat;
