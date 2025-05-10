@@ -1,6 +1,9 @@
 package com.bd2_team6.biteright.entities.recipe_content;
 
+import com.bd2_team6.biteright.entities.ingredient.Ingredient;
+import com.bd2_team6.biteright.entities.recipe.Recipe;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class RecipeContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +28,14 @@ public class RecipeContent {
 
     @Column(name = "ingredient_amount")
     private Integer ingredient_amount;
+
+    @ManyToOne
+    @JoinColumn(name = "ingredient_id")
+    private Ingredient ingredient;
+
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
 
     public RecipeContent(Integer recipe_id, Integer ingredient_id, Integer ingredient_amount) {
         this.recipe_id = recipe_id;

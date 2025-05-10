@@ -1,5 +1,8 @@
 package com.bd2_team6.biteright.entities.user_exercise;
+import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfo;
+import com.bd2_team6.biteright.entities.user.User;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class UserExercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +35,14 @@ public class UserExercise {
 
     @Column(name = "calories_burnt")
     private Integer calories_burnt; 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id")
+    private ExerciseInfo exerciseInfo;
 
     public UserExercise(Integer user_id, Integer exercise_info_id, Date activity_date, Integer duration, Integer calories_burnt) {
         this.user_id = user_id;

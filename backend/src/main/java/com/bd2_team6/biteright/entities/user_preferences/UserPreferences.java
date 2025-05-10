@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.entities.user_preferences;
 
+import com.bd2_team6.biteright.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,10 @@ public class UserPreferences {
     
     @Column(name = "notifications")
     private Boolean notifications; 
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public UserPreferences(Integer user_id, String language, Boolean darkmode, Boolean font, Boolean notifications) {
         this.user_id = user_id;

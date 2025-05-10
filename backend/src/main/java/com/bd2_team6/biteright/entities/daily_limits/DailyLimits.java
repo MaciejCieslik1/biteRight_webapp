@@ -1,9 +1,12 @@
 package com.bd2_team6.biteright.entities.daily_limits;
 
+import com.bd2_team6.biteright.entities.user.User;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Entity
 @Table(name = "daily_limits")
@@ -33,6 +36,10 @@ public class DailyLimits {
 
     @Column(name = "water_goal")
     private Integer water_goal;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public DailyLimits(Integer user_id, Integer calorie_lilmit, Integer protein_limit, Integer fat_limit, Integer carb_limit, Integer water_goal) {
         this.user_id = user_id;

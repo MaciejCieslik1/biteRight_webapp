@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.entities.limit_history;
 
+import com.bd2_team6.biteright.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,11 @@ public class LimitHistory {
     private Integer carb_limit;
     
     @Column(name = "water_goal")
-    private Integer water_goal;    
+    private Integer water_goal;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public LimitHistory(String data_changed, Integer user_id, Integer calorie_limit, Integer fat_limit,
                         Integer carb_limit, Integer water_goal) {

@@ -1,6 +1,9 @@
 package com.bd2_team6.biteright.entities.user_goal;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.bd2_team6.biteright.entities.user_info.UserInfo;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +28,9 @@ public class UserGoal {
 
     @Column(name = "deadline")
     private Date deadline;
+
+    @OneToMany(mappedBy = "userGoal")
+    private Set<UserInfo> userInfos = new HashSet<>();
 
     public UserGoal(String goal_type, Float goal_weight, Date deadline) {
         this.goal_type = goal_type;

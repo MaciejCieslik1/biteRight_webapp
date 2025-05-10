@@ -1,5 +1,8 @@
 package com.bd2_team6.biteright.entities.user_info;
+import com.bd2_team6.biteright.entities.user.User;
+import com.bd2_team6.biteright.entities.user_goal.UserGoal;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +45,14 @@ public class UserInfo {
 
     @Column(name = "bmi")
     private Float bmi;      
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "user_goal_id")
+    private UserGoal userGoal;
 
     public UserInfo(Integer user_id, Integer user_goal_id, String name, String surname, Integer age, Float weight, Integer height, String lifestyle, Float bmi) {
         this.user_id = user_id;

@@ -1,5 +1,14 @@
 package com.bd2_team6.biteright.entities.user;
+import com.bd2_team6.biteright.entities.address.Address;
+import com.bd2_team6.biteright.entities.daily_limits.DailyLimits;
 import com.bd2_team6.biteright.entities.daily_summary.DailySummary;
+import com.bd2_team6.biteright.entities.limit_history.LimitHistory;
+import com.bd2_team6.biteright.entities.meal.Meal;
+import com.bd2_team6.biteright.entities.user_exercise.UserExercise;
+import com.bd2_team6.biteright.entities.user_info.UserInfo;
+import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
+import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
+import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +39,35 @@ public class User {
     @Column(name = "password_hash")
     private String password_hash; 
 
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
+
+    @OneToOne(mappedBy = "user")
+    private DailyLimits dailyLimits;
+
+    @OneToOne(mappedBy = "user")
+    private UserPreferences userPreferences;
+
+    @OneToOne(mappedBy = "user")
+    private LimitHistory limitHistory;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Address> addresses = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserInfo> userInfos = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Meal> meals = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<WaterIntake> waterIntakes = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserExercise> userExercises = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<WeightHistory> weightHistories = new HashSet<>();
 
     public User( String username, String email, String password_hash, String type) {
         this.username = username;
@@ -39,7 +75,4 @@ public class User {
         this.password_hash = password_hash;
         this.type = type;
     }
-
-    @OneToMany(mappedBy = "user")
-    private Set<DailySummary> dailySummaries = new HashSet<>();
 }

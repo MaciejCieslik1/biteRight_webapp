@@ -43,7 +43,4 @@ public class DailySummary {
     @Column(name="calories_burnt")
     private Integer calories_burnt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
 }
