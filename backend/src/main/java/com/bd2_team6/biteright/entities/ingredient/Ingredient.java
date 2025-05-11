@@ -45,7 +45,7 @@ public class Ingredient {
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
     private Set<MealContent> mealContents = new HashSet<>();
 
-    @OneToMany(mappedBy = "ingredient")
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
     private Set<RecipeContent> recipeContents = new HashSet<>();
 
     public Ingredient(String name, String brand, Integer portionSize, Integer calories, Integer protein, Integer fat,
