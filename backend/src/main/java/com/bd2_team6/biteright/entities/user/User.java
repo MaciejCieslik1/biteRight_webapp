@@ -48,8 +48,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserPreferences userPreferences;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private LimitHistory limitHistory;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<LimitHistory> limitHistories = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<>();
