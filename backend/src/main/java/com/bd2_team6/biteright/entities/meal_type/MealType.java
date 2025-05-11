@@ -23,8 +23,7 @@ public class MealType {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "mealType", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-                                                CascadeType.REFRESH})
+    @OneToMany(mappedBy = "mealType", cascade = CascadeType.ALL)
     private Set<Meal> meals = new HashSet<>();
 
     public MealType(String name) {
