@@ -66,7 +66,7 @@ create table limit_history (
         history_id                  integer unsigned not null auto_increment primary key,
         date_changed                date not null,
         user_id                     integer unsigned not null,
-        calorie_lilmit              integer unsigned not null,
+        calorie_limit              integer unsigned not null,
         protein_limit               integer unsigned not null,
         fat_limit                   integer unsigned not null,
         carb_limit                  integer unsigned not null,
@@ -92,7 +92,7 @@ create table meal_content (
 );
 
 create table meal_type (
-        type_id                     integer unsigned not null auto_increment primary key,
+        meal_type_id                     integer unsigned not null auto_increment primary key,
         name                        varchar(64) not null -- UNIQUE
 );
 
