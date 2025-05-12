@@ -1,5 +1,14 @@
 package com.bd2_team6.biteright.entities.user;
+import com.bd2_team6.biteright.entities.address.Address;
+import com.bd2_team6.biteright.entities.daily_limits.DailyLimits;
 import com.bd2_team6.biteright.entities.daily_summary.DailySummary;
+import com.bd2_team6.biteright.entities.limit_history.LimitHistory;
+import com.bd2_team6.biteright.entities.meal.Meal;
+import com.bd2_team6.biteright.entities.user_exercise.UserExercise;
+import com.bd2_team6.biteright.entities.user_info.UserInfo;
+import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
+import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
+import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,18 +37,42 @@ public class User {
     private String email;
 
     @Column(name = "password_hash")
-    private String password_hash; 
+    private String passwordHash;
 
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
 
-    public User( String username, String email, String password_hash, String type) {
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private DailyLimits dailyLimits;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserPreferences userPreferences;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<LimitHistory> limitHistories = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Address> addresses = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserInfo> userInfos = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Meal> meals = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<WaterIntake> waterIntakes = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserExercise> userExercises = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<WeightHistory> weightHistories = new HashSet<>();
+
+    public User(String username, String email, String passwordHash, String type) {
         this.username = username;
         this.email = email;
-        this.password_hash = password_hash;
+        this.passwordHash = passwordHash;
         this.type = type;
     }
-
-    @OneToMany(mappedBy = "user")
-    private Set<DailySummary> dailySummaries = new HashSet<>();
 }

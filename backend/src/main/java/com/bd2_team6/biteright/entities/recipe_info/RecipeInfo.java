@@ -14,10 +14,10 @@ import jakarta.persistence.*;
 public class RecipeInfo {
     @Id
     @Column(name = "recipe_id")
-    private Integer recipe_id;
+    private Integer recipeId;
     
     @Column(name = "recipe_name")
-    private String recipe_name;
+    private String recipeName;
     
     @Column(name = "calories")
     private Double calories;
@@ -31,8 +31,8 @@ public class RecipeInfo {
     @Column(name = "carbs")
     private Double carbs;
     
-    public RecipeInfo(String recipe_name, Double calories, Double protein, Double fat, Double carbs) {
-        this.recipe_name = recipe_name;
+    public RecipeInfo(String recipeName, Double calories, Double protein, Double fat, Double carbs) {
+        this.recipeName = recipeName;
         this.calories = calories;
         this.protein = protein;
         this.fat = fat;

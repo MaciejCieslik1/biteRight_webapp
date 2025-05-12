@@ -1,48 +1,47 @@
 package com.bd2_team6.biteright.entities.address;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.bd2_team6.biteright.entities.user.User;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Entity
 @Table(name = "address")
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
-    private Integer address_id ;
-
-    @Column(name = "user_id")
-    private Integer user_id;
+    private Integer addressId ;
 
     @Column(name = "address")
     private String address;
 
-    @Column(name="city")
+    @Column(name = "city")
     private String city;
 
-    @Column(name="postal_code")
-    private String postal_code;
+    @Column(name = "postal_code")
+    private String postalCode;
 
-    @Column(name="country")
+    @Column(name = "country")
     private String country;
 
-    public Address(Integer user_id, String address, String city, String postal_code, String country) {
-        this.user_id = user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Address(User user, String address, String city, String postalCode, String country) {
+        this.user = user;
         this.address = address;
         this.city = city;
-        this.postal_code = postal_code;
+        this.postalCode = postalCode;
         this.country = country;
     }
 }

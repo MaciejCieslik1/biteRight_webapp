@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Immutable;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,11 +21,11 @@ import java.util.Date;
 public class DailySummary {
     @Id
     @Column(name = "user_id")
-    private Integer user_id;
+    private Integer userId;
 
     @Id
     @Column(name = "summary_date")
-    private Date summary_date;
+    private LocalDate summaryDate;
 
     @Column(name = "calories")
     private Integer calories;
@@ -38,12 +40,9 @@ public class DailySummary {
     private Integer carbs;
 
     @Column(name="water_drank")
-    private Integer water_drank;
+    private Integer waterDrank;
 
     @Column(name="calories_burnt")
-    private Integer calories_burnt;
+    private Integer caloriesBurnt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
 }
