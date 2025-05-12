@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,7 @@ public class LimitHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        LimitHistory limitHistory = new LimitHistory("2025-05-11", user, 2500, 150, 60, 3);
+        LimitHistory limitHistory = new LimitHistory(LocalDate.parse("2025-05-11"), user, 2500, 150, 60, 3);
 
         limitHistoryRepository.save(limitHistory);
 
@@ -48,7 +49,7 @@ public class LimitHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        LimitHistory limitHistory = new LimitHistory("2025-05-11", user, 2500, 150, 60, 3);
+        LimitHistory limitHistory = new LimitHistory(LocalDate.parse("2025-05-11"), user, 2500, 150, 60, 3);
         limitHistoryRepository.save(limitHistory);
 
         limitHistory.setCalorieLimit(2800);
@@ -66,7 +67,7 @@ public class LimitHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        LimitHistory limitHistory = new LimitHistory("2025-05-11", user, 2500, 150, 60, 3);
+        LimitHistory limitHistory = new LimitHistory(LocalDate.parse("2025-05-11"), user, 2500, 150, 60, 3);
         limitHistoryRepository.save(limitHistory);
 
         limitHistoryRepository.delete(limitHistory);
@@ -79,8 +80,8 @@ public class LimitHistoryTests {
     public void shouldNotSaveDuplicateLimitHistory() {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
 
-        LimitHistory limitHistory1 = new LimitHistory("2025-05-11", user, 2500, 150, 60, 3);
-        LimitHistory limitHistory2 = new LimitHistory("2025-05-11", user, 2500, 150, 60, 3);
+        LimitHistory limitHistory1 = new LimitHistory(LocalDate.parse("2025-05-11"), user, 2500, 150, 60, 3);
+        LimitHistory limitHistory2 = new LimitHistory(LocalDate.parse("2025-05-11"), user, 2500, 150, 60, 3);
 
         user.getLimitHistories().add(limitHistory1);
         user.getLimitHistories().add(limitHistory2);
@@ -95,8 +96,8 @@ public class LimitHistoryTests {
     public void shouldDeleteLimitHistoryWhenUserDeleted() {
         User user = new User("jane_doe", "jane@example.com", "password", "standard");
 
-        LimitHistory limitHistory1 = new LimitHistory("2025-05-11", user, 2500, 150, 60, 3);
-        LimitHistory limitHistory2 = new LimitHistory("2025-05-12", user, 2200, 130, 50, 3);
+        LimitHistory limitHistory1 = new LimitHistory(LocalDate.parse("2025-05-11"), user, 2500, 150, 60, 3);
+        LimitHistory limitHistory2 = new LimitHistory(LocalDate.parse("2025-05-12"), user, 2200, 130, 50, 3);
 
         user.getLimitHistories().add(limitHistory1);
         user.getLimitHistories().add(limitHistory2);
@@ -119,8 +120,8 @@ public class LimitHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        LimitHistory limitHistory1 = new LimitHistory("2025-05-11", user, 2500, 150, 60, 3);
-        LimitHistory limitHistory2 = new LimitHistory("2025-05-12", user, 2200, 130, 50, 3);
+        LimitHistory limitHistory1 = new LimitHistory(LocalDate.parse("2025-05-11"), user, 2500, 150, 60, 3);
+        LimitHistory limitHistory2 = new LimitHistory(LocalDate.parse("2025-05-12"), user, 2200, 130, 50, 3);
 
         limitHistoryRepository.save(limitHistory1);
         limitHistoryRepository.save(limitHistory2);
@@ -135,7 +136,7 @@ public class LimitHistoryTests {
 
         assertEquals(2, limitHistories.size());
 
-        assertTrue(limitHistories.stream().anyMatch(lh -> lh.getDateChanged().equals("2025-05-11")));
-        assertTrue(limitHistories.stream().anyMatch(lh -> lh.getDateChanged().equals("2025-05-12")));
+        assertTrue(limitHistories.stream().anyMatch(lh -> lh.getDateChanged().equals(LocalDate.parse("2025-05-11"))));
+        assertTrue(limitHistories.stream().anyMatch(lh -> lh.getDateChanged().equals(LocalDate.parse("2025-05-12"))));
     }
 }

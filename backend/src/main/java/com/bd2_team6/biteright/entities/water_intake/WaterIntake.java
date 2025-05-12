@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,8 +22,8 @@ public class WaterIntake {
     private Integer waterIntakeId;
 
     @Column(name = "intake_date")
-    private Date intakeDate;
-    
+    private LocalDateTime intakeDate;
+
     @Column(name = "water_amount")
     private Integer waterAmount;
 
@@ -30,7 +31,7 @@ public class WaterIntake {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public WaterIntake(Date intakeDate, User user, Integer waterAmount) {
+    public WaterIntake(LocalDateTime intakeDate, User user, Integer waterAmount) {
         this.intakeDate = intakeDate;
         this.user = user;
         this.waterAmount = waterAmount;

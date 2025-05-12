@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class WaterIntakeTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WaterIntake waterIntake = new WaterIntake(new Date(), user, 500);
+        WaterIntake waterIntake = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 500);
         waterIntakeRepository.save(waterIntake);
 
         WaterIntake found = waterIntakeRepository.findById(waterIntake.getWaterIntakeId()).orElse(null);
@@ -47,7 +48,7 @@ public class WaterIntakeTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WaterIntake waterIntake = new WaterIntake(new Date(), user, 500);
+        WaterIntake waterIntake = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 500);
         waterIntakeRepository.save(waterIntake);
 
         waterIntake.setWaterAmount(750);
@@ -63,7 +64,7 @@ public class WaterIntakeTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WaterIntake waterIntake = new WaterIntake(new Date(), user, 500);
+        WaterIntake waterIntake = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 500);
         waterIntakeRepository.save(waterIntake);
 
         waterIntakeRepository.delete(waterIntake);
@@ -77,8 +78,8 @@ public class WaterIntakeTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WaterIntake waterIntake = new WaterIntake(new Date(), user, 500);
-        WaterIntake waterIntake2 = new WaterIntake(new Date(), user, 510);
+        WaterIntake waterIntake = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 500);
+        WaterIntake waterIntake2 = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 510);
         waterIntakeRepository.save(waterIntake);
         waterIntakeRepository.save(waterIntake2);
 
@@ -96,7 +97,7 @@ public class WaterIntakeTests {
     @Test
     public void shouldDeleteWaterIntakeWhenUserDeleted() {
         User user = new User("jane_doe", "jane@example.com", "password", "standard");
-        WaterIntake waterIntake = new WaterIntake(new Date(), user, 500);
+        WaterIntake waterIntake = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 500);
 
         user.getWaterIntakes().add(waterIntake);
         userRepository.save(user);
@@ -114,8 +115,8 @@ public class WaterIntakeTests {
     public void shouldNotSave2SameWaterIntakesForUser() {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
 
-        WaterIntake waterIntake1 = new WaterIntake(new Date(), user, 500);
-        WaterIntake waterIntake2 = new WaterIntake(new Date(), user, 500);
+        WaterIntake waterIntake1 = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 500);
+        WaterIntake waterIntake2 = new WaterIntake(LocalDateTime.parse("2025-05-12T00:00:00"), user, 500);
 
         user.getWaterIntakes().add(waterIntake1);
         user.getWaterIntakes().add(waterIntake2);

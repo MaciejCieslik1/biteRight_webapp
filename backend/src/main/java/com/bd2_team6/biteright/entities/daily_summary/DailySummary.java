@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Immutable;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -23,7 +25,7 @@ public class DailySummary {
 
     @Id
     @Column(name = "summary_date")
-    private Date summaryDate;
+    private LocalDate summaryDate;
 
     @Column(name = "calories")
     private Integer calories;

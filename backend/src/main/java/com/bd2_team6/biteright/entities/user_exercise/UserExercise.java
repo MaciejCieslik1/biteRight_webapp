@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -22,7 +23,7 @@ public class UserExercise {
     private Integer userExerciseId;
 
     @Column(name = "activity_date")
-    private Date activityDate;
+    private LocalDateTime activityDate;
 
     @Column(name ="duration")
     private Integer duration;        
@@ -38,7 +39,7 @@ public class UserExercise {
     @JoinColumn(name = "exercise_id")
     private ExerciseInfo exerciseInfo;
 
-    public UserExercise(User user, ExerciseInfo exerciseInfo, Date activityDate, Integer duration, Integer caloriesBurnt) {
+    public UserExercise(User user, ExerciseInfo exerciseInfo, LocalDateTime activityDate, Integer duration, Integer caloriesBurnt) {
         this.user = user;
         this.exerciseInfo = exerciseInfo;
         this.activityDate = activityDate;

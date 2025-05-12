@@ -77,7 +77,7 @@ create table meal (
         meal_id                     integer unsigned not null auto_increment primary key,
         user_id                     integer unsigned not null,
         meal_type_id                integer unsigned not null,
-        meal_date                   date not null,
+        meal_date                   datetime not null,
         name                        varchar(64) not null,
         description                 varchar(256)
 );
@@ -117,7 +117,7 @@ create table user_exercise (
         user_exercise_id            integer unsigned not null auto_increment primary key,
         user_id                     integer unsigned not null,
         exercise_info_id            integer unsigned not null,
-        activity_date               date not null,
+        activity_date               datetime not null,
         duration                    integer unsigned not null,
         calories_burnt              integer unsigned not null
 );
@@ -151,7 +151,7 @@ alter table user_info add constraint positive_usr_weight CHECK(weight > 0);
 create table user_preferences (
         user_preferences_id         integer unsigned not null auto_increment primary key,
         user_id                     integer unsigned not null,
-        language                    varchar(64) not null default("eng"),
+        language                    varchar(64) not null default('eng'),
         darkmode                    boolean not null default false,
         font                        varchar(64),
         notifications               boolean not null default false
@@ -164,7 +164,7 @@ create unique index user_preferences__idx on
 
 create table water_intake (
         water_intake_id             integer unsigned not null auto_increment primary key,
-        intake_date                 date not null,
+        intake_date                 datetime not null,
         user_id                     integer unsigned not null,
         water_amount                integer unsigned not null
 );

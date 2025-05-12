@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "limit_history")
 @Getter
@@ -20,7 +22,7 @@ public class LimitHistory {
     private Integer historyId;
     
     @Column(name = "date_changed")
-    private String dateChanged;
+    private LocalDate dateChanged;
 
     @Column(name = "calorie_limit")
     private Integer calorieLimit;
@@ -41,7 +43,7 @@ public class LimitHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public LimitHistory(String dateChanged, User user, Integer calorieLimit, Integer fatLimit,
+    public LimitHistory(LocalDate dateChanged, User user, Integer calorieLimit, Integer fatLimit,
                         Integer carbLimit, Integer waterGoal) {
         this.dateChanged = dateChanged;
         this.user = user;

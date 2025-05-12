@@ -305,18 +305,18 @@ INSERT INTO user_info
 
 INSERT INTO meal (user_id, meal_type_id, meal_date, name, description)
 VALUES 
-    (1, 1, '2025-10-02', 'Oatmeal Breakfast', 'Oatmeal with milk and banana'),
-    (1, 2, '2025-02-01', 'Chicken Salad', 'Chicken breast, lettuce, tomato, olive oil'),
-    (1, 3, '2025-05-06', 'Vegetable Rice', 'Rice with broccoli and carrots'),
-    (1, 4, '2025-03-17', 'Grilled Salmon Supper', 'Salmon fillet with asparagus and quinoa'),
-    (1, 5, '2025-02-21', 'Protein Snack Pack', 'Almonds, Greek yogurt, and blueberries'),
-    (1, 2, '2025-01-09', 'Turkey Club Lunch', 'Whole wheat sandwich with turkey bacon and avocado');
+    (1, 1, '2025-10-02 00:00:00', 'Oatmeal Breakfast', 'Oatmeal with milk and banana'),
+    (1, 2, '2025-02-01 01:00:00', 'Chicken Salad', 'Chicken breast, lettuce, tomato, olive oil'),
+    (1, 3, '2025-05-06 02:00:00', 'Vegetable Rice', 'Rice with broccoli and carrots'),
+    (1, 4, '2025-03-17 03:00:00', 'Grilled Salmon Supper', 'Salmon fillet with asparagus and quinoa'),
+    (1, 5, '2025-02-21 04:00:00', 'Protein Snack Pack', 'Almonds, Greek yogurt, and blueberries'),
+    (1, 2, '2025-01-09 05:00:00', 'Turkey Club Lunch', 'Whole wheat sandwich with turkey bacon and avocado');
 
 insert into water_intake  (intake_date, user_id, water_amount) VALUES
-	('2025-03-17', 1, 200),
-    ('2025-10-02', 1, 50),
-    ('2025-02-01', 1, 1500),
-    ('2025-01-09', 1, 200);
+	('2025-03-17 00:00:00', 1, 200),
+    ('2025-10-02 01:00:00', 1, 50),
+    ('2025-02-01 02:00:00', 1, 1500),
+    ('2025-01-09 03:00:00', 1, 200);
     
 INSERT INTO meal_content (ingredient_id, meal_id, ingredient_amount) VALUES
     (192, 1, 50),

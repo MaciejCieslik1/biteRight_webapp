@@ -10,8 +10,7 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +39,7 @@ public class UserExerciseTests {
         ExerciseInfo exercise = new ExerciseInfo(0.8f, "Running");
         exerciseInfoRepository.save(exercise);
 
-        UserExercise userExercise = new UserExercise(user, exercise, Date.valueOf("2025-05-11"), 30, 300);
+        UserExercise userExercise = new UserExercise(user, exercise, LocalDateTime.parse("2025-05-11T00:00:00"), 30, 300);
         userExerciseRepository.save(userExercise);
 
         UserExercise found = userExerciseRepository.findById(userExercise.getUserExerciseId()).orElse(null);
@@ -58,7 +57,7 @@ public class UserExerciseTests {
         ExerciseInfo exercise = new ExerciseInfo(0.8f, "Light cardio");
         exerciseInfoRepository.save(exercise);
 
-        UserExercise userExercise = new UserExercise(user, exercise, Date.valueOf("2025-05-11"), 20, 100);
+        UserExercise userExercise = new UserExercise(user, exercise, LocalDateTime.parse("2025-05-11T00:00:00"), 20, 100);
         userExerciseRepository.save(userExercise);
 
         userExercise.setDuration(25);
@@ -79,7 +78,7 @@ public class UserExerciseTests {
         ExerciseInfo exercise = new ExerciseInfo(0.8f, "Outdoor activity");
         exerciseInfoRepository.save(exercise);
 
-        UserExercise userExercise = new UserExercise(user, exercise, Date.valueOf("2025-05-11"), 45, 400);
+        UserExercise userExercise = new UserExercise(user, exercise, LocalDateTime.parse("2025-05-11T00:00:00"), 45, 400);
         userExerciseRepository.save(userExercise);
 
         userExerciseRepository.delete(userExercise);
@@ -95,8 +94,8 @@ public class UserExerciseTests {
         ExerciseInfo exerciseInfo2 = new ExerciseInfo(0.8f, "Endurance");
         exerciseInfoRepository.saveAll(List.of(exerciseInfo1, exerciseInfo2));
 
-        UserExercise userExercise1 = new UserExercise(user, exerciseInfo1, Date.valueOf("2025-05-11"), 60, 500);
-        UserExercise userExercise2 = new UserExercise(user, exerciseInfo2, Date.valueOf("2025-05-11"), 40, 350);
+        UserExercise userExercise1 = new UserExercise(user, exerciseInfo1, LocalDateTime.parse("2025-05-11T00:00:00"), 60, 500);
+        UserExercise userExercise2 = new UserExercise(user, exerciseInfo2, LocalDateTime.parse("2025-05-12T00:00:00"), 40, 350);
         userExerciseRepository.saveAll(List.of(userExercise1, userExercise2));
 
         entityManager.flush();
@@ -117,8 +116,8 @@ public class UserExerciseTests {
         ExerciseInfo exerciseInfo = new ExerciseInfo(0.2f, "Flexibility");
         exerciseInfoRepository.save(exerciseInfo);
 
-        UserExercise userExercise1 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 30, 120);
-        UserExercise userExercise2 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 45, 200);
+        UserExercise userExercise1 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-11T00:00:00"), 30, 120);
+        UserExercise userExercise2 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-12T00:00:00"), 45, 200);
         userExerciseRepository.saveAll(List.of(userExercise1, userExercise2));
 
         entityManager.flush();
@@ -137,8 +136,8 @@ public class UserExerciseTests {
 
         exerciseInfoRepository.save(exerciseInfo);
 
-        UserExercise userExercise1 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 60, 600);
-        UserExercise userExercise2 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 30, 300);
+        UserExercise userExercise1 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-11T00:00:00"), 60, 600);
+        UserExercise userExercise2 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-12T00:00:00"), 30, 300);
 
         user.getUserExercises().addAll(Set.of(userExercise1, userExercise2));
         userRepository.save(user);
@@ -161,8 +160,8 @@ public class UserExerciseTests {
 
         ExerciseInfo exerciseInfo = new ExerciseInfo(0.8f, "Dance fitness");
 
-        UserExercise userExercise1 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 40, 300);
-        UserExercise userExercise2 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 50, 400);
+        UserExercise userExercise1 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-11T00:00:00"), 40, 300);
+        UserExercise userExercise2 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-12T00:00:00"), 50, 400);
 
         exerciseInfo.getUserExercises().addAll(Set.of(userExercise1, userExercise2));
         exerciseInfoRepository.save(exerciseInfo);
@@ -185,8 +184,8 @@ public class UserExerciseTests {
         ExerciseInfo exerciseInfo = new ExerciseInfo(0.8f, "Cardio");
         exerciseInfoRepository.save(exerciseInfo);
 
-        UserExercise exerciseInfo1 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 30, 250);
-        UserExercise exerciseInfo2 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 30, 250);
+        UserExercise exerciseInfo1 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-11T00:00:00"), 30, 250);
+        UserExercise exerciseInfo2 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-11T00:00:00"), 30, 250);
 
         user.getUserExercises().add(exerciseInfo1);
         user.getUserExercises().add(exerciseInfo2);
@@ -204,8 +203,8 @@ public class UserExerciseTests {
 
         ExerciseInfo exerciseInfo = new ExerciseInfo(0.8f, "Cardio");
 
-        UserExercise exerciseInfo1 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 30, 250);
-        UserExercise exerciseInfo2 = new UserExercise(user, exerciseInfo, Date.valueOf("2025-05-11"), 30, 250);
+        UserExercise exerciseInfo1 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-11T00:00:00"), 30, 250);
+        UserExercise exerciseInfo2 = new UserExercise(user, exerciseInfo, LocalDateTime.parse("2025-05-11T00:00:00"), 30, 250);
 
         exerciseInfo.getUserExercises().add(exerciseInfo1);
         exerciseInfo.getUserExercises().add(exerciseInfo2);

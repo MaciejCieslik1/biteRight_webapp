@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +27,7 @@ public class Meal {
     private Integer mealId;
 
     @Column(name = "meal_date")
-    private Date mealDate;
+    private LocalDateTime mealDate;
 
     @Column(name = "name")
     private String name;
@@ -44,7 +46,7 @@ public class Meal {
     @JoinColumn(name = "type_id")
     private MealType mealType;
 
-    public Meal(User user, MealType mealType, Date mealDate, String name, String description) {
+    public Meal(User user, MealType mealType, LocalDateTime mealDate, String name, String description) {
         this.user = user;
         this.mealType = mealType;
         this.mealDate = mealDate;

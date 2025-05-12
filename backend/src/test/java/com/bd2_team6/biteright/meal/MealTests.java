@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,7 +43,7 @@ public class MealTests {
         MealType mealType = new MealType("Breakfast");
         mealTypeRepository.save(mealType);
 
-        Meal meal = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Pancakes", "Delicious pancakes with syrup");
+        Meal meal = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Pancakes", "Delicious pancakes with syrup");
         mealRepository.save(meal);
 
         Meal foundMeal = mealRepository.findById(meal.getMealId()).orElse(null);
@@ -61,7 +63,7 @@ public class MealTests {
         MealType mealType = new MealType("Dinner");
         mealTypeRepository.save(mealType);
 
-        Meal meal = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Pasta", "Pasta with tomato sauce");
+        Meal meal = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Pasta", "Pasta with tomato sauce");
         mealRepository.save(meal);
 
         meal.setName("Spaghetti");
@@ -82,7 +84,7 @@ public class MealTests {
         MealType mealType = new MealType("Lunch");
         mealTypeRepository.save(mealType);
 
-        Meal meal = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Salad", "Fresh salad with vegetables");
+        Meal meal = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Salad", "Fresh salad with vegetables");
         mealRepository.save(meal);
 
         mealRepository.delete(meal);
@@ -99,8 +101,8 @@ public class MealTests {
         MealType mealType = new MealType("Snack");
         mealTypeRepository.save(mealType);
 
-        Meal meal1 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
-        Meal meal2 = new Meal(user, mealType, Date.valueOf("2025-05-12"), "Fruit", "Mixed fruit salad");
+        Meal meal1 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
+        Meal meal2 = new Meal(user, mealType, LocalDateTime.parse("2025-05-12T00:00:00"), "Fruit", "Mixed fruit salad");
         mealRepository.save(meal1);
         mealRepository.save(meal2);
 
@@ -124,8 +126,8 @@ public class MealTests {
         MealType mealType = new MealType("lunch");
         mealTypeRepository.save(mealType);
 
-        Meal meal1 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
-        Meal meal2 = new Meal(user, mealType, Date.valueOf("2025-05-12"), "Fruit", "Mixed fruit salad");
+        Meal meal1 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
+        Meal meal2 = new Meal(user, mealType, LocalDateTime.parse("2025-05-12T00:00:00"), "Fruit", "Mixed fruit salad");
         mealRepository.save(meal1);
         mealRepository.save(meal2);
 
@@ -148,8 +150,8 @@ public class MealTests {
         MealType mealType = new MealType("lunch");
         mealTypeRepository.save(mealType);
 
-        Meal meal1 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
-        Meal meal2 = new Meal(user, mealType, Date.valueOf("2025-05-12"), "Fruit", "Mixed fruit salad");
+        Meal meal1 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
+        Meal meal2 = new Meal(user, mealType, LocalDateTime.parse("2025-05-12T00:00:00"), "Fruit", "Mixed fruit salad");
 
         user.getMeals().add(meal1);
         user.getMeals().add(meal2);
@@ -174,8 +176,8 @@ public class MealTests {
 
         MealType mealType = new MealType("lunch");
 
-        Meal meal1 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
-        Meal meal2 = new Meal(user, mealType, Date.valueOf("2025-05-12"), "Fruit", "Mixed fruit salad");
+        Meal meal1 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
+        Meal meal2 = new Meal(user, mealType, LocalDateTime.parse("2025-05-12T00:00:00"), "Fruit", "Mixed fruit salad");
 
         mealType.getMeals().add(meal1);
         mealType.getMeals().add(meal2);
@@ -199,8 +201,8 @@ public class MealTests {
 
         MealType mealType = new MealType("lunch");
 
-        Meal meal1 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
-        Meal meal2 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
+        Meal meal1 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
+        Meal meal2 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
 
         user.getMeals().add(meal1);
         user.getMeals().add(meal2);
@@ -217,8 +219,8 @@ public class MealTests {
 
         MealType mealType = new MealType("lunch");
 
-        Meal meal1 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
-        Meal meal2 = new Meal(user, mealType, Date.valueOf("2025-05-11"), "Cookies", "Chocolate chip cookies");
+        Meal meal1 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
+        Meal meal2 = new Meal(user, mealType, LocalDateTime.parse("2025-05-11T00:00:00"), "Cookies", "Chocolate chip cookies");
 
         mealType.getMeals().add(meal1);
         mealType.getMeals().add(meal2);
