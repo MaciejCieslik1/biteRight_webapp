@@ -116,7 +116,7 @@ create table recipe_content (
 create table user_exercise (
         user_exercise_id            integer unsigned not null auto_increment primary key,
         user_id                     integer unsigned not null,
-        exercise_info_id            integer unsigned not null,
+        exercise_id                 integer unsigned not null,
         activity_date               datetime not null,
         duration                    integer unsigned not null,
         calories_burnt              integer unsigned not null
