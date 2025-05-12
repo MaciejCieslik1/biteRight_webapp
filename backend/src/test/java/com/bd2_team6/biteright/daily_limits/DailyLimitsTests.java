@@ -1,6 +1,5 @@
 package com.bd2_team6.biteright.daily_limits;
 
-import com.bd2_team6.biteright.entities.address.Address;
 import com.bd2_team6.biteright.entities.daily_limits.DailyLimits;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.daily_limits.DailyLimitsRepository;
@@ -13,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-public class DailyLimitsTest {
+public class DailyLimitsTests {
 
     @Autowired
     private DailyLimitsRepository dailyLimitsRepository;

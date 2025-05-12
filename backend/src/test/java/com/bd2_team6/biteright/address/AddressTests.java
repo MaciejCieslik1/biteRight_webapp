@@ -5,19 +5,16 @@ import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.address.AddressRepository;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-public class AddressTest {
+public class AddressTests {
 
     @Autowired
     private AddressRepository addressRepository;
