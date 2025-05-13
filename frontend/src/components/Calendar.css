@@ -1,0 +1,4 @@
+.highlighted {
+  background-color: #ffdd99 !important; /* Kolor tła dla zaznaczonej daty */
+  color: #000; /* Kolor tekstu (opcjonalnie) */
+}
