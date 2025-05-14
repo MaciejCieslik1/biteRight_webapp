@@ -11,6 +11,7 @@ const CalendarComponent = () => {
 
   const handleDateClick = (arg) => {
     setSelectedDate(arg.dateStr);
+    alert(`Selected date: ${arg.dateStr}`);
     arg.view.calendar.gotoDate(arg.date);
   };
 
@@ -29,12 +30,15 @@ const CalendarComponent = () => {
   };
 
   return (
-    <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin]}
-      initialView="dayGridMonth"
-      dateClick={handleDateClick}
-      dayCellClassNames={getDayCellClassNames}
-    />
+    <div className="calendar-container">
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        height="100%"
+        dateClick={handleDateClick}
+        dayCellClassNames={getDayCellClassNames}
+      />
+    </div>
   );
 };
 
