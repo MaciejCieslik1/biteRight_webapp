@@ -8,7 +8,7 @@
   color: #000;
 }
 
-.calendar-container {
+.calendar-wrapper {
   position: relative;
   width: 25vw;
   aspect-ratio: 1.5 / 1;
@@ -17,7 +17,7 @@
   min-height: 400px;
 }
 
-.calendar-container .fc {
+.calendar-wrapper .fc {
   height: 100% !important;
 }
 
