@@ -1,0 +1,45 @@
+.meal-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 25%;
+  background-color: #fdf28e;
+  border-radius: 20px;
+}
+
+.meal-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meal-title {
+  font-size: 1.2rem;
+  margin: 3%;
+  font-weight: bold;
+}
+
+.meal-calories {
+  margin: 3%;
+}
+
+.meal-products {
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-content {
+  height: 60%;
+}
+
+.product-item {
+  margin-left: 3%;
+}
+
+.meal-macros {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 5%;
+  margin-bottom: 1%;
+}
