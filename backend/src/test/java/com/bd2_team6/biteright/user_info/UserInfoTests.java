@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +36,7 @@ public class UserInfoTests {
         User user = new User("testuser", "test@example.com", "hashedpassword", "user");
         userRepository.save(user);
 
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
         UserInfo info = new UserInfo(user, goal, "John", "Doe", 30, 70.5f, 180, "active", 21.8f);
@@ -52,7 +53,7 @@ public class UserInfoTests {
         User user = new User("testuser", "test@example.com", "hashedpassword", "user");
         userRepository.save(user);
 
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
         UserInfo info = new UserInfo(user, goal, "Jane", "Doe", 28, 60.0f, 165, "moderate", 22.0f);
@@ -73,7 +74,7 @@ public class UserInfoTests {
         User user = new User("testuser", "test@example.com", "hashedpassword", "user");
         userRepository.save(user);
 
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
         UserInfo info = new UserInfo(user, goal, "Mike", "Smith", 25, 80.0f, 175, "intense", 26.1f);
@@ -90,20 +91,18 @@ public class UserInfoTests {
         User user = new User("testuser", "test@example.com", "hashedpassword", "user");
         userRepository.save(user);
 
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
-        UserInfo info1 = new UserInfo(user, goal, "Alex", "Blue", 29, 75.0f, 178, "moderate", 23.7f);
-        UserInfo info2 = new UserInfo(user, goal, "Alex", "Red", 30, 76.0f, 178, "moderate", 24.0f);
-        userInfoRepository.save(info1);
-        userInfoRepository.save(info2);
+        UserInfo info = new UserInfo(user, goal, "Alex", "Blue", 29, 75.0f, 178, "moderate", 23.7f);
+        userInfoRepository.save(info);
 
         entityManager.flush();
         entityManager.clear();
 
         User foundUser = userRepository.findById(user.getId()).orElse(null);
         assertNotNull(foundUser);
-        assertEquals(2, foundUser.getUserInfos().size());
+        assertEquals("Alex", foundUser.getUserInfo().getName());
     }
 
     @Test
@@ -111,56 +110,18 @@ public class UserInfoTests {
         User user = new User("testuser", "test@example.com", "hashedpassword", "user");
         userRepository.save(user);
 
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
-        UserInfo info1 = new UserInfo(user, goal, "Kate", "W", 32, 55.0f, 160, "low", 21.5f);
-        UserInfo info2 = new UserInfo(user, goal, "Katie", "M", 33, 56.0f, 160, "low", 21.9f);
-        userInfoRepository.save(info1);
-        userInfoRepository.save(info2);
+        UserInfo info = new UserInfo(user, goal, "Kate", "W", 32, 55.0f, 160, "low", 21.5f);
+        userInfoRepository.save(info);
 
         entityManager.flush();
         entityManager.clear();
 
         UserGoal foundGoal = userGoalRepository.findById(goal.getUserGoalId()).orElse(null);
         assertNotNull(foundGoal);
-        assertEquals(2, foundGoal.getUserInfos().size());
-    }
-
-    @Test
-    public void shouldNotAllowDuplicateUserInfoForSameUser() {
-        User user = new User("testuser", "test@example.com", "hashedpassword", "user");
-
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
-        userGoalRepository.save(goal);
-
-        UserInfo info1 = new UserInfo(user, goal, "Tom", "X", 22, 65.0f, 170, "active", 22.5f);
-        UserInfo info2 = new UserInfo(user, goal, "Tom", "X", 22, 65.0f, 170, "active", 22.5f);
-
-        user.getUserInfos().add(info1);
-        user.getUserInfos().add(info2);
-        userRepository.save(user);
-
-        User saved = userRepository.findById(user.getId()).orElseThrow();
-        assertEquals(1, saved.getUserInfos().size());
-    }
-
-    @Test
-    public void shouldNotAllowDuplicateUserInfoForSameUserGoal() {
-        User user = new User("testuser", "test@example.com", "hashedpassword", "user");
-        userRepository.save(user);
-
-        UserGoal userGoal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
-
-        UserInfo info1 = new UserInfo(user, userGoal, "Tom", "X", 22, 65.0f, 170, "active", 22.5f);
-        UserInfo info2 = new UserInfo(user, userGoal, "Tom", "X", 22, 65.0f, 170, "active", 22.5f);
-
-        userGoal.getUserInfos().add(info1);
-        userGoal.getUserInfos().add(info2);
-        userGoalRepository.save(userGoal);
-
-        UserGoal saved = userGoalRepository.findById(user.getId()).orElseThrow();
-        assertEquals(1, saved.getUserInfos().size());
+        assertEquals("Kate", foundGoal.getUserInfo().getName());
     }
 
     @Test
@@ -168,12 +129,12 @@ public class UserInfoTests {
         User user = new User("testuser", "test@example.com", "hashedpassword", "user");
         userRepository.save(user);
 
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
         UserInfo info = new UserInfo(user, goal, "Test", "Person", 40, 70.0f, 175, "low", 22.9f);
 
-        user.getUserInfos().add(info);
+        user.setUserInfo(info);
         userInfoRepository.save(info);
 
         Integer infoId = info.getUserInfoId();
@@ -189,12 +150,12 @@ public class UserInfoTests {
         User user = new User("testuser", "test@example.com", "hashedpassword", "user");
         userRepository.save(user);
 
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
         UserInfo info = new UserInfo(user, goal, "Test", "User", 35, 78.0f, 180, "moderate", 24.1f);
 
-        goal.getUserInfos().add(info);
+        goal.setUserInfo(info);
         userInfoRepository.save(info);
 
         Integer infoId = info.getUserInfoId();
