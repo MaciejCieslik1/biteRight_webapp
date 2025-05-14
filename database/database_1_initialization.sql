@@ -92,7 +92,7 @@ create table meal_content (
 );
 
 create table meal_type (
-        meal_type_id                     integer unsigned not null auto_increment primary key,
+        meal_type_id                integer unsigned not null auto_increment primary key,
         name                        varchar(64) not null -- UNIQUE
 );
 
@@ -143,7 +143,7 @@ create table user_info (
         bmi                         decimal(4, 2) not null
 );
 
-alter table user_info add constraint no_usrs_under_16 CHECK(age >= 16);
+alter table user_info add constraint no_users_under_16 CHECK(age >= 16);
 alter table user_info add constraint positive_usr_bmi CHECK(bmi > 0);
 alter table user_info add constraint positive_usr_weight CHECK(weight > 0);
 
@@ -200,7 +200,7 @@ alter table meal_content
 
 alter table meal
         add constraint meal_meal_type_fk foreign key ( meal_type_id )
-                references meal_type ( type_id );
+                references meal_type ( meal_type_id );
 
 alter table meal
         add constraint meal_user_fk foreign key ( user_id )
@@ -215,7 +215,7 @@ alter table recipe_content
                 references recipe ( recipe_id );
 
 alter table user_exercise
-        add constraint user_exercise_exercise_info_fk foreign key ( exercise_info_id )
+        add constraint user_exercise_exercise_info_fk foreign key ( exercise_id )
                 references exercise_info ( exercise_id );
 
 alter table user_exercise
