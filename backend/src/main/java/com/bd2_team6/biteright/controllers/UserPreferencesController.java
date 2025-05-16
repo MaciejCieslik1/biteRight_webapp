@@ -28,7 +28,7 @@ public class UserPreferencesController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<?> updateUserPreferences(Authentication authentication,
                                                     @RequestBody UserPreferencesUpdateRequest request) {
         String username = authentication.getName();

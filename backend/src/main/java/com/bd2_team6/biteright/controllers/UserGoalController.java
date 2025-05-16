@@ -29,7 +29,7 @@ public class UserGoalController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<?> updateUserGoal(Authentication authentication, @RequestBody UserGoalUpdateRequest request) {
         String username = authentication.getName();
 

@@ -28,7 +28,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/updateUserInfo")
+    @PutMapping("/update")
     public ResponseEntity<?> updateUserInfo(Authentication authentication, @RequestBody UserInfoUpdateRequest request) {
         String username = authentication.getName();
 
