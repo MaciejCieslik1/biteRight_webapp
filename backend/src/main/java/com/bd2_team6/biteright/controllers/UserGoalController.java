@@ -1,6 +1,7 @@
 package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.controllers.requests.update_requests.UserGoalUpdateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.UserInfoUpdateRequest;
 import com.bd2_team6.biteright.entities.user_goal.UserGoal;
 import com.bd2_team6.biteright.service.UserGoalService;
 import lombok.RequiredArgsConstructor;
