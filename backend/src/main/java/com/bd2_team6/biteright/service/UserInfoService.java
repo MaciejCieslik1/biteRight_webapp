@@ -31,7 +31,7 @@ public class UserInfoService {
 
         UserInfo userInfo = user.getUserInfo();
         userInfo.setName(request.getName());
-        userInfo.setSurname(request.getName());
+        userInfo.setSurname(request.getSurname());
         userInfo.setAge(request.getAge());
         userInfo.setWeight(request.getWeight());
         userInfo.setHeight(request.getHeight());
