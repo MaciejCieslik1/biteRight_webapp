@@ -1,6 +1,6 @@
 package com.bd2_team6.biteright.service;
 
-import com.bd2_team6.biteright.controllers.requests.add_requests.AddressAddRequest;
+import com.bd2_team6.biteright.controllers.requests.create_requests.AddressCreateRequest;
 import com.bd2_team6.biteright.entities.address.Address;
 import com.bd2_team6.biteright.entities.address.AddressRepository;
 import com.bd2_team6.biteright.entities.user.User;
@@ -28,7 +28,7 @@ public class AddressService {
         return user.getAddresses();
     }
 
-    public Address addAddress(String username, AddressAddRequest request) {
+    public Address addAddress(String username, AddressCreateRequest request) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         

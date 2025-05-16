@@ -1,6 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
-import com.bd2_team6.biteright.controllers.requests.add_requests.AddressAddRequest;
+import com.bd2_team6.biteright.controllers.requests.create_requests.AddressCreateRequest;
 import com.bd2_team6.biteright.entities.address.Address;
 import com.bd2_team6.biteright.service.AddressService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class AddressController {
     }
 
     @PostMapping("/addAddress")
-    public ResponseEntity<?> addAddress(Authentication authentication, @RequestBody AddressAddRequest request) {
+    public ResponseEntity<?> addAddress(Authentication authentication, @RequestBody AddressCreateRequest request) {
         String username = authentication.getName();
 
         try {
