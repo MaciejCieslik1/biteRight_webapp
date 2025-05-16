@@ -1,9 +1,10 @@
 package com.bd2_team6.biteright.controllers;
 
-import com.bd2_team6.biteright.controllers.data_transfer_objects.RegistrationData;
-import com.bd2_team6.biteright.controllers.data_transfer_objects.LoginData;
+import com.bd2_team6.biteright.controllers.data_transfer_objects.RegistrationRequestBody;
+import com.bd2_team6.biteright.controllers.data_transfer_objects.LoginRequestBody;
+import com.bd2_team6.biteright.authentication.AuthenticationService;
 import com.bd2_team6.biteright.authentication.jason_web_token.JwtService;
-import com.bd2_team6.biteright.entities.user.UserService;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -11,10 +12,10 @@ import lombok.RequiredArgsConstructor;
 
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private final UserService userService;
+    private final AuthenticationService authService;
     private final JwtService jwtService;
     
     @GetMapping("/testtoken")
@@ -23,9 +24,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerNewUser(@RequestBody RegistrationData registrationData) {
+    public ResponseEntity<String> registerNewUser(@RequestBody RegistrationRequestBody registrationRequestBody) {
         try {
-            userService.registerNewUser(registrationData.getUsername(),registrationData.getEmail(), registrationData.getPassword());
+            authService.registerNewUser(registrationRequestBody.getUsername(),registrationRequestBody.getEmail(), registrationRequestBody.getPassword());
             return ResponseEntity.status(HttpStatus.OK).body("User registered successfully");
         }
         catch (Exception e) {
@@ -34,10 +35,10 @@ public class AuthenticationController {
     } 
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginData loginData)  {
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequestBody loginRequestBody)  {
         try {
-            userService.loginUser(loginData.getEmail(), loginData.getPassword());
-            String token = jwtService.generateToken(loginData.getEmail());
+            authService.loginUser(loginRequestBody.getEmail(), loginRequestBody.getPassword());
+            String token = jwtService.generateToken(loginRequestBody.getEmail());
             return ResponseEntity.status(HttpStatus.OK).body(token);
         }
         catch (Exception e) {
@@ -49,7 +50,7 @@ public class AuthenticationController {
     @GetMapping("/getusers")
     public ResponseEntity<String> getUsers() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
+            return ResponseEntity.status(HttpStatus.OK).body(authService.getAllUsers());
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
