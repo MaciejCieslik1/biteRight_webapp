@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.service;
 
+import com.bd2_team6.biteright.controllers.requests.add_requests.AddressAddRequest;
 import com.bd2_team6.biteright.entities.address.Address;
 import com.bd2_team6.biteright.entities.address.AddressRepository;
 import com.bd2_team6.biteright.entities.user.User;
@@ -13,15 +14,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressService {
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
 
     @Autowired
-    public AddressService(UserRepository userRepository) {
+    public AddressService(UserRepository userRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     public Set<Address> findAddressesByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return user.getAddresses();
+    }
+
+    public Address addAddress(String username, AddressAddRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        
+        Address newAddress = new Address();
+        newAddress.setAddress(request.getAddress());
+        newAddress.setCity(request.getCity());
+        newAddress.setPostalCode(request.getPostalCode());
+        newAddress.setCountry(request.getCountry());
+
+        newAddress.setUser(user);
+        user.getAddresses().add(newAddress);
+
+        return addressRepository.save(newAddress);
     }
 }

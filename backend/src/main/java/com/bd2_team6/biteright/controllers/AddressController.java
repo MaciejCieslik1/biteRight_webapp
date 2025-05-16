@@ -1,7 +1,7 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.requests.add_requests.AddressAddRequest;
 import com.bd2_team6.biteright.entities.address.Address;
-import com.bd2_team6.biteright.entities.user_goal.UserGoal;
 import com.bd2_team6.biteright.service.AddressService;
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/address")
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class AddressController {
     private final AddressService addressService;
 
     @GetMapping("/findAddress")
-    public ResponseEntity<?> findUserGoal(Authentication authentication) {
+    public ResponseEntity<?> findAddress(Authentication authentication) {
         String username = authentication.getName();
 
         try {
@@ -29,4 +30,18 @@ public class AddressController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/addAddress")
+    public ResponseEntity<?> addAddress(Authentication authentication, @RequestBody AddressAddRequest request) {
+        String username = authentication.getName();
+
+        try {
+            Address newAddress = addressService.addAddress(username, request);
+            return ResponseEntity.ok(newAddress);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
 }
