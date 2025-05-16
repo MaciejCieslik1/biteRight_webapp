@@ -39,7 +39,7 @@ public class WaterIntakeController {
     public ResponseEntity<?> findWaterIntakeForUser(Authentication authentication,
                                                     @RequestParam(defaultValue = "0") int page,
                                                     @RequestParam(defaultValue = "10") int size,
-                                                    @RequestParam(defaultValue = "id") String sortBy) {
+                                                    @RequestParam(defaultValue = "intakeDate") String sortBy) {
         String username = authentication.getName();
 
         try {
@@ -56,7 +56,7 @@ public class WaterIntakeController {
     public ResponseEntity<?> findWaterIntakesByDate(Authentication authentication,
                             @RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "10") int size,
-                            @RequestParam(defaultValue = "id") String sortBy,
+                            @RequestParam(defaultValue = "intakeDate") String sortBy,
                             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 
         String username = authentication.getName();
