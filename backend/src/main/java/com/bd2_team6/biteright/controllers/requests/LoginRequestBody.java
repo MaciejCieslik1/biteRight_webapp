@@ -1,4 +1,4 @@
-package com.bd2_team6.biteright.controllers.data_transfer_objects;
+package com.bd2_team6.biteright.controllers.requests;
 import lombok.*;
 
 @Getter
