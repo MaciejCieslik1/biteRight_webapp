@@ -1,9 +1,9 @@
 package com.bd2_team6.biteright.controllers;
 
-import com.bd2_team6.biteright.controllers.data_transfer_objects.RegistrationRequestBody;
-import com.bd2_team6.biteright.controllers.data_transfer_objects.LoginRequestBody;
 import com.bd2_team6.biteright.authentication.AuthenticationService;
 import com.bd2_team6.biteright.authentication.jason_web_token.JwtService;
+import com.bd2_team6.biteright.controllers.requests.LoginRequestBody;
+import com.bd2_team6.biteright.controllers.requests.RegistrationRequestBody;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
