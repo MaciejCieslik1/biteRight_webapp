@@ -4,6 +4,7 @@ import com.bd2_team6.biteright.controllers.requests.update_requests.UserInfoUpda
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.user_info.UserInfo;
+import com.bd2_team6.biteright.entities.user_info.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class UserInfoService {
 
     private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
 
     @Autowired
-    public UserInfoService(UserRepository userRepository) {
+    public UserInfoService(UserRepository userRepository, UserInfoRepository userInfoRepository) {
         this.userRepository = userRepository;
+        this.userInfoRepository = userInfoRepository;
     }
 
     public UserInfo findUserInfoByUsername(String username) {
@@ -37,6 +40,8 @@ public class UserInfoService {
         userInfo.setHeight(request.getHeight());
         userInfo.setLifestyle(request.getLifestyle());
         userInfo.setBmi(request.getBmi());
+
+        userInfoRepository.save(userInfo);
 
         return userInfo;
     }
