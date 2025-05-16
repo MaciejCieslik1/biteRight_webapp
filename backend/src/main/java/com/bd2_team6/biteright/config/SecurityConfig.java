@@ -55,9 +55,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((request) -> request
                     .requestMatchers(
                         "/actuator/health", 
-                        "/api/user/register", 
-                        "/api/user/login",
-                        "/api/user/getusers")
+                        "/api/auth/register", 
+                        "/api/auth/login",
+                        "/api/auth/getusers")
                         .permitAll()
                     .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
