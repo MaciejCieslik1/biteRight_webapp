@@ -2,6 +2,7 @@ package com.bd2_team6.biteright.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bd2_team6.biteright.controllers.requests.create_requests.IngredientCreateRequest;
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
 import com.bd2_team6.biteright.service.IngredientService;
 
@@ -13,6 +14,9 @@ import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -30,6 +34,17 @@ public class IngredientController {
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @PostMapping("/create")
+    public ResponseEntity<?> createIngredient(@RequestBody IngredientCreateRequest request) {
+        try {
+            Ingredient newIngredient = ingredientService.createIngredient(request);
+            return ResponseEntity.ok(newIngredient);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     
