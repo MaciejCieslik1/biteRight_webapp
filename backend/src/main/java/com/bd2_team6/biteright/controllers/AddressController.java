@@ -3,7 +3,6 @@ package com.bd2_team6.biteright.controllers;
 import com.bd2_team6.biteright.controllers.requests.create_requests.AddressCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.AddressUpdateRequest;
 import com.bd2_team6.biteright.entities.address.Address;
-import com.bd2_team6.biteright.entities.user_goal.UserGoal;
 import com.bd2_team6.biteright.service.AddressService;
 import lombok.RequiredArgsConstructor;
 
