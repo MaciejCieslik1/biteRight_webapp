@@ -1,0 +1,19 @@
+.settings-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f0f4f8;
+  padding-left: 0;
+  margin: 0;
+}
+
+.settings-content {
+  flex: 1;
+  border-radius: 20px;
+  margin: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.settings-title {
+    margin-top: 50px;
+    margin-left: 100px;
+}
