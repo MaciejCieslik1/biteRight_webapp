@@ -26,4 +26,10 @@ public class MealService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return user.getMeals();
     }
+
+    public Meal findMealByName(String name) {
+        Meal meal = mealRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
+        return meal;
+    }
 }

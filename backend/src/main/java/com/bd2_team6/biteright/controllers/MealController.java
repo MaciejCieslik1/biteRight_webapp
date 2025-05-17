@@ -31,4 +31,15 @@ public class MealController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/findMeal/{name}")
+    public ResponseEntity<?> findMeal(@PathVariable("name") String name) {
+        try {
+            Meal meal = mealService.findMealByName(name);
+            return ResponseEntity.ok(meal);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
