@@ -4,6 +4,7 @@ import com.bd2_team6.biteright.controllers.requests.update_requests.UserGoalUpda
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.user_goal.UserGoal;
+import com.bd2_team6.biteright.entities.user_goal.UserGoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class UserGoalService {
 
     private final UserRepository userRepository;
+    private final UserGoalRepository userGoalRepository;
 
     @Autowired
-    public UserGoalService(UserRepository userRepository) {
+    public UserGoalService(UserRepository userRepository, UserGoalRepository userGoalRepository) {
         this.userRepository = userRepository;
+        this.userGoalRepository = userGoalRepository;
     }
 
     public UserGoal findUserGoalByUsername(String username) {
@@ -31,6 +34,7 @@ public class UserGoalService {
         userGoal.setGoalType(request.getGoalType());
         userGoal.setGoalWeight(request.getGoalWeight());
         userGoal.setDeadline(request.getGoalDate());
+        userGoalRepository.save(userGoal);
 
         return userGoal;
     }

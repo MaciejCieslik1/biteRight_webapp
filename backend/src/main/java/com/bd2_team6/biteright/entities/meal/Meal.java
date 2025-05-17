@@ -43,7 +43,7 @@ public class Meal {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "meal_type_id")
     private MealType mealType;
 
     public Meal(User user, MealType mealType, LocalDateTime mealDate, String name, String description) {

@@ -172,7 +172,7 @@ create table water_intake (
 create table weight_history (
         weight_id                   integer unsigned not null auto_increment primary key,
         user_id                     integer unsigned not null,
-        measurement_date            date not null,
+        measurement_date            datetime not null,
         weight                      decimal(5, 2) not null
 );
 

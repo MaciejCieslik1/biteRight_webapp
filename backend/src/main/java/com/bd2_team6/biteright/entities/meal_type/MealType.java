@@ -17,7 +17,7 @@ import java.util.Set;
 public class MealType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "type_id")
+    @Column(name = "meal_type_id")
     private Integer typeId;
 
     @Column(name = "name")
