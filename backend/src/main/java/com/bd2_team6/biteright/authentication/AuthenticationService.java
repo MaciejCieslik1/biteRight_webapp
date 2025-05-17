@@ -11,6 +11,7 @@ import com.bd2_team6.biteright.entities.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +23,12 @@ public class AuthenticationService {
     public void registerNewUser(String username, String email, String password) throws Exception {
         validateEmail(email);
 
-        if (userRepository.findByUsername(username) != null)
+        Optional<User> userOptByUsername = userRepository.findByUsername(username);
+        Optional<User> userOptByEmail = userRepository.findByEmail(email);
+
+        if (userOptByUsername.isPresent())
             throw new Exception("Username already taken.");
-        if (userRepository.findByEmail(email) != null)
+        if (userOptByEmail.isPresent())
             throw new Exception("Email already taken.");
 
         String hashedPassword = passwordEncoder.encode(password);
@@ -33,8 +37,8 @@ public class AuthenticationService {
     }
 
     public void loginUser(String email, String password) throws Exception {
-        User user = userRepository.findByEmail(email);
-        if (user == null)
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty())
             throw new Exception("User (with email"+ email + ") not found.");
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password)); 
         if (auth == null || !auth.isAuthenticated()) throw new Exception("Invalid password.");
