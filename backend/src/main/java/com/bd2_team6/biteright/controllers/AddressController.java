@@ -1,7 +1,9 @@
 package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.controllers.requests.create_requests.AddressCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.AddressUpdateRequest;
 import com.bd2_team6.biteright.entities.address.Address;
+import com.bd2_team6.biteright.entities.user_goal.UserGoal;
 import com.bd2_team6.biteright.service.AddressService;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +12,7 @@ import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -44,13 +47,26 @@ public class AddressController {
         }
     }
 
+    @PutMapping("/updateAddress/{id}")
+    public ResponseEntity<?> updateAddress(Authentication authentication, @RequestBody AddressUpdateRequest request, @PathVariable("id") Integer addressId) {
+        String username = authentication.getName();
+
+        try {
+            Address updatedAddress = addressService.updateAddress(username, request, addressId);
+            return ResponseEntity.ok(updatedAddress);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/deleteAddress/{id}")
     public ResponseEntity<?> deleteAddress(Authentication authentication, @PathVariable("id") Integer addressId) {
         String username = authentication.getName();
 
         try {
             addressService.deleteAddressById(username, addressId);
-            return ResponseEntity.ok("Weight history deleted successfully");
+            return ResponseEntity.ok("Address deleted successfully");
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
