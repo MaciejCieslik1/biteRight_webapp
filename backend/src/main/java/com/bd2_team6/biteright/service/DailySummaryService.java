@@ -1,6 +1,5 @@
 package com.bd2_team6.biteright.service;
 
-import com.bd2_team6.biteright.entities.daily_limits.DailyLimitsRepository;
 import com.bd2_team6.biteright.entities.daily_summary.DailySummary;
 import com.bd2_team6.biteright.entities.daily_summary.DailySummaryRepository;
 import com.bd2_team6.biteright.entities.user.User;
