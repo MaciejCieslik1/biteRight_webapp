@@ -19,12 +19,12 @@ import com.bd2_team6.biteright.service.MealService;
 public class MealController {
     private final MealService mealService;
 
-    @GetMapping("/find")
-    public ResponseEntity<?> findMeals(Authentication authentication) {
+    @GetMapping("/findUserMeals")
+    public ResponseEntity<?> findUserMeals(Authentication authentication) {
         String username = authentication.getName();
 
         try {
-            Set<Meal> meals = mealService.findMealsByUsername(username);
+            Set<Meal> meals = mealService.findUserMealsByUsername(username);
             return ResponseEntity.ok(meals);
         }
         catch (IllegalArgumentException e) {

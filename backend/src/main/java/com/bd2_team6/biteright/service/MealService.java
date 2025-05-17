@@ -21,7 +21,7 @@ public class MealService {
         this.mealRepository = mealRepository;
     }
 
-    public Set<Meal> findMealsByUsername(String username) {
+    public Set<Meal> findUserMealsByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return user.getMeals();
