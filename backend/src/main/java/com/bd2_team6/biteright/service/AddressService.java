@@ -5,7 +5,6 @@ import com.bd2_team6.biteright.entities.address.Address;
 import com.bd2_team6.biteright.entities.address.AddressRepository;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
-import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 
 import java.util.Set;
 
@@ -57,7 +56,7 @@ public class AddressService {
             addressRepository.delete(address);
         }
         else {
-            throw new IllegalArgumentException("Weight history with provided id does not belong to user");
+            throw new IllegalArgumentException("Address with provided id does not belong to user");
         }
     }
 }
