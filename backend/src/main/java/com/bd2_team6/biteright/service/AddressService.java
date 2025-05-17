@@ -28,7 +28,7 @@ public class AddressService {
         return user.getAddresses();
     }
 
-    public Address addAddress(String username, AddressCreateRequest request) {
+    public Address createAddress(String username, AddressCreateRequest request) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         

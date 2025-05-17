@@ -31,12 +31,12 @@ public class AddressController {
         }
     }
 
-    @PostMapping("/addAddress")
+    @PostMapping("/createAddress")
     public ResponseEntity<?> addAddress(Authentication authentication, @RequestBody AddressCreateRequest request) {
         String username = authentication.getName();
 
         try {
-            Address newAddress = addressService.addAddress(username, request);
+            Address newAddress = addressService.createAddress(username, request);
             return ResponseEntity.ok(newAddress);
         }
         catch (IllegalArgumentException e) {

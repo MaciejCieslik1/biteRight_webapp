@@ -9,6 +9,8 @@ import com.bd2_team6.biteright.entities.user_info.UserInfo;
 import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
 import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
 import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +54,7 @@ public class User {
     private Set<LimitHistory> limitHistories = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Address> addresses = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
