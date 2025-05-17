@@ -5,6 +5,7 @@ import com.bd2_team6.biteright.entities.address.Address;
 import com.bd2_team6.biteright.entities.address.AddressRepository;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
+import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 
 import java.util.Set;
 
@@ -42,5 +43,21 @@ public class AddressService {
         user.getAddresses().add(newAddress);
 
         return addressRepository.save(newAddress);
+    }
+
+    public void deleteAddressById(String username, Integer addressId) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        Integer userId = user.getId();
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new IllegalArgumentException("Address with provided id not found"));
+
+        if (address.getUser().getId().equals(userId)) {
+            addressRepository.delete(address);
+        }
+        else {
+            throw new IllegalArgumentException("Weight history with provided id does not belong to user");
+        }
     }
 }

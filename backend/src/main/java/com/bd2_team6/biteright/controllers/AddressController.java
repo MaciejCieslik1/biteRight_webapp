@@ -43,5 +43,18 @@ public class AddressController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    
+
+    @DeleteMapping("/deleteAddress/{id}")
+    public ResponseEntity<?> deleteAddress(Authentication authentication, @PathVariable("id") Integer addressId) {
+        String username = authentication.getName();
+
+        try {
+            addressService.deleteAddressById(username, addressId);
+            return ResponseEntity.ok("Weight history deleted successfully");
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
