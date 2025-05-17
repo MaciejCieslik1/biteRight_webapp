@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DailySummaryRepository extends JpaRepository<DailySummary, DailySummaryId> {
-    Optional<DailySummary> findById(Integer id);
+    Optional<DailySummary> findByUserId(Integer userId);
 }

@@ -22,8 +22,8 @@ public class DailySummaryService {
     public DailySummary findDailySummaryByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        Integer user_id = user.getId();
-        DailySummary summary = dailySummaryRepository.findById(user_id)
+        Integer userId = user.getId();
+        DailySummary summary = dailySummaryRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Summary not found"));
         return summary;
     }
