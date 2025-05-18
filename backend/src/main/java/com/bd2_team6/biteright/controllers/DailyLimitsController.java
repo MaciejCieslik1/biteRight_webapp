@@ -1,5 +1,7 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.DailyLimitsDTO;
+import com.bd2_team6.biteright.controllers.DTO.UserGoalDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.DailyLimitsCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.DailyLimitsUpdateRequest;
 import com.bd2_team6.biteright.entities.daily_limits.DailyLimits;
@@ -25,7 +27,9 @@ public class DailyLimitsController {
 
         try {
             DailyLimits dailyLimits = dailyLimitsService.findDailyLimitsByUsername(username);
-            return ResponseEntity.ok(dailyLimits);
+            DailyLimitsDTO dailyLimitsDTO = new DailyLimitsDTO(dailyLimits.getCalorieLimit(), dailyLimits.getProteinLimit(), 
+            dailyLimits.getFatLimit(), dailyLimits.getCarbLimit(), dailyLimits.getWaterGoal());
+            return ResponseEntity.ok(dailyLimitsDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
@@ -38,7 +42,9 @@ public class DailyLimitsController {
 
         try {
             DailyLimits newDailyLimits = dailyLimitsService.createDailyLimits(username, request);
-            return ResponseEntity.ok(newDailyLimits);
+            DailyLimitsDTO newDailyLimitsDTO = new DailyLimitsDTO(newDailyLimits.getCalorieLimit(), newDailyLimits.getProteinLimit(), 
+            newDailyLimits.getFatLimit(), newDailyLimits.getCarbLimit(), newDailyLimits.getWaterGoal());
+            return ResponseEntity.ok(newDailyLimitsDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -51,7 +57,9 @@ public class DailyLimitsController {
 
         try {
             DailyLimits updatedDailyLimits = dailyLimitsService.updateDailyLimits(username, request);
-            return ResponseEntity.ok(updatedDailyLimits);
+            DailyLimitsDTO updatedDailyLimitsDTO = new DailyLimitsDTO(updatedDailyLimits.getCalorieLimit(), updatedDailyLimits.getProteinLimit(), 
+            updatedDailyLimits.getFatLimit(), updatedDailyLimits.getCarbLimit(), updatedDailyLimits.getWaterGoal());
+            return ResponseEntity.ok(updatedDailyLimitsDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
