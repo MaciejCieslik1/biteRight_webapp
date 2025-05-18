@@ -20,7 +20,7 @@ public class UserGoalController {
     @GetMapping("/findUserGoal")
     public ResponseEntity<?> findUserGoal(Authentication authentication) {
         String username = authentication.getName();
-
+        System.out.println(username);
         try {
             UserGoal userGoal = userGoalService.findUserGoalByUsername(username);
             UserGoalDTO userGoalDTO = new UserGoalDTO(userGoal.getUserGoalId(), userGoal.getGoalType(),
@@ -28,7 +28,7 @@ public class UserGoalController {
             return ResponseEntity.ok(userGoalDTO);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
