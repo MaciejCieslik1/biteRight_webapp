@@ -1,11 +1,8 @@
 package com.bd2_team6.biteright.authentication.jason_web_token;
 
 import com.bd2_team6.biteright.authentication.custom_user_details.CustomUserDetails;
-import com.bd2_team6.biteright.entities.user.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import com.bd2_team6.biteright.entities.user.User;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.io.Decoders;
