@@ -21,8 +21,8 @@ public class MealContentService {
         this.mealRepository = mealRepository;
     }
 
-    public Set<MealContent> findMealContentByName(String name) {
-        Meal meal = mealRepository.findByName(name)
+    public Set<MealContent> findMealContentByName(String mealName) {
+        Meal meal = mealRepository.findByName(mealName)
                 .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
         return meal.getMealContents();
     }

@@ -17,9 +17,9 @@ public class MealContentController {
     private final MealContentService mealContentService;
 
     @GetMapping("/findByName/{name}")
-    public ResponseEntity<?> findMealContentByName(@PathVariable("name") String name) {
+    public ResponseEntity<?> findMealContentByName(@PathVariable("name") String mealName) {
         try {
-            Set<MealContent> mealContents = mealContentService.findMealContentByName(name);
+            Set<MealContent> mealContents = mealContentService.findMealContentByName(mealName);
             return ResponseEntity.ok(mealContents);
         }
         catch (IllegalArgumentException e) {

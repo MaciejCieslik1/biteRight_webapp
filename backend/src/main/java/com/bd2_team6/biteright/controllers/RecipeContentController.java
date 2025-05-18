@@ -18,9 +18,9 @@ public class RecipeContentController {
     private final RecipeContentService recipeContentService;
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<?> findRecipeContentById(@PathVariable("id") Integer mealId) {
+    public ResponseEntity<?> findRecipeContentById(@PathVariable("id") Integer recipeId) {
         try {
-            RecipeContent recipeContent = recipeContentService.findRecipeContentById(mealId);
+            RecipeContent recipeContent = recipeContentService.findRecipeContentById(recipeId);
             return ResponseEntity.ok(recipeContent);
         }
         catch (IllegalArgumentException e) {
