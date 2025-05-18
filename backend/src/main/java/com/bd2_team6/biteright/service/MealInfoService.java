@@ -11,11 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MealInfoService {
     private final MealInfoRepository mealInfoRepository;
-    private final MealRepository mealRepository;
 
     @Autowired
-    public MealInfoService(MealRepository mealRepository, MealInfoRepository mealInfoRepository) {
-        this.mealRepository = mealRepository;
+    public MealInfoService(MealInfoRepository mealInfoRepository) {
         this.mealInfoRepository = mealInfoRepository;
     }
 
@@ -25,11 +23,8 @@ public class MealInfoService {
         return mealInfo;
     }
 
-    public MealInfo findMealInfoByName(String name) {
-        Meal meal = mealRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
-        Integer mealId = meal.getMealId();
-        MealInfo mealInfo = mealInfoRepository.findById(mealId)
+    public MealInfo findMealInfoByName(String mealName) {
+        MealInfo mealInfo = mealInfoRepository.findByName(mealName)
                 .orElseThrow(() -> new IllegalArgumentException("Meal info not found"));
         return mealInfo;
     }

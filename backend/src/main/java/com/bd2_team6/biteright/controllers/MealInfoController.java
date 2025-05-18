@@ -15,7 +15,7 @@ public class MealInfoController {
     private final MealInfoService mealInfoService;
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<?> findMealInfo(@PathVariable("id") Integer mealId) {
+    public ResponseEntity<?> findMealInfoById(@PathVariable("id") Integer mealId) {
         try {
             MealInfo mealInfo = mealInfoService.findMealInfoById(mealId);
             return ResponseEntity.ok(mealInfo);
@@ -26,9 +26,9 @@ public class MealInfoController {
     }
 
     @GetMapping("/find/{name}")
-    public ResponseEntity<?> findMealInfo(@PathVariable("name") String name) {
+    public ResponseEntity<?> findMealInfoByName(@PathVariable("name") String mealName) {
         try {
-            MealInfo mealInfo = mealInfoService.findMealInfoByName(name);
+            MealInfo mealInfo = mealInfoService.findMealInfoByName(mealName);
             return ResponseEntity.ok(mealInfo);
         }
         catch (IllegalArgumentException e) {
