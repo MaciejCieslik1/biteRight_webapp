@@ -42,10 +42,14 @@ public class WeightHistoryController {
     public ResponseEntity<?> findWeightHistoriesForUser(Authentication authentication,
                                                       @RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size,
+                                                      @RequestParam(defaultValue = "desc") String sortDir,
                                                       @RequestParam(defaultValue = "measurementDate") String sortBy) {
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
-            Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+            Pageable pageable = PageRequest.of(page, size, sort);
             Page<WeightHistory> weightHistories = weightHistoryService.findWeightHistoriesByUsername(username, pageable);
             return ResponseEntity.ok(mapToDTOPage(weightHistories));
         }
@@ -59,11 +63,15 @@ public class WeightHistoryController {
                                                      @RequestParam(defaultValue = "0") int page,
                                                      @RequestParam(defaultValue = "10") int size,
                                                      @RequestParam(defaultValue = "measurementDate") String sortBy,
+                                                     @RequestParam(defaultValue = "desc") String sortDir,
                                                      @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                          LocalDate date) {
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
-            Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+            Pageable pageable = PageRequest.of(page, size, sort);
             Page<WeightHistory> weightHistories = weightHistoryService.findWeightHistoriesByDate(username, date, pageable);
             return ResponseEntity.ok(mapToDTOPage(weightHistories));
         } catch (IllegalArgumentException e) {
@@ -71,9 +79,8 @@ public class WeightHistoryController {
         }
     }
 
-    @GetMapping("/findLastWeightHistoryByDate/{date}")
-    public ResponseEntity<?> findLastWaterIntakesByDate(Authentication authentication,
-                                                        @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    @GetMapping("/findLastWeightHistory")
+    public ResponseEntity<?> findLastWaterIntakesByDate(Authentication authentication) {
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WeightHistory weightHistory = weightHistoryService.findLastWeightHistoryByUsername(username);

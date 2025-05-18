@@ -37,14 +37,18 @@ public class WaterIntakeController {
         }
     }
 
-    @GetMapping("/findWaterIntakeForUser")
+    @GetMapping("/findWaterIntakesForUser")
     public ResponseEntity<?> findWaterIntakeForUser(Authentication authentication,
                                                     @RequestParam(defaultValue = "0") int page,
                                                     @RequestParam(defaultValue = "10") int size,
+                                                    @RequestParam(defaultValue = "desc") String sortDir,
                                                     @RequestParam(defaultValue = "intakeDate") String sortBy) {
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
-            Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+            Pageable pageable = PageRequest.of(page, size, sort);
             Page<WaterIntake> waterIntakes = waterIntakeService.findWaterIntakesByUsername(username, pageable);
             return ResponseEntity.ok(mapToDTOPage(waterIntakes));
         }
@@ -53,16 +57,20 @@ public class WaterIntakeController {
         }
     }
 
-    @GetMapping("/findWaterIntakeByDate/{date}")
+    @GetMapping("/findWaterIntakesByDate/{date}")
     public ResponseEntity<?> findWaterIntakesByDate(Authentication authentication,
                             @RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "10") int size,
+                            @RequestParam(defaultValue = "desc") String sortDir,
                             @RequestParam(defaultValue = "intakeDate") String sortBy,
                             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
-            Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+            Pageable pageable = PageRequest.of(page, size, sort);
             Page<WaterIntake> waterIntakes = waterIntakeService.findWaterIntakesByDate(username, date, pageable);
             return ResponseEntity.ok(mapToDTOPage(waterIntakes));
         } catch (IllegalArgumentException e) {
@@ -70,9 +78,8 @@ public class WaterIntakeController {
         }
     }
 
-    @GetMapping("/findLastWaterIntakeByDate/{date}")
-    public ResponseEntity<?> findLastWaterIntakesByDate(Authentication authentication,
-                            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    @GetMapping("/findLastWaterIntake")
+    public ResponseEntity<?> findLastWaterIntakesByDate(Authentication authentication) {
 
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
