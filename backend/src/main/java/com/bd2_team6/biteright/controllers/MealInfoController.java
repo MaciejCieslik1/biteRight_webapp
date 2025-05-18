@@ -16,6 +16,17 @@ import com.bd2_team6.biteright.service.MealInfoService;
 public class MealInfoController {
     private final MealInfoService mealInfoService;
 
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> findMealInfo(@PathVariable("id") Integer mealId) {
+        try {
+            MealInfo mealInfo = mealInfoService.findMealInfoById(mealId);
+            return ResponseEntity.ok(mealInfo);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/find/{name}")
     public ResponseEntity<?> findMealInfo(@PathVariable("name") String name) {
         try {

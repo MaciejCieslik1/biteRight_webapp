@@ -19,6 +19,12 @@ public class MealInfoService {
         this.mealInfoRepository = mealInfoRepository;
     }
 
+    public MealInfo findMealInfoById(Integer mealId) {
+        MealInfo mealInfo = mealInfoRepository.findById(mealId)
+                .orElseThrow(() -> new IllegalArgumentException("Meal info not found"));
+        return mealInfo;
+    }
+
     public MealInfo findMealInfoByName(String name) {
         Meal meal = mealRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
