@@ -9,7 +9,7 @@ import com.bd2_team6.biteright.entities.meal_type.MealType;
 import com.bd2_team6.biteright.service.MealTypeService;
 
 @RestController
-@RequestMapping("/mealInfo")
+@RequestMapping("/mealType")
 @RequiredArgsConstructor
 public class MealTypeController {
     private final MealTypeService mealTypeService;
