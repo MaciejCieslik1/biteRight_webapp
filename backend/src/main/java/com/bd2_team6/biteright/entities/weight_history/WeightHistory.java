@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "weight_history")
@@ -21,7 +21,7 @@ public class WeightHistory {
     private Integer weightId;
     
     @Column(name = "measurement_date")
-    private Date measurementDate;
+    private LocalDateTime measurementDate;
 
     @Column(name = "weight")
     private Float weight;
@@ -30,7 +30,7 @@ public class WeightHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public WeightHistory(User user, Date measurementDate, Float weight) {
+    public WeightHistory(User user, LocalDateTime measurementDate, Float weight) {
         this.user = user;
         this.measurementDate = measurementDate;
         this.weight = weight;

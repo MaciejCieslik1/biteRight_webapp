@@ -134,7 +134,7 @@ public class MealTests {
         entityManager.flush();
         entityManager.clear();
 
-        MealType refreshedMealType = mealTypeRepository.findById(user.getId()).orElse(null);
+        MealType refreshedMealType = mealTypeRepository.findById(mealType.getTypeId()).orElse(null);
         assertNotNull(refreshedMealType);
 
         Set<Meal> meals = refreshedMealType.getMeals();

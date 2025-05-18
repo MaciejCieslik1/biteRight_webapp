@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -31,7 +33,7 @@ public class WeightHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WeightHistory weightHistory = new WeightHistory(user, new Date(), 70.5f);
+        WeightHistory weightHistory = new WeightHistory(user, LocalDateTime.parse("2025-05-12T00:00:00"), 70.5f);
         weightHistoryRepository.save(weightHistory);
 
         WeightHistory found = weightHistoryRepository.findById(weightHistory.getWeightId()).orElse(null);
@@ -45,7 +47,7 @@ public class WeightHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WeightHistory weightHistory = new WeightHistory(user, new Date(), 70.5f);
+        WeightHistory weightHistory = new WeightHistory(user, LocalDateTime.parse("2025-05-12T00:00:00"), 70.5f);
         weightHistoryRepository.save(weightHistory);
 
         weightHistory.setWeight(72.0f);
@@ -61,7 +63,7 @@ public class WeightHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WeightHistory weightHistory = new WeightHistory(user, new Date(), 70.5f);
+        WeightHistory weightHistory = new WeightHistory(user, LocalDateTime.parse("2025-05-12T00:00:00"), 70.5f);
         weightHistoryRepository.save(weightHistory);
 
         weightHistoryRepository.delete(weightHistory);
@@ -74,8 +76,8 @@ public class WeightHistoryTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        WeightHistory wh1 = new WeightHistory(user, new Date(), 70.0f);
-        WeightHistory wh2 = new WeightHistory(user, new Date(), 71.0f);
+        WeightHistory wh1 = new WeightHistory(user, LocalDateTime.parse("2025-05-12T00:00:00"), 70.0f);
+        WeightHistory wh2 = new WeightHistory(user, LocalDateTime.parse("2025-05-12T00:00:00"), 71.0f);
         weightHistoryRepository.save(wh1);
         weightHistoryRepository.save(wh2);
 
@@ -93,7 +95,7 @@ public class WeightHistoryTests {
     @Test
     public void shouldDeleteWeightHistoryWhenUserDeleted() {
         User user = new User("jane_doe", "jane@example.com", "password", "standard");
-        WeightHistory weightHistory = new WeightHistory(user, new Date(), 68.0f);
+        WeightHistory weightHistory = new WeightHistory(user, LocalDateTime.parse("2025-05-12T00:00:00"), 70.0f);
 
         user.getWeightHistories().add(weightHistory);
         userRepository.save(user);
@@ -111,7 +113,7 @@ public class WeightHistoryTests {
     public void shouldNotSave2SameWeightHistoriesForUser() {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
 
-        Date sameDate = new Date();
+        LocalDateTime sameDate = LocalDateTime.parse("2025-05-12T00:00:00");
         WeightHistory wh1 = new WeightHistory(user, sameDate, 70.0f);
         WeightHistory wh2 = new WeightHistory(user, sameDate, 70.0f);
 

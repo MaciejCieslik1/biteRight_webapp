@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.entities.user_goal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 @Entity
 @Table(name = "user_goal")
@@ -27,12 +29,12 @@ public class UserGoal {
     private Float goalWeight;
 
     @Column(name = "deadline")
-    private Date deadline;
+    private LocalDate deadline;
 
-    @OneToMany(mappedBy = "userGoal", cascade = CascadeType.ALL)
-    private Set<UserInfo> userInfos = new HashSet<>();
+    @OneToOne(mappedBy = "userGoal", cascade = CascadeType.ALL)
+    private UserInfo userInfo;
 
-    public UserGoal(String goalType, Float goalWeight, Date deadline) {
+    public UserGoal(String goalType, Float goalWeight, LocalDate deadline) {
         this.goalType = goalType;
         this.goalWeight = goalWeight;
         this.deadline = deadline;
