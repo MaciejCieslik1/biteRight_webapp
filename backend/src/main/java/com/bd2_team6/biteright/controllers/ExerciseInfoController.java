@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/exerciseInfo")
 @RequiredArgsConstructor
 public class ExerciseInfoController {
-
     private final ExerciseInfoService exerciseInfoService;
 
     @GetMapping("/findExerciseInfo")

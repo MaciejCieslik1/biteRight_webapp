@@ -1,6 +1,7 @@
 package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.entities.daily_summary.DailySummary;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.DailySummaryService;
 
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class DailySummaryController {
     private final DailySummaryService dailySummaryService;
+    private final UserRepository userRepository;
 
     @GetMapping("/findDailySummary")
     public ResponseEntity<?> findDailySummary(Authentication authentication) {
-        String username = authentication.getName();
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
             DailySummary dailySummary = dailySummaryService.findDailySummaryByUsername(username);

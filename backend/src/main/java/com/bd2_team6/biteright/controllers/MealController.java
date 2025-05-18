@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.bd2_team6.biteright.entities.meal.Meal;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.MealService;
 
 @RestController
@@ -16,10 +17,11 @@ import com.bd2_team6.biteright.service.MealService;
 @RequiredArgsConstructor
 public class MealController {
     private final MealService mealService;
+    private final UserRepository userRepository;
 
     @GetMapping("/findUserMeals")
     public ResponseEntity<?> findUserMeals(Authentication authentication) {
-        String username = authentication.getName();
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
             Set<Meal> meals = mealService.findUserMealsByUsername(username);

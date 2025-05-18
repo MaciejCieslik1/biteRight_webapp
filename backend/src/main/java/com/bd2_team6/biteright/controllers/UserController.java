@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bd2_team6.biteright.entities.user.User;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @GetMapping("/find")
     public ResponseEntity<?> findUser(Authentication authentication) {
-        String username = authentication.getName();
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
         try {
             User user = userService.getUserByName(username);
             return ResponseEntity.ok(user);

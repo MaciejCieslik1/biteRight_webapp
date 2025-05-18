@@ -3,6 +3,7 @@ package com.bd2_team6.biteright.controllers;
 import com.bd2_team6.biteright.controllers.requests.create_requests.AddressCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.AddressUpdateRequest;
 import com.bd2_team6.biteright.entities.address.Address;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.AddressService;
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +18,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AddressController {
     private final AddressService addressService;
+    private final UserRepository userRepository;
 
     @GetMapping("/findAddress")
     public ResponseEntity<?> findAddress(Authentication authentication) {
-        String username = authentication.getName();
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
             Set<Address> addresses = addressService.findAddressesByUsername(username);
@@ -33,7 +35,7 @@ public class AddressController {
 
     @PostMapping("/createAddress")
     public ResponseEntity<?> addAddress(Authentication authentication, @RequestBody AddressCreateRequest request) {
-        String username = authentication.getName();
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
             Address newAddress = addressService.createAddress(username, request);
@@ -46,7 +48,7 @@ public class AddressController {
 
     @PutMapping("/updateAddress/{id}")
     public ResponseEntity<?> updateAddress(Authentication authentication, @RequestBody AddressUpdateRequest request, @PathVariable("id") Integer addressId) {
-        String username = authentication.getName();
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
             Address updatedAddress = addressService.updateAddress(username, request, addressId);
@@ -59,7 +61,7 @@ public class AddressController {
 
     @DeleteMapping("/deleteAddress/{id}")
     public ResponseEntity<?> deleteAddress(Authentication authentication, @PathVariable("id") Integer addressId) {
-        String username = authentication.getName();
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
             addressService.deleteAddressById(username, addressId);
