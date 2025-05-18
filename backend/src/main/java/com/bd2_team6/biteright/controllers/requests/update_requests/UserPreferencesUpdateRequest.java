@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserPreferencesUpdateRequest {
     String language;
-    Boolean darkMode;
+    Boolean darkmode;
     Boolean font;
     Boolean notifications;
 }

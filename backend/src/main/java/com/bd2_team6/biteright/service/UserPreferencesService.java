@@ -23,7 +23,7 @@ public class UserPreferencesService {
         UserPreferences userPreferences = user.getUserPreferences();
 
         userPreferences.setLanguage(request.getLanguage());
-        userPreferences.setDarkmode(request.getDarkMode());
+        userPreferences.setDarkmode(request.getDarkmode());
         userPreferences.setFont(request.getFont());
         userPreferences.setNotifications(request.getNotifications());
 
