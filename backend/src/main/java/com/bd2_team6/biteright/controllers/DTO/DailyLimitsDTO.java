@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DailyLimitsDTO {
+    private Integer dailyLimitId;
     private Integer calorieLimit;
     private Integer proteinLimit;
     private Integer fatLimit;  
