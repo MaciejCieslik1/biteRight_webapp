@@ -14,11 +14,13 @@
   aspect-ratio: 1.5 / 1;
   margin: 1rem auto;
   min-width: 280px;
-  min-height: 400px;
+  height: fit-content;
 }
 
 .calendar-wrapper .fc {
   height: 100% !important;
+  margin-bottom: 0 !important;
+  padding: 0% !important;
 }
 
 .fc-daygrid-day-frame {
