@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.bd2_team6.biteright.entities.meal.Meal;
 import com.bd2_team6.biteright.service.MealService;
 
-
-
 @RestController
 @RequestMapping("/meal")
 @RequiredArgsConstructor

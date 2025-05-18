@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.bd2_team6.biteright.entities.meal_content.MealContent;
