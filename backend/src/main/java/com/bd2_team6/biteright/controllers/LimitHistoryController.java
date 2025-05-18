@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.bd2_team6.biteright.entities.limit_history.LimitHistory;
 import com.bd2_team6.biteright.service.LimitHistoryService;
 
-
-
 @RestController
 @RequestMapping("/limitHistory")
 @RequiredArgsConstructor
