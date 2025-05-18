@@ -4,7 +4,7 @@ import com.bd2_team6.biteright.authentication.AuthenticationService;
 import com.bd2_team6.biteright.authentication.jason_web_token.JwtService;
 import com.bd2_team6.biteright.controllers.requests.LoginRequestBody;
 import com.bd2_team6.biteright.controllers.requests.RegistrationRequestBody;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,9 @@ public class AuthenticationController {
     private final JwtService jwtService;
     
     @GetMapping("/testtoken")
-    public ResponseEntity<String> test() {
+    public ResponseEntity<String> test(Authentication authentication) {
+        String email = authentication.getName();
+        System.out.println("Email associated with given token: " + email);
         return ResponseEntity.status(HttpStatus.OK).body("The token provided is valid :>>");
     }
 
