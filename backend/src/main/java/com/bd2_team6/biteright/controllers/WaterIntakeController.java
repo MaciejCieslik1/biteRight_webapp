@@ -2,6 +2,7 @@ package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.controllers.DTO.WaterIntakeDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.WaterIntakeCreateRequest;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
 import com.bd2_team6.biteright.service.WaterIntakeService;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,13 @@ import java.time.LocalDate;
 public class WaterIntakeController {
 
     private final WaterIntakeService waterIntakeService;
+    private final UserRepository userRepository;
 
     @PostMapping("/create")
     public ResponseEntity<?> createWaterIntake(Authentication authentication,
                                                          @RequestBody WaterIntakeCreateRequest request) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WaterIntake waterIntake = waterIntakeService.createWaterIntake(username, request);
             return ResponseEntity.ok(mapToDTO(waterIntake));
         }
@@ -41,9 +42,8 @@ public class WaterIntakeController {
                                                     @RequestParam(defaultValue = "0") int page,
                                                     @RequestParam(defaultValue = "10") int size,
                                                     @RequestParam(defaultValue = "intakeDate") String sortBy) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
             Page<WaterIntake> waterIntakes = waterIntakeService.findWaterIntakesByUsername(username, pageable);
             return ResponseEntity.ok(mapToDTOPage(waterIntakes));
@@ -60,9 +60,8 @@ public class WaterIntakeController {
                             @RequestParam(defaultValue = "intakeDate") String sortBy,
                             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
             Page<WaterIntake> waterIntakes = waterIntakeService.findWaterIntakesByDate(username, date, pageable);
             return ResponseEntity.ok(mapToDTOPage(waterIntakes));
@@ -75,9 +74,8 @@ public class WaterIntakeController {
     public ResponseEntity<?> findLastWaterIntakesByDate(Authentication authentication,
                             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WaterIntake waterIntake = waterIntakeService.findLastWaterIntakeByUsername(username);
             return ResponseEntity.ok(mapToDTO(waterIntake));
         }
@@ -88,9 +86,8 @@ public class WaterIntakeController {
 
     @GetMapping("/findWaterIntakeById/{id}")
     public ResponseEntity<?> findWaterIntakeById(Authentication authentication, @PathVariable("id") int waterIntakeId) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WaterIntake waterIntake = waterIntakeService.findWaterIntakeById(username, waterIntakeId);
             return ResponseEntity.ok(mapToDTO(waterIntake));
         }
@@ -101,9 +98,8 @@ public class WaterIntakeController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteWaterIntake(Authentication authentication, @PathVariable("id") int waterIntakeId) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             waterIntakeService.deleteWaterIntakeById(username, waterIntakeId);
             return ResponseEntity.ok("Water intake deleted successfully");
         }

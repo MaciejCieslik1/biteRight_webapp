@@ -2,13 +2,16 @@ package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.controllers.DTO.UserGoalDTO;
 import com.bd2_team6.biteright.controllers.requests.update_requests.UserGoalUpdateRequest;
-import com.bd2_team6.biteright.controllers.requests.update_requests.UserInfoUpdateRequest;
+import com.bd2_team6.biteright.entities.user.User;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.user_goal.UserGoal;
 import com.bd2_team6.biteright.service.UserGoalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/userGoal")
@@ -16,12 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserGoalController {
 
     private final UserGoalService userGoalService;
+    private final UserRepository userRepository;
 
     @GetMapping("/findUserGoal")
     public ResponseEntity<?> findUserGoal(Authentication authentication) {
-        String username = authentication.getName();
-        System.out.println(username);
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             UserGoal userGoal = userGoalService.findUserGoalByUsername(username);
             UserGoalDTO userGoalDTO = new UserGoalDTO(userGoal.getUserGoalId(), userGoal.getGoalType(),
                     userGoal.getGoalWeight(), userGoal.getDeadline());
@@ -34,9 +37,8 @@ public class UserGoalController {
 
     @PutMapping("/update")
     public ResponseEntity<?> updateUserGoal(Authentication authentication, @RequestBody UserGoalUpdateRequest request) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             UserGoal updatedGoal = userGoalService.updateUserGoal(username, request);
             return ResponseEntity.ok(updatedGoal);
         }

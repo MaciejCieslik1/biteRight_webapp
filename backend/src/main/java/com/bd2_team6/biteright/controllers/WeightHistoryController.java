@@ -2,6 +2,7 @@ package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.controllers.DTO.WeightHistoryDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.WeightHistoryCreateRequest;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 import com.bd2_team6.biteright.service.WeightHistoryService;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ import java.time.LocalDate;
 public class WeightHistoryController {
 
     private final WeightHistoryService weightHistoryService;
+    private final UserRepository userRepository;
 
     @PostMapping("/create")
     public ResponseEntity<?> createWaterIntake(Authentication authentication,
                                                @RequestBody WeightHistoryCreateRequest request) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WeightHistory weightHistory = weightHistoryService.createWeightHistory(username, request);
             return ResponseEntity.ok(mapToDTO(weightHistory));
         }
@@ -42,9 +43,8 @@ public class WeightHistoryController {
                                                       @RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size,
                                                       @RequestParam(defaultValue = "measurementDate") String sortBy) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
             Page<WeightHistory> weightHistories = weightHistoryService.findWeightHistoriesByUsername(username, pageable);
             return ResponseEntity.ok(mapToDTOPage(weightHistories));
@@ -61,9 +61,8 @@ public class WeightHistoryController {
                                                      @RequestParam(defaultValue = "measurementDate") String sortBy,
                                                      @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                          LocalDate date) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
             Page<WeightHistory> weightHistories = weightHistoryService.findWeightHistoriesByDate(username, date, pageable);
             return ResponseEntity.ok(mapToDTOPage(weightHistories));
@@ -75,10 +74,8 @@ public class WeightHistoryController {
     @GetMapping("/findLastWeightHistoryByDate/{date}")
     public ResponseEntity<?> findLastWaterIntakesByDate(Authentication authentication,
                                                         @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WeightHistory weightHistory = weightHistoryService.findLastWeightHistoryByUsername(username);
             return ResponseEntity.ok(mapToDTO(weightHistory));
         }
@@ -89,9 +86,8 @@ public class WeightHistoryController {
 
     @GetMapping("/findWeightHistoryById/{id}")
     public ResponseEntity<?> findWeightHistoryById(Authentication authentication, @PathVariable("id") int weightHistoryId) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WeightHistory weightHistory = weightHistoryService.findWeightHistoryById(username, weightHistoryId);
             return ResponseEntity.ok(mapToDTO(weightHistory));
         }
@@ -102,9 +98,8 @@ public class WeightHistoryController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteWeightHistory(Authentication authentication, @PathVariable("id") int weightHistoryId) {
-        String username = authentication.getName();
-
         try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             weightHistoryService.deleteWeightHistoryById(username, weightHistoryId);
             return ResponseEntity.ok("Weight history deleted successfully");
         }
