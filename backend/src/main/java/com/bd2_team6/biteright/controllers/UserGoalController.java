@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.UserGoalDTO;
 import com.bd2_team6.biteright.controllers.requests.update_requests.UserGoalUpdateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.UserInfoUpdateRequest;
 import com.bd2_team6.biteright.entities.user_goal.UserGoal;
@@ -22,7 +23,9 @@ public class UserGoalController {
 
         try {
             UserGoal userGoal = userGoalService.findUserGoalByUsername(username);
-            return ResponseEntity.ok(userGoal);
+            UserGoalDTO userGoalDTO = new UserGoalDTO(userGoal.getUserGoalId(), userGoal.getGoalType(),
+                    userGoal.getGoalWeight(), userGoal.getDeadline());
+            return ResponseEntity.ok(userGoalDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

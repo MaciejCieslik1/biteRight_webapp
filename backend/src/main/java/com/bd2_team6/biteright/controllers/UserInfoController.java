@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.UserInfoDTO;
 import com.bd2_team6.biteright.controllers.requests.update_requests.UserInfoUpdateRequest;
 import com.bd2_team6.biteright.entities.user_info.UserInfo;
 import com.bd2_team6.biteright.service.UserInfoService;
@@ -21,7 +22,9 @@ public class UserInfoController {
 
         try {
             UserInfo userInfo = userInfoService.findUserInfoByUsername(username);
-            return ResponseEntity.ok(userInfo);
+            UserInfoDTO userInfoDTO = new UserInfoDTO(userInfo.getUserInfoId(), userInfo.getName(), userInfo.getSurname(),
+                    userInfo.getAge(), userInfo.getWeight(), userInfo.getHeight(), userInfo.getLifestyle(), userInfo.getBmi());
+            return ResponseEntity.ok(userInfoDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

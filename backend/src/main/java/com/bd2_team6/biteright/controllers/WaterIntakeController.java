@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.WaterIntakeDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.WaterIntakeCreateRequest;
 import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
 import com.bd2_team6.biteright.service.WaterIntakeService;
@@ -28,7 +29,7 @@ public class WaterIntakeController {
 
         try {
             WaterIntake waterIntake = waterIntakeService.createWaterIntake(username, request);
-            return ResponseEntity.ok(waterIntake);
+            return ResponseEntity.ok(mapToDTO(waterIntake));
         }
         catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -45,7 +46,7 @@ public class WaterIntakeController {
         try {
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
             Page<WaterIntake> waterIntakes = waterIntakeService.findWaterIntakesByUsername(username, pageable);
-            return ResponseEntity.ok(waterIntakes);
+            return ResponseEntity.ok(mapToDTOPage(waterIntakes));
         }
         catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -64,7 +65,7 @@ public class WaterIntakeController {
         try {
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
             Page<WaterIntake> waterIntakes = waterIntakeService.findWaterIntakesByDate(username, date, pageable);
-            return ResponseEntity.ok(waterIntakes);
+            return ResponseEntity.ok(mapToDTOPage(waterIntakes));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -78,7 +79,7 @@ public class WaterIntakeController {
 
         try {
             WaterIntake waterIntake = waterIntakeService.findLastWaterIntakeByUsername(username);
-            return ResponseEntity.ok(waterIntake);
+            return ResponseEntity.ok(mapToDTO(waterIntake));
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -91,7 +92,7 @@ public class WaterIntakeController {
 
         try {
             WaterIntake waterIntake = waterIntakeService.findWaterIntakeById(username, waterIntakeId);
-            return ResponseEntity.ok(waterIntake);
+            return ResponseEntity.ok(mapToDTO(waterIntake));
         }
         catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -109,5 +110,14 @@ public class WaterIntakeController {
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    private WaterIntakeDTO mapToDTO(WaterIntake waterIntake) {
+        return new WaterIntakeDTO(waterIntake.getWaterIntakeId(), waterIntake.getIntakeDate(),
+                waterIntake.getWaterAmount());
+    }
+
+    private Page<WaterIntakeDTO> mapToDTOPage(Page<WaterIntake> page) {
+        return page.map(this::mapToDTO);
     }
 }

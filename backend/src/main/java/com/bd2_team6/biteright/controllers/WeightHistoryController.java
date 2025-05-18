@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.WeightHistoryDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.WeightHistoryCreateRequest;
 import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 import com.bd2_team6.biteright.service.WeightHistoryService;
@@ -29,7 +30,7 @@ public class WeightHistoryController {
 
         try {
             WeightHistory weightHistory = weightHistoryService.createWeightHistory(username, request);
-            return ResponseEntity.ok(weightHistory);
+            return ResponseEntity.ok(mapToDTO(weightHistory));
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -45,8 +46,8 @@ public class WeightHistoryController {
 
         try {
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-            Page<WeightHistory> weightIntakes = weightHistoryService.findWeightHistoriesByUsername(username, pageable);
-            return ResponseEntity.ok(weightIntakes);
+            Page<WeightHistory> weightHistories = weightHistoryService.findWeightHistoriesByUsername(username, pageable);
+            return ResponseEntity.ok(mapToDTOPage(weightHistories));
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -65,7 +66,7 @@ public class WeightHistoryController {
         try {
             Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
             Page<WeightHistory> weightHistories = weightHistoryService.findWeightHistoriesByDate(username, date, pageable);
-            return ResponseEntity.ok(weightHistories);
+            return ResponseEntity.ok(mapToDTOPage(weightHistories));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -79,7 +80,7 @@ public class WeightHistoryController {
 
         try {
             WeightHistory weightHistory = weightHistoryService.findLastWeightHistoryByUsername(username);
-            return ResponseEntity.ok(weightHistory);
+            return ResponseEntity.ok(mapToDTO(weightHistory));
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -92,7 +93,7 @@ public class WeightHistoryController {
 
         try {
             WeightHistory weightHistory = weightHistoryService.findWeightHistoryById(username, weightHistoryId);
-            return ResponseEntity.ok(weightHistory);
+            return ResponseEntity.ok(mapToDTO(weightHistory));
         }
         catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -110,5 +111,14 @@ public class WeightHistoryController {
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    private WeightHistoryDTO mapToDTO(WeightHistory weightHistory) {
+        return new WeightHistoryDTO(weightHistory.getWeightId(), weightHistory.getMeasurementDate(),
+                weightHistory.getWeight());
+    }
+
+    private Page<WeightHistoryDTO> mapToDTOPage(Page<WeightHistory> page) {
+        return page.map(this::mapToDTO);
     }
 }

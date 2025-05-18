@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.UserPreferencesDTO;
 import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
 import com.bd2_team6.biteright.service.UserPreferencesService;
 import com.bd2_team6.biteright.controllers.requests.update_requests.UserPreferencesUpdateRequest;
@@ -21,7 +22,10 @@ public class UserPreferencesController {
 
         try {
             UserPreferences userPreferences = userPreferencesService.findUserPreferencesByUsername(username);
-            return ResponseEntity.ok(userPreferences);
+            UserPreferencesDTO userPreferencesDTO = new UserPreferencesDTO(userPreferences.getUserPreferencesId(),
+                    userPreferences.getLanguage(), userPreferences.getDarkmode(), userPreferences.getFont(),
+                    userPreferences.getNotifications());
+            return ResponseEntity.ok(userPreferencesDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
