@@ -38,7 +38,9 @@ public class UserInfoController {
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             UserInfo userInfo = userInfoService.updateUserInfo(username, request);
-            return ResponseEntity.ok(userInfo);
+            UserInfoDTO userInfoDTO = new UserInfoDTO(userInfo.getUserInfoId(), userInfo.getName(), userInfo.getSurname(),
+                    userInfo.getAge(), userInfo.getWeight(), userInfo.getHeight(), userInfo.getLifestyle(), userInfo.getBmi());
+            return ResponseEntity.ok(userInfoDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

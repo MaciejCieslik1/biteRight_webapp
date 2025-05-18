@@ -39,7 +39,10 @@ public class UserPreferencesController {
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             UserPreferences userPreferences = userPreferencesService.updateUserPreferences(username, request);
-            return ResponseEntity.ok(userPreferences);
+            UserPreferencesDTO userPreferencesDTO = new UserPreferencesDTO(userPreferences.getUserPreferencesId(),
+                    userPreferences.getLanguage(), userPreferences.getDarkmode(), userPreferences.getFont(),
+                    userPreferences.getNotifications());
+            return ResponseEntity.ok(userPreferencesDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
