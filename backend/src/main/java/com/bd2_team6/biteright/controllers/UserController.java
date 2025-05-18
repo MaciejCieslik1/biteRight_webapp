@@ -21,7 +21,7 @@ public class UserController {
     @GetMapping("/find")
     public ResponseEntity<?> findUser(Authentication authentication) {
         String username = authentication.getName();
-         try {
+        try {
             User user = userService.getUserByName(username);
             return ResponseEntity.ok(user);
         }
