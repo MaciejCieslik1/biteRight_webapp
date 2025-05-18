@@ -17,7 +17,7 @@ public class MealInfoController {
     private final MealInfoService mealInfoService;
 
     @GetMapping("/find/{name}")
-    public ResponseEntity<?> findUserMeals(@PathVariable("name") String name) {
+    public ResponseEntity<?> findMealInfo(@PathVariable("name") String name) {
         try {
             MealInfo mealInfo = mealInfoService.findMealInfoByName(name);
             return ResponseEntity.ok(mealInfo);
