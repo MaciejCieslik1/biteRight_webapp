@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.service;
 
+import com.bd2_team6.biteright.controllers.requests.create_requests.DailyLimitsCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.DailyLimitsUpdateRequest;
 import com.bd2_team6.biteright.entities.daily_limits.DailyLimits;
 import com.bd2_team6.biteright.entities.daily_limits.DailyLimitsRepository;
@@ -24,6 +25,21 @@ public class DailyLimitsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return user.getDailyLimits();
+    }
+    
+    public DailyLimits createDailyLimits(String username, DailyLimitsCreateRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        DailyLimits newDailyLimits = new DailyLimits();
+        newDailyLimits.setCalorieLimit(request.getCalorieLimit());
+        newDailyLimits.setProteinLimit(request.getCalorieLimit());
+        newDailyLimits.setFatLimit(request.getFatLimit());
+        newDailyLimits.setCarbLimit(request.getCarbLimit());
+        newDailyLimits.setWaterGoal(request.getWaterGoal());
+        newDailyLimits.setUser(user);
+        dailyLimitsRepository.save(newDailyLimits);
+
+        return newDailyLimits;
     }
 
     public DailyLimits updateDailyLimits(String username, DailyLimitsUpdateRequest request) {

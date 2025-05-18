@@ -1,6 +1,9 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.requests.create_requests.AddressCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.create_requests.DailyLimitsCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.DailyLimitsUpdateRequest;
+import com.bd2_team6.biteright.entities.address.Address;
 import com.bd2_team6.biteright.entities.daily_limits.DailyLimits;
 import com.bd2_team6.biteright.service.DailyLimitsService;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/dailyLimits")
@@ -30,6 +32,19 @@ public class DailyLimitsController {
         }
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<?> addDailyLimits(Authentication authentication, @RequestBody DailyLimitsCreateRequest request) {
+        String username = authentication.getName();
+
+        try {
+            DailyLimits newDailyLimits = dailyLimitsService.createDailyLimits(username, request);
+            return ResponseEntity.ok(newDailyLimits);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
     @PutMapping("/update")
     public ResponseEntity<?> updateDailyLimits(Authentication authentication, @RequestBody DailyLimitsUpdateRequest request) {
         String username = authentication.getName();
