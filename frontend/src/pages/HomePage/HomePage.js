@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NavBar from "../../components/NavBar";
 import Calendar from "../../components/Calendar";
 import MealSection from "../../components/HomeMealSection";
+import WaterIntake from "../../components/WaterIntake";
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -48,21 +49,30 @@ const HomePage = () => {
     <div>
       <NavBar showButtons={false} />
       <div className="home-container">
-        <div className="welcome-text-container">
-          <h1>Welcome XYZ</h1>
-        </div>
-        <div className="mealplan-container">
-          <div className="today-text">{selectedDate || "Null"}</div>
-          <div className="meals-container">
-            <MealSection title="Breakfast" products={breakfast} />
-            <MealSection title="Lunch" products={lunch} />
-            <MealSection title="Dinner" products={dinner} />
-            <MealSection title="Snacks" products={snacks} />
+        <div className="home-left">
+          <div className="welcome-text-container">
+            <h1>Welcome XYZ</h1>
           </div>
         </div>
-        <div className="calendar-container">
-          <h2>Calendar</h2>
-          <Calendar onDateSelect={handleDateChange} />
+        <div className="home-middle">
+          <div className="mealplan-container">
+            <div className="today-text">{selectedDate || "Null"}</div>
+            <div className="meals-container">
+              <MealSection title="Breakfast" products={breakfast} />
+              <MealSection title="Lunch" products={lunch} />
+              <MealSection title="Dinner" products={dinner} />
+              <MealSection title="Snacks" products={snacks} />
+            </div>
+          </div>
+        </div>
+        <div className="home-right">
+          <div className="calendar-container">
+            <h2>Calendar</h2>
+            <Calendar onDateSelect={handleDateChange} />
+          </div>
+          <div className="water-intake-container">
+            <WaterIntake />
+          </div>
         </div>
       </div>
     </div>
