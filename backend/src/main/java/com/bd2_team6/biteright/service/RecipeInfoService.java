@@ -14,7 +14,7 @@ public class RecipeInfoService {
     }
 
     public RecipeInfo findRecipeInfoByName(String recipeName) {
-        RecipeInfo recipeInfo = recipeInfoRepository.findByName(recipeName)
+        RecipeInfo recipeInfo = recipeInfoRepository.findByRecipeName(recipeName)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe info not found"));
         return recipeInfo;
     }
