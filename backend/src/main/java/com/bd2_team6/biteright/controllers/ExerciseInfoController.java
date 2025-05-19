@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExerciseInfoController {
     private final ExerciseInfoService exerciseInfoService;
 
-    @GetMapping("/findExerciseInfo")
+    @GetMapping("/find")
     public ResponseEntity<?> getExerciseInfoByName(@RequestParam String name) {
         try {
             ExerciseInfo info = exerciseInfoService.findByName(name);

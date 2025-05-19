@@ -18,7 +18,7 @@ public class DailySummaryController {
     private final DailySummaryService dailySummaryService;
     private final UserRepository userRepository;
 
-    @GetMapping("/findDailySummary")
+    @GetMapping("/find")
     public ResponseEntity<?> findDailySummary(Authentication authentication) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 

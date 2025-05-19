@@ -20,7 +20,7 @@ public class AddressController {
     private final AddressService addressService;
     private final UserRepository userRepository;
 
-    @GetMapping("/findAddress")
+    @GetMapping("/find")
     public ResponseEntity<?> findAddress(Authentication authentication) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
@@ -33,7 +33,7 @@ public class AddressController {
         }
     }
 
-    @PostMapping("/createAddress")
+    @PostMapping("/create")
     public ResponseEntity<?> addAddress(Authentication authentication, @RequestBody AddressCreateRequest request) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
@@ -46,7 +46,7 @@ public class AddressController {
         }
     }
 
-    @PutMapping("/updateAddress/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAddress(Authentication authentication, @RequestBody AddressUpdateRequest request, @PathVariable("id") Integer addressId) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
@@ -59,7 +59,7 @@ public class AddressController {
         }
     }
 
-    @DeleteMapping("/deleteAddress/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAddress(Authentication authentication, @PathVariable("id") Integer addressId) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
