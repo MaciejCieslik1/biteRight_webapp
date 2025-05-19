@@ -35,8 +35,8 @@ public class IngredientService {
         return ingredientRepository.save(newIngredient);
     }
     
-    public Ingredient updateIngredient(String name, IngredientUpdateRequest request) {
-        Ingredient newIngredient = ingredientRepository.findByName(name)
+    public Ingredient updateIngredient(Integer id, IngredientUpdateRequest request) {
+        Ingredient newIngredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
         newIngredient.setName(request.getName());
         newIngredient.setBrand(request.getBrand());
@@ -49,8 +49,8 @@ public class IngredientService {
         return ingredientRepository.save(newIngredient);
     }
 
-    public void deleteIngredient(String name) {
-        Ingredient ingredient = ingredientRepository.findByName(name)
+    public void deleteIngredient(Integer id) {
+        Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
         ingredientRepository.delete(ingredient);
     }

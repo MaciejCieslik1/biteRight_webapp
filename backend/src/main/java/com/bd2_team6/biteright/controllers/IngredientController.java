@@ -49,10 +49,10 @@ public class IngredientController {
         }
     }
 
-    @PutMapping("/update/{name}")
-    public ResponseEntity<?> updateIngredient(@PathVariable("name") String name, @RequestBody IngredientUpdateRequest request) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateIngredient(@PathVariable("id") Integer id, @RequestBody IngredientUpdateRequest request) {
         try {
-            Ingredient updatedIngredient = ingredientService.updateIngredient(name, request);
+            Ingredient updatedIngredient = ingredientService.updateIngredient(id, request);
             return ResponseEntity.ok(updatedIngredient);
         }
         catch (IllegalArgumentException e) {
@@ -60,10 +60,10 @@ public class IngredientController {
         }
     }
 
-    @DeleteMapping("/delete/{name}")
-    public ResponseEntity<?> deleteIngredient(@PathVariable("name") String name) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteIngredient(@PathVariable("id") Integer id) {
         try {
-            ingredientService.deleteIngredient(name);
+            ingredientService.deleteIngredient(id);
             return ResponseEntity.ok("Ingredient deleted successfully");
         }
         catch (IllegalArgumentException e) {
