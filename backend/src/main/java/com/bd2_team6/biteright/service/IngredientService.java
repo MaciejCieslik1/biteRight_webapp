@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.bd2_team6.biteright.controllers.requests.create_requests.IngredientCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.IngredientUpdateRequest;
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
 import com.bd2_team6.biteright.entities.ingredient.IngredientRepository;
 
@@ -32,5 +33,25 @@ public class IngredientService {
         newIngredient.setCarbs(request.getCarbs());
 
         return ingredientRepository.save(newIngredient);
+    }
+    
+    public Ingredient updateIngredient(String name, IngredientUpdateRequest request) {
+        Ingredient newIngredient = ingredientRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+        newIngredient.setName(request.getName());
+        newIngredient.setBrand(request.getBrand());
+        newIngredient.setPortionSize(request.getPortionSize());
+        newIngredient.setCalories(request.getCalories());
+        newIngredient.setProtein(request.getProtein());
+        newIngredient.setFat(request.getFat());
+        newIngredient.setCarbs(request.getCarbs());
+
+        return ingredientRepository.save(newIngredient);
+    }
+
+    public void deleteIngredient(String name) {
+        Ingredient ingredient = ingredientRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+        ingredientRepository.delete(ingredient);
     }
 }
