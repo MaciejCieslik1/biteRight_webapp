@@ -36,4 +36,10 @@ public class ExerciseInfoService {
         newInfo.setName(request.getName());
         return exerciseInfoRepository.save(newInfo);
     }
+
+    public void deleteExerciseInfo(String name) {
+        ExerciseInfo info = exerciseInfoRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Exercise with name '" + name + "' not found"));
+        exerciseInfoRepository.delete(info);
+    }
 }

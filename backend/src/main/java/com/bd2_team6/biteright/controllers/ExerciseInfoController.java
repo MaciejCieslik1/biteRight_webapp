@@ -43,4 +43,14 @@ public class ExerciseInfoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/delete/{name}") 
+    public ResponseEntity<?> deleteExerciseInfo(@PathVariable("name") String exerciseName) {
+        try {
+            exerciseInfoService.deleteExerciseInfo(exerciseName);
+            return ResponseEntity.ok("Exercise info delete successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
