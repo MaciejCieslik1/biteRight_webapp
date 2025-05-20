@@ -1,0 +1,54 @@
+.field-container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.field-input {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: #fafafa;
+  transition: border 0.2s;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: #27374d;
+  background-color: #fff;
+}
+
+.field-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: #496285;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: transparent;
+  color: #888;
+  border: 1px solid #ccc;
+}

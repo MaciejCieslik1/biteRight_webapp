@@ -1,7 +1,7 @@
 import React from 'react'
 import './SettingsPage.css'
 
-const DietGoalSettings = () => {
+const TargetsSettings = () => {
   return (
     <div>
       <div className='settings-title'>
@@ -12,4 +12,4 @@ const DietGoalSettings = () => {
   )
 }
 
-export default DietGoalSettings
+export default TargetsSettings

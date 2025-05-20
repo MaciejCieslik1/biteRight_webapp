@@ -15,5 +15,29 @@
 
 .settings-title {
     margin-top: 50px;
-    margin-left: 100px;
+    margin-left: 80px;
 }
+
+.field-wrapper {
+  margin-top: 40px;
+  margin-left: 80px;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  row-gap: 0;
+}
+
+.field-wrapper > * {
+  flex: 1 1 45%;
+  min-width: 250px;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  margin: 30px 80px 30px 80px;
+}
+
