@@ -64,7 +64,7 @@ public class RecipeInfoController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateRecipeInfo(@PathVariable("id") Integer recipeId, @RequestBody RecipeInfoUpdateRequest request) {
         try {
-            RecipeInfo recipeInfo = recipeInfoService.createRecipeInfo(recipeId, request);
+            RecipeInfo recipeInfo = recipeInfoService.updateRecipeInfo(recipeId, request);
             return ResponseEntity.ok(recipeInfo);
         }
         catch (IllegalArgumentException e) {
