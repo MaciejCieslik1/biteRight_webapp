@@ -2,12 +2,14 @@ package com.bd2_team6.biteright.controllers;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.bd2_team6.biteright.controllers.requests.create_requests.MealInfoCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.MealInfoUpdateRequest;
 import com.bd2_team6.biteright.entities.meal_info.MealInfo;
+import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.MealInfoService;
 
 @RestController
@@ -15,6 +17,7 @@ import com.bd2_team6.biteright.service.MealInfoService;
 @RequiredArgsConstructor
 public class MealInfoController {
     private final MealInfoService mealInfoService;
+    private final UserRepository userRepository;
 
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findMealInfoById(@PathVariable("id") Integer mealId) {
@@ -39,9 +42,10 @@ public class MealInfoController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createMealInfo(@RequestBody MealInfoCreateRequest request) {
+    public ResponseEntity<?> createMealInfo(Authentication authentication, @RequestBody MealInfoCreateRequest request) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
         try {
-            MealInfo mealInfo = mealInfoService.createMealInfo(request);
+            MealInfo mealInfo = mealInfoService.createMealInfo(username, request);
             return ResponseEntity.ok(mealInfo);
         }
         catch (IllegalArgumentException e) {

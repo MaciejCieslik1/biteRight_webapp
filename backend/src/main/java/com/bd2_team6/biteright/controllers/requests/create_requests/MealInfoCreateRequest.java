@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class MealInfoCreateRequest {
-    private Integer userId;
     private String mealName;
     private Float calories;
     private Float protein;
