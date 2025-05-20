@@ -40,11 +40,11 @@ public class UserInfo {
     @Column(name = "bmi")
     private Float bmi;      
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_goal_id")
     private UserGoal userGoal;
 

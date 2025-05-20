@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,36 +20,36 @@ public class UserGoalTests {
 
     @Test
     public void shouldSaveUserGoal() {
-        UserGoal goal = new UserGoal("Lose Weight", 70.0f, Date.valueOf("2025-06-01"));
+        UserGoal goal = new UserGoal("Lose Weight", 70.0f, LocalDate.parse("2025-05-12"));
         userGoalRepository.save(goal);
 
         UserGoal saved = userGoalRepository.findById(goal.getUserGoalId()).orElse(null);
         assertNotNull(saved);
         assertEquals("Lose Weight", saved.getGoalType());
         assertEquals(70.0f, saved.getGoalWeight());
-        assertEquals(Date.valueOf("2025-06-01"), saved.getDeadline());
+        assertEquals(LocalDate.parse("2025-05-12"), saved.getDeadline());
     }
 
     @Test
     public void shouldUpdateUserGoal() {
-        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, Date.valueOf("2025-07-01"));
+        UserGoal goal = new UserGoal("Gain Muscle", 80.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
         goal.setGoalType("Maintain Weight");
         goal.setGoalWeight(75.0f);
-        goal.setDeadline(Date.valueOf("2025-08-01"));
+        goal.setDeadline(LocalDate.parse("2025-05-12"));
         userGoalRepository.save(goal);
 
         UserGoal updated = userGoalRepository.findById(goal.getUserGoalId()).orElse(null);
         assertNotNull(updated);
         assertEquals("Maintain Weight", updated.getGoalType());
         assertEquals(75.0f, updated.getGoalWeight());
-        assertEquals(Date.valueOf("2025-08-01"), updated.getDeadline());
+        assertEquals(LocalDate.parse("2025-05-12"), updated.getDeadline());
     }
 
     @Test
     public void shouldDeleteUserGoal() {
-        UserGoal goal = new UserGoal("Gain Strength", 85.0f, Date.valueOf("2025-09-01"));
+        UserGoal goal = new UserGoal("Gain Strength", 85.0f, LocalDate.parse("2025-05-11"));
         userGoalRepository.save(goal);
 
         userGoalRepository.delete(goal);

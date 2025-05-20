@@ -54,8 +54,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<UserInfo> userInfos = new HashSet<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserInfo userInfo;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Meal> meals = new HashSet<>();
