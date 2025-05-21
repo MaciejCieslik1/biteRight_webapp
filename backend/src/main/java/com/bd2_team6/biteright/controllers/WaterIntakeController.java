@@ -1,8 +1,12 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.UserPreferencesDTO;
 import com.bd2_team6.biteright.controllers.DTO.WaterIntakeDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.WaterIntakeCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.UserPreferencesUpdateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.WaterIntakeUpdateRequest;
 import com.bd2_team6.biteright.entities.user.UserRepository;
+import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
 import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
 import com.bd2_team6.biteright.service.WaterIntakeService;
 import lombok.RequiredArgsConstructor;
@@ -97,6 +101,20 @@ public class WaterIntakeController {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             WaterIntake waterIntake = waterIntakeService.findWaterIntakeById(username, waterIntakeId);
             return ResponseEntity.ok(mapToDTO(waterIntake));
+        }
+        catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateWaterIntakeById(Authentication authentication,
+                                                   @PathVariable("id") int waterIntakeId,
+                                                   @RequestBody WaterIntakeUpdateRequest request) {
+        try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+            WaterIntake updatedWaterIntake = waterIntakeService.updateWaterIntakeById(username, waterIntakeId, request);
+            return ResponseEntity.ok(mapToDTO(updatedWaterIntake));
         }
         catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
