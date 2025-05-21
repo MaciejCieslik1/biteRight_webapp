@@ -78,6 +78,7 @@ public class WeightHistoryService {
         if (weightHistory.getUser().getId().equals(userId)) {
             weightHistory.setMeasurementDate(request.getMeasurementDate());
             weightHistory.setWeight(request.getWeight());
+            weightHistoryRepository.save(weightHistory);
             return weightHistory;
         }
         else {

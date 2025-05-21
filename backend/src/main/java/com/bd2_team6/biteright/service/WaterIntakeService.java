@@ -80,6 +80,7 @@ public class WaterIntakeService {
         if (waterIntake.getUser().getId().equals(userId)) {
             waterIntake.setIntakeDate(request.getIntakeDate());
             waterIntake.setWaterAmount(request.getWaterAmount());
+            waterIntakeRepository.save(waterIntake);
             return waterIntake;
         }
         else {
