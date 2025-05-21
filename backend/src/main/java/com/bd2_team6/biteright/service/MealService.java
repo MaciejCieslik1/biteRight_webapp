@@ -91,7 +91,7 @@ public class MealService {
         MealType mealType = mealTypeRepository.findById(request.getMealTypeId())
                 .orElseThrow(() -> new RuntimeException("Meal type not found"));
 
-        Meal newMeal = mealRepository.findByUserandMealId(user, mealId)
+        Meal newMeal = mealRepository.findByUserAndMealId(user, mealId)
                 .orElseThrow(() -> new RuntimeException("Meal not found"));
 
         newMeal.setMealType(mealType);
@@ -118,7 +118,7 @@ public class MealService {
     public void deleteMeal(String username, Integer mealId) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        Meal meal = mealRepository.findByUserandMealId(user, mealId)
+        Meal meal = mealRepository.findByUserAndMealId(user, mealId)
                 .orElseThrow(() -> new RuntimeException("Meal not found"));
         mealRepository.delete(meal);
     }
