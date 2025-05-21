@@ -2,6 +2,7 @@ package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.controllers.DTO.WeightHistoryDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.WeightHistoryCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.WeightHistoryUpdateRequest;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 import com.bd2_team6.biteright.service.WeightHistoryService;
@@ -102,6 +103,22 @@ public class WeightHistoryController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateWeightHistoryById(Authentication authentication,
+                                                   @PathVariable("id") int weightHistoryId,
+                                                   @RequestBody WeightHistoryUpdateRequest request) {
+        try {
+            String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+            WeightHistory weightHistory = weightHistoryService.updateWeightHistoryById(username,
+                    weightHistoryId, request);
+            return ResponseEntity.ok(mapToDTO(weightHistory));
+        }
+        catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteWeightHistory(Authentication authentication, @PathVariable("id") int weightHistoryId) {
