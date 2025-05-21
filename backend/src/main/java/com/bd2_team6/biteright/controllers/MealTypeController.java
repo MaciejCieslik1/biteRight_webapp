@@ -14,7 +14,7 @@ import com.bd2_team6.biteright.service.MealTypeService;
 public class MealTypeController {
     private final MealTypeService mealTypeService;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/findByName/{id}")
     public ResponseEntity<?> findMealTypeById(@PathVariable("id") Integer mealId) {
         try {
             MealType mealType = mealTypeService.findMealTypeById(mealId);
@@ -25,7 +25,7 @@ public class MealTypeController {
         }
     }
 
-    @GetMapping("/find/{name}")
+    @GetMapping("/findById/{name}")
     public ResponseEntity<?> findMealTypeByName(@PathVariable("name") String mealTypeName) {
         try {
             MealType mealType = mealTypeService.findMealTypeByName(mealTypeName);
