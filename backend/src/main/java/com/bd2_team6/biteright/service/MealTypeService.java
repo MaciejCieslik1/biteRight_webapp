@@ -20,4 +20,10 @@ public class MealTypeService {
                 .orElseThrow(() -> new IllegalArgumentException("Meal type not found"));
         return mealType;
     }
+
+    public MealType findMealTypeByName(String mealTypeName) {
+        MealType mealType = mealTypeRepository.findByName(mealTypeName)
+                .orElseThrow(() -> new IllegalArgumentException("Meal type not found"));
+        return mealType;
+    }
 }

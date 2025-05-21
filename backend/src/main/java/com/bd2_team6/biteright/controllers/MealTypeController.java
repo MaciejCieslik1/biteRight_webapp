@@ -15,9 +15,20 @@ public class MealTypeController {
     private final MealTypeService mealTypeService;
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<?> findUserMeals(@PathVariable("id") Integer mealId) {
+    public ResponseEntity<?> findMealTypeById(@PathVariable("id") Integer mealId) {
         try {
             MealType mealType = mealTypeService.findMealTypeById(mealId);
+            return ResponseEntity.ok(mealType);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/find/{name}")
+    public ResponseEntity<?> findMealTypeByName(@PathVariable("name") String mealTypeName) {
+        try {
+            MealType mealType = mealTypeService.findMealTypeByName(mealTypeName);
             return ResponseEntity.ok(mealType);
         }
         catch (IllegalArgumentException e) {
