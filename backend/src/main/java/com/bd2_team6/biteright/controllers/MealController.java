@@ -35,9 +35,11 @@ public class MealController {
     }
 
     @GetMapping("/findMeal/{name}")
-    public ResponseEntity<?> findMeal(@PathVariable("name") String name) {
+    public ResponseEntity<?> findMeal(Authentication authentication, @PathVariable("name") String name) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
         try {
-            Meal meal = mealService.findMealByName(name);
+            Meal meal = mealService.findMealByName(username, name);
             MealDTO mealDTO = new MealDTO(meal);
             return ResponseEntity.ok(mealDTO);
         }

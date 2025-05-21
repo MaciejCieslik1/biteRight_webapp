@@ -40,8 +40,10 @@ public class MealService {
         return user.getMeals();
     }
 
-    public Meal findMealByName(String name) {
-        Meal meal = mealRepository.findByName(name)
+    public Meal findMealByName(String username, String mealName) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Meal meal = mealRepository.findByUserAndName(user, mealName)
                 .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
         return meal;
     }
@@ -61,7 +63,7 @@ public class MealService {
             ? request.getMealDate()
             : LocalDateTime.now();
         newMeal.setMealDate(mealDate);
-        
+
         newMeal.setName(request.getName());
         newMeal.setDescription(request.getDescription());
 
