@@ -1,6 +1,7 @@
 package com.bd2_team6.biteright.service;
 
 import com.bd2_team6.biteright.controllers.requests.create_requests.WeightHistoryCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.WeightHistoryUpdateRequest;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
@@ -59,6 +60,24 @@ public class WeightHistoryService {
                 .orElseThrow(() -> new IllegalArgumentException("Weight history with provided id not found"));
 
         if (weightHistory.getUser().getId().equals(userId)) {
+            return weightHistory;
+        }
+        else {
+            throw new IllegalArgumentException("Weight history with provided id does not belong to user");
+        }
+    }
+
+    public WeightHistory updateWeightHistoryById(String username, int weightHistoryId, WeightHistoryUpdateRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        Integer userId = user.getId();
+        WeightHistory weightHistory = weightHistoryRepository.findById(weightHistoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Weight history with provided id not found"));
+
+        if (weightHistory.getUser().getId().equals(userId)) {
+            weightHistory.setMeasurementDate(request.getMeasurementDate());
+            weightHistory.setWeight(request.getWeight());
             return weightHistory;
         }
         else {

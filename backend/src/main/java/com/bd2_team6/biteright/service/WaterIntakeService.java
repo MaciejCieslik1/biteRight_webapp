@@ -1,6 +1,7 @@
 package com.bd2_team6.biteright.service;
 
 import com.bd2_team6.biteright.controllers.requests.create_requests.WaterIntakeCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.WaterIntakeUpdateRequest;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
@@ -60,6 +61,25 @@ public class WaterIntakeService {
                 .orElseThrow(() -> new IllegalArgumentException("Water intake with provided id not found"));
 
         if (waterIntake.getUser().getId().equals(userId)) {
+            return waterIntake;
+        }
+        else {
+            throw new IllegalArgumentException("Water intake with provided id does not belong to user");
+        }
+    }
+
+    public WaterIntake updateWaterIntakeById(String username, int waterIntakeId,
+                                             WaterIntakeUpdateRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        Integer userId = user.getId();
+        WaterIntake waterIntake = waterIntakeRepository.findById(waterIntakeId)
+                .orElseThrow(() -> new IllegalArgumentException("Water intake with provided id not found"));
+
+        if (waterIntake.getUser().getId().equals(userId)) {
+            waterIntake.setIntakeDate(request.getIntakeDate());
+            waterIntake.setWaterAmount(request.getWaterAmount());
             return waterIntake;
         }
         else {
