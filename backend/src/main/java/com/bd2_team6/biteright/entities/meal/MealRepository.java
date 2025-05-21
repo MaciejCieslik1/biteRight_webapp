@@ -10,4 +10,5 @@ import com.bd2_team6.biteright.entities.user.User;
 public interface MealRepository extends JpaRepository<Meal, Integer> {
     Optional<Meal> findByName(String name);
     Optional<Meal> findByUserAndName(User user, String name);
+    Optional<Meal> findByUserandMealId(User user, Integer mealId);
 }

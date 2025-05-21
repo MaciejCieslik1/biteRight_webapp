@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bd2_team6.biteright.controllers.DTO.MealDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.MealCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.MealUpdateRequest;
 import com.bd2_team6.biteright.entities.meal.Meal;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.MealService;
@@ -55,6 +56,33 @@ public class MealController {
         try {
             Meal meal = mealService.createMeal(username, request);
             return ResponseEntity.ok(meal);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateMeal(Authentication authentication, @RequestBody MealUpdateRequest request, 
+                                        @PathVariable("id") Integer mealId) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
+        try {
+            Meal meal = mealService.updateMeal(username, request, mealId);
+            return ResponseEntity.ok(meal);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteMeal(Authentication authentication, @PathVariable("id") Integer mealId) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
+        try {
+            mealService.deleteMeal(username, mealId);
+            return ResponseEntity.ok("Meal successfully deleted");
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

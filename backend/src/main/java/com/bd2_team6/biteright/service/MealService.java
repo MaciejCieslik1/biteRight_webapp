@@ -2,6 +2,7 @@ package com.bd2_team6.biteright.service;
 
 import com.bd2_team6.biteright.controllers.DTO.MealContentDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.MealCreateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.MealUpdateRequest;
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
 import com.bd2_team6.biteright.entities.ingredient.IngredientRepository;
 import com.bd2_team6.biteright.entities.meal.Meal;
@@ -81,5 +82,44 @@ public class MealService {
         }
 
         return mealRepository.save(newMeal);
+    }
+
+    public Meal updateMeal(String username, MealUpdateRequest request, Integer mealId) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        MealType mealType = mealTypeRepository.findById(request.getMealTypeId())
+                .orElseThrow(() -> new RuntimeException("Meal type not found"));
+
+        Meal newMeal = mealRepository.findByUserandMealId(user, mealId)
+                .orElseThrow(() -> new RuntimeException("Meal not found"));
+
+        newMeal.setMealType(mealType);
+        newMeal.setMealDate(request.getMealDate());
+        newMeal.setName(request.getName());
+        newMeal.setDescription(request.getDescription());
+
+        for (MealContentDTO contentDTO : request.getContents()) {
+            Ingredient ingredient = ingredientRepository.findById(contentDTO.getIngredientId())
+                    .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+
+            MealContent content = new MealContent();
+
+            content.setIngredient(ingredient);
+            content.setMeal(newMeal);
+            content.setIngredientAmount(contentDTO.getIngredientAmount());
+
+            newMeal.getMealContents().add(content);
+        }
+
+        return mealRepository.save(newMeal);
+    }
+
+    public void deleteMeal(String username, Integer mealId) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Meal meal = mealRepository.findByUserandMealId(user, mealId)
+                .orElseThrow(() -> new RuntimeException("Meal not found"));
+        mealRepository.delete(meal);
     }
 }
