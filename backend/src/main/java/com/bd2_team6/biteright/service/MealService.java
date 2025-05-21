@@ -12,6 +12,7 @@ import com.bd2_team6.biteright.entities.meal_type.MealTypeRepository;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,12 @@ public class MealService {
         Meal newMeal = new Meal();
         newMeal.setUser(user);
         newMeal.setMealType(mealType);
-        newMeal.setMealDate(request.getMealDate());
+
+        LocalDateTime mealDate = request.getMealDate() != null
+            ? request.getMealDate()
+            : LocalDateTime.now();
+        newMeal.setMealDate(mealDate);
+        
         newMeal.setName(request.getName());
         newMeal.setDescription(request.getDescription());
 
@@ -64,7 +70,7 @@ public class MealService {
                     .orElseThrow(() -> new RuntimeException("Ingredient not found"));
 
             MealContent content = new MealContent();
-            
+
             content.setIngredient(ingredient);
             content.setMeal(newMeal);
             content.setIngredientAmount(contentDTO.getIngredientAmount());

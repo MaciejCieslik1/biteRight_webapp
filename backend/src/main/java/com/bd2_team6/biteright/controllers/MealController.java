@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import com.bd2_team6.biteright.controllers.DTO.MealDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.MealCreateRequest;
 import com.bd2_team6.biteright.entities.meal.Meal;
 import com.bd2_team6.biteright.entities.user.UserRepository;
@@ -37,7 +38,8 @@ public class MealController {
     public ResponseEntity<?> findMeal(@PathVariable("name") String name) {
         try {
             Meal meal = mealService.findMealByName(name);
-            return ResponseEntity.ok(meal);
+            MealDTO mealDTO = new MealDTO(meal);
+            return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
