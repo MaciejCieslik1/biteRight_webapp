@@ -1,6 +1,7 @@
 package com.bd2_team6.biteright.service;
 
 import com.bd2_team6.biteright.controllers.DTO.MealContentDTO;
+import com.bd2_team6.biteright.controllers.DTO.MealDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.MealCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.MealUpdateRequest;
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
@@ -15,6 +16,7 @@ import com.bd2_team6.biteright.entities.user.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,18 +37,21 @@ public class MealService {
         this.ingredientRepository = ingredientRepository;
     }
 
-    public Set<Meal> findUserMealsByUsername(String username) {
+    public Set<MealDTO> findUserMealsByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return user.getMeals();
+        
+        return user.getMeals().stream()
+                .map(MealDTO::new)
+                .collect(Collectors.toSet());
     }
 
-    public Meal findMealByName(String username, String mealName) {
+    public MealDTO findMealByName(String username, String mealName) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         Meal meal = mealRepository.findByUserAndName(user, mealName)
                 .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
-        return meal;
+        return new MealDTO(meal);
     }
 
     public Meal createMeal(String username, MealCreateRequest request) {

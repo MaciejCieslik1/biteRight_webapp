@@ -2,19 +2,18 @@ package com.bd2_team6.biteright.entities.meal_content;
 
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
 import com.bd2_team6.biteright.entities.meal.Meal;
-import com.bd2_team6.biteright.entities.recipe.Recipe;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "meal_content")
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class MealContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +35,18 @@ public class MealContent {
         this.ingredient = ingredient;
         this.meal = meal;
         this.ingredientAmount = ingredientAmount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MealContent)) return false;
+        MealContent that = (MealContent) o;
+        return mealContentId != null && mealContentId.equals(that.mealContentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
     }
 }

@@ -1,6 +1,8 @@
 package com.bd2_team6.biteright.controllers.DTO;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.bd2_team6.biteright.entities.meal.Meal;
 
@@ -17,6 +19,7 @@ public class MealDTO {
     private String description;
     private LocalDateTime mealDate;
     private String mealTypeName;
+    private Set<MealContentDTO> contents;
 
     public MealDTO(Meal meal) {
         this.mealId = meal.getMealId();
@@ -24,5 +27,9 @@ public class MealDTO {
         this.description = meal.getDescription();
         this.mealDate = meal.getMealDate();
         this.mealTypeName = meal.getMealType().getName();
+
+        this.contents = meal.getMealContents().stream()
+                             .map(MealContentDTO::new)
+                             .collect(Collectors.toSet());
     }
 }

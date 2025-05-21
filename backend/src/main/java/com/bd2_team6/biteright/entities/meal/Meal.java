@@ -1,17 +1,16 @@
 package com.bd2_team6.biteright.entities.meal;
+
 import com.bd2_team6.biteright.entities.meal_content.MealContent;
 import com.bd2_team6.biteright.entities.meal_type.MealType;
 import com.bd2_team6.biteright.entities.user.User;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,7 +18,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +50,18 @@ public class Meal {
         this.mealDate = mealDate;
         this.name = name;
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Meal)) return false;
+        Meal meal = (Meal) o;
+        return mealId != null && mealId.equals(meal.mealId);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
     }
 }

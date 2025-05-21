@@ -3,6 +3,7 @@ package com.bd2_team6.biteright.controllers;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,8 +28,8 @@ public class MealController {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
-            Set<Meal> meals = mealService.findUserMealsByUsername(username);
-            return ResponseEntity.ok(meals);
+            Set<MealDTO> mealsDTO = mealService.findUserMealsByUsername(username);
+            return ResponseEntity.ok(mealsDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
@@ -40,8 +41,7 @@ public class MealController {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
-            Meal meal = mealService.findMealByName(username, name);
-            MealDTO mealDTO = new MealDTO(meal);
+            MealDTO mealDTO = mealService.findMealByName(username, name);
             return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
@@ -55,7 +55,8 @@ public class MealController {
 
         try {
             Meal meal = mealService.createMeal(username, request);
-            return ResponseEntity.ok(meal);
+            MealDTO mealDTO = new MealDTO(meal);
+            return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
@@ -69,7 +70,8 @@ public class MealController {
 
         try {
             Meal meal = mealService.updateMeal(username, request, mealId);
-            return ResponseEntity.ok(meal);
+            MealDTO mealDTO = new MealDTO(meal);
+            return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
