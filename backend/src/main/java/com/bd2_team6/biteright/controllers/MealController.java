@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import com.bd2_team6.biteright.controllers.requests.create_requests.MealCreateRequest;
 import com.bd2_team6.biteright.entities.meal.Meal;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.MealService;
@@ -36,6 +37,19 @@ public class MealController {
     public ResponseEntity<?> findMeal(@PathVariable("name") String name) {
         try {
             Meal meal = mealService.findMealByName(name);
+            return ResponseEntity.ok(meal);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/create") 
+    public ResponseEntity<?> findMeal(Authentication authentication, @RequestBody MealCreateRequest request) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
+        try {
+            Meal meal = mealService.createMeal(username, request);
             return ResponseEntity.ok(meal);
         }
         catch (IllegalArgumentException e) {

@@ -3,11 +3,8 @@ package com.bd2_team6.biteright.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bd2_team6.biteright.controllers.requests.create_requests.MealInfoCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.create_requests.RecipeInfoCreateRequest;
-import com.bd2_team6.biteright.controllers.requests.update_requests.MealInfoUpdateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.RecipeInfoUpdateRequest;
-import com.bd2_team6.biteright.entities.meal_info.MealInfo;
 import com.bd2_team6.biteright.entities.recipe_info.RecipeInfo;
 import com.bd2_team6.biteright.service.RecipeInfoService;
 
