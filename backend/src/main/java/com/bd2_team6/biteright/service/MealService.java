@@ -105,6 +105,8 @@ public class MealService {
         newMeal.setName(request.getName());
         newMeal.setDescription(request.getDescription());
 
+        newMeal.getMealContents().clear();
+
         for (MealContentDTO contentDTO : request.getContents()) {
             Ingredient ingredient = ingredientRepository.findById(contentDTO.getIngredientId())
                     .orElseThrow(() -> new RuntimeException("Ingredient not found"));
