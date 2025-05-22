@@ -47,9 +47,13 @@ public class MealService {
     }
 
     public MealDTO findMealByName(String username, String mealName) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        Meal meal = mealRepository.findByUserAndName(user, mealName)
+        Meal meal = mealRepository.findByUsernameAndName(username, mealName)
+                .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
+        return new MealDTO(meal);
+    }
+
+    public MealDTO findMealById(String username, Integer mealId) {
+        Meal meal = mealRepository.findByUsernameAndMealId(username, mealId)
                 .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
         return new MealDTO(meal);
     }
@@ -91,17 +95,13 @@ public class MealService {
     }
 
     public Meal updateMeal(String username, MealUpdateRequest request, Integer mealId) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
         MealType mealType = mealTypeRepository.findById(request.getMealTypeId())
                 .orElseThrow(() -> new RuntimeException("Meal type not found"));
 
-        Meal newMeal = mealRepository.findByUserAndMealId(user, mealId)
+        Meal newMeal = mealRepository.findByUsernameAndMealId(username, mealId)
                 .orElseThrow(() -> new RuntimeException("Meal not found"));
 
         newMeal.setMealType(mealType);
-        newMeal.setMealDate(request.getMealDate());
         newMeal.setName(request.getName());
         newMeal.setDescription(request.getDescription());
 
@@ -122,9 +122,7 @@ public class MealService {
     }
 
     public void deleteMeal(String username, Integer mealId) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Meal meal = mealRepository.findByUserAndMealId(user, mealId)
+        Meal meal = mealRepository.findByUsernameAndMealId(username, mealId)
                 .orElseThrow(() -> new RuntimeException("Meal not found"));
         mealRepository.delete(meal);
     }
