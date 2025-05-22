@@ -77,6 +77,8 @@ const HomePage = () => {
           <div className="welcome-text-container">
             <h1>Welcome XYZ</h1>
           </div>
+          <div className="progress-container"></div>
+          <div className="exercise-container"></div>
         </div>
         <div className="home-middle">
           <div className="mealplan-container">
