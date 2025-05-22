@@ -86,6 +86,7 @@ public class MealService {
             newMeal.getMealContents().add(content);
         }
 
+        user.getMeals().add(newMeal);
         return mealRepository.save(newMeal);
     }
 

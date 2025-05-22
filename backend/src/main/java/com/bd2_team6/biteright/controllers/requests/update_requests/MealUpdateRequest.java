@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class MealUpdateRequest {
-    private Integer userId;
     private Integer mealTypeId;
     private String name;
     private String description;
