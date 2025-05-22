@@ -37,6 +37,9 @@ const RegisterPage = () => {
                   required
                 />
               </div>
+              <div className="register-button-conatainer">
+                <button className="register-button">Register</button>
+              </div>
               <div className="register-text">
                 Already have an account?{" "}
                 <Link to="/login" className="login-link">

@@ -91,3 +91,22 @@
     transform: translateX(0);
   }
 }
+
+.register-button {
+  height: 5.5vh;
+  width: 10vw;
+  min-width: 100px;
+  font-family: "Montserrat", sans-serif, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 1.3vh;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(243, 193, 205);
+}
+
+.register-button:hover {
+  background-color: #fdf28e;
+  transform: scale(1.05);
+}
