@@ -49,6 +49,19 @@ public class MealController {
         }
     }
 
+    @GetMapping("/findMeal/{id}")
+    public ResponseEntity<?> findMeal(Authentication authentication, @PathVariable("id") Integer mealId) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
+        try {
+            MealDTO mealDTO = mealService.findMealById(username, mealId);
+            return ResponseEntity.ok(mealDTO);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/create") 
     public ResponseEntity<?> findMeal(Authentication authentication, @RequestBody MealCreateRequest request) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);

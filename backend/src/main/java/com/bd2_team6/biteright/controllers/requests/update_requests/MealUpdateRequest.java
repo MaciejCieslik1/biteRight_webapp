@@ -1,6 +1,5 @@
 package com.bd2_team6.biteright.controllers.requests.update_requests;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.bd2_team6.biteright.controllers.DTO.MealContentDTO;
@@ -16,6 +15,5 @@ public class MealUpdateRequest {
     private Integer mealTypeId;
     private String name;
     private String description;
-    private LocalDateTime mealDate;
     private List<MealContentDTO> contents;
 }
