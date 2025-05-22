@@ -1,6 +1,8 @@
 package com.bd2_team6.biteright.entities.address;
 
 import com.bd2_team6.biteright.entities.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,6 +37,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     public Address(User user, String address, String city, String postalCode, String country) {
