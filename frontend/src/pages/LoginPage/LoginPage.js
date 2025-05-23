@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import "./LoginPage.css";
 import login_photo from "../../assets/login-photo.jpg";
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const text = await response.text();
+      if (response.ok) {
+        localStorage.setItem("jwt", text);
+        navigate("/home");
+      } else {
+        setError(text);
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again.");
+      console.log(email, password);
+      console.error("Error:", error);
+    }
+  };
   return (
     <div>
       <NavBar showButtons={false} />
@@ -17,6 +45,8 @@ const LoginPage = () => {
                   type="email"
                   className="login-form-input email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -25,8 +55,16 @@ const LoginPage = () => {
                   type="password"
                   className="login-form-input"
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+              </div>
+              {error && <div className="error-message">{error}</div>}
+              <div className="login-button-container">
+                <button className="login-button" onClick={handleLogin}>
+                  Login
+                </button>
               </div>
               <div className="register-text">
                 Don't have an account yet?{" "}
