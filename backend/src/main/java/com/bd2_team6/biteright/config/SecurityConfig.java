@@ -12,11 +12,15 @@ import com.bd2_team6.biteright.authentication.jason_web_token.JwtFilter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.Customizer;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.context.annotation.*;
 import lombok.RequiredArgsConstructor;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +50,18 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
     
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control", "X-Requested-With"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
