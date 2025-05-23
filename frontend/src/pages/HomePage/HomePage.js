@@ -122,7 +122,7 @@ const HomePage = () => {
             <Calendar onDateSelect={handleDateChange} />
           </div>
           <div className="water-intake-container">
-            <WaterIntake />
+            <WaterIntake selectedDate={selectedDate} />
           </div>
         </div>
       </div>
