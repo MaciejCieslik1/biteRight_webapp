@@ -294,8 +294,8 @@ INSERT INTO ingredient (name, portion_size, calories, protein, fat, carbs) VALUE
 
 
 -- ----------->   EXMAPLE USER DATA   <--------------------------------
-
-INSERT INTO app_user  (USERNAME, EMAIL, PASSWORD_HASH, TYPE) VALUES ('anowakforever', 'annanowak@gmail.com', 'hashy_hash', 'exampleuser');
+-- Anna's password: haslo
+INSERT INTO app_user  (USERNAME, EMAIL, PASSWORD_HASH, TYPE) VALUES ('anowakforever', 'annanowak@gmail.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser');
 INSERT INTO user_goal (GOAL_TYPE, GOAL_WEIGHT, DEADLINE) VALUES ("Get skinny", 55.5, '2025-01-01');
 INSERT INTO user_info 
     (USER_ID, USER_GOAL_ID, NAME, SURNAME, AGE, WEIGHT, HEIGHT, LIFESTYLE) VALUES
