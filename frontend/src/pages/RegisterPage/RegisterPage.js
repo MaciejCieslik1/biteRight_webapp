@@ -13,7 +13,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const handleRegister = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/register", {
+      const response = await fetch("http://localhost:8080/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,6 +30,7 @@ const RegisterPage = () => {
     } catch (error) {
       setError("An error occurred. Please try again.");
       console.error("Error:", error);
+      console.log(email, username, password);
     }
   };
   return (

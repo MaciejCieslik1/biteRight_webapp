@@ -12,7 +12,7 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/login", {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +28,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
+      console.log(email, password);
       console.error("Error:", error);
     }
   };
