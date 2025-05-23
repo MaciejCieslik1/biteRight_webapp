@@ -2,12 +2,15 @@ import "./App.scss";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
+import { UserProvider } from "./contexts/UserContext";
 
 function App() {
   return (
-    <Router>
-      <AppRoutes />
-    </Router>
+    <UserProvider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </UserProvider>
   );
 }
 

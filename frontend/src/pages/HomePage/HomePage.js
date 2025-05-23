@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import NavBar from "../../components/NavBar";
 import Calendar from "../../components/Calendar";
 import MealSection from "../../components/HomeMealSection";
 import WaterIntake from "../../components/WaterIntake";
+import { UserContext } from "../../contexts/UserContext";
 import "./HomePage.css";
 
 const breakfast = [
@@ -37,6 +38,9 @@ const snacks = [
 ];
 
 const HomePage = () => {
+  const { user } = useContext(UserContext);
+  console.log(user);
+
   const calculateDailyTotals = () => {
     const allMeals = [...breakfast, ...lunch, ...dinner, ...snacks];
 
@@ -75,7 +79,7 @@ const HomePage = () => {
       <div className="home-container">
         <div className="home-left">
           <div className="welcome-text-container">
-            <h1>Welcome XYZ</h1>
+            <h1>Hello {user?.email}</h1>
           </div>
           <div className="progress-container"></div>
           <div className="exercise-container"></div>

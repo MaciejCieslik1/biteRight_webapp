@@ -302,6 +302,12 @@ INSERT INTO user_info
     (USER_ID, USER_GOAL_ID, NAME, SURNAME, AGE, WEIGHT, HEIGHT, LIFESTYLE) VALUES
     (1, 1, "Anna", "Nowak", 18,  60.0, 165, "Active" );
 
+-- ----------->   EXAMPLE DAILY LIMITS FOR ANNA NOWAK <-------------------------------
+INSERT INTO daily_limits 
+    (CALORIE_LIMIT, PROTEIN_LIMIT, FAT_LIMIT, CARB_LIMIT, WATER_GOAL, USER_ID) 
+VALUES 
+    (2000, 100, 70, 250, 2000, 1);
+   
 -- ----------->   EXMAPLE MEAL DATA   <--------------------------------
 
 INSERT INTO meal (user_id, meal_type_id, meal_date, name, description)
