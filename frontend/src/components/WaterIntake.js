@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./WaterIntake.css";
 import glass_icon from "../assets/water-icon.svg";
+import { UserContext } from "../contexts/UserContext";
 
 const WaterIntake = () => {
+  const { user } = useContext(UserContext);
   const [glasses, setGlasses] = useState([]);
+  const [waterIntake, setWaterIntake] = useState(0);
+  const [waterIntakeGoal, setWaterIntakeGoal] = useState(0);
 
   const handleAddGlass = () => {
     setGlasses([...glasses, {}]);
