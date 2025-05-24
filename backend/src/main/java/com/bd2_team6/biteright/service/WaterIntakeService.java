@@ -78,7 +78,6 @@ public class WaterIntakeService {
                 .orElseThrow(() -> new IllegalArgumentException("Water intake with provided id not found"));
 
         if (waterIntake.getUser().getId().equals(userId)) {
-            waterIntake.setIntakeDate(request.getIntakeDate());
             waterIntake.setWaterAmount(request.getWaterAmount());
             waterIntakeRepository.save(waterIntake);
             return waterIntake;
