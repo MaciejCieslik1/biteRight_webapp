@@ -24,7 +24,7 @@ public class UserPreferences {
     private Boolean darkmode; 
     
     @Column(name = "font")
-    private Boolean font; 
+    private String font;
     
     @Column(name = "notifications")
     private Boolean notifications; 
@@ -33,7 +33,7 @@ public class UserPreferences {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public UserPreferences(User user, String language, Boolean darkmode, Boolean font, Boolean notifications) {
+    public UserPreferences(User user, String language, Boolean darkmode, String font, Boolean notifications) {
         this.user = user;
         this.language = language;
         this.darkmode = darkmode;

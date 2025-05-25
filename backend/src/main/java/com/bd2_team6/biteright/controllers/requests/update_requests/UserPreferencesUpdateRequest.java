@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class UserPreferencesUpdateRequest {
     String language;
     Boolean darkmode;
-    Boolean font;
+    String font;
     Boolean notifications;
 }
