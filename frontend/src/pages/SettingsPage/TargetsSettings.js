@@ -70,7 +70,7 @@ const TargetsSettings = () => {
     const payload = {
       goalType: userGoal.goalType,
       goalWeight: Number(userGoal.goalWeight),
-      deadline: userGoal.deadline
+      goalDate: userGoal.goalDate
     }
 
     console.log('Sending userGoal payload:', payload)
@@ -128,7 +128,7 @@ const TargetsSettings = () => {
     (
       userGoal.goalType !== originalUserGoal.goalType ||
       Number(userGoal.goalWeight) !== Number(originalUserGoal.goalWeight) ||
-      userGoal.deadline !== originalUserGoal.deadline
+      userGoal.goalDate !== originalUserGoal.goalDate
     )
 
   const dailyLimitsChanged =
@@ -182,12 +182,12 @@ const TargetsSettings = () => {
         </div>
 
         <div className="field-container">
-          <label className="field-label">Deadline</label>
+          <label className="field-label">goalDate</label>
           <input
             className="field-input"
             type="date"
-            name="deadline"
-            value={userGoal?.deadline?.split('T')[0] || ''}
+            name="goalDate"
+            value={userGoal?.goalDate || ''}
             onChange={handleUserGoalChange}
           />
         </div>
