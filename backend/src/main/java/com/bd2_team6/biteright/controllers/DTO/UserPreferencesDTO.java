@@ -11,6 +11,6 @@ public class UserPreferencesDTO {
     private int id;
     private String language;
     private Boolean darkmode;
-    private Boolean font;
+    private String font;
     private Boolean notifications;
 }
