@@ -54,9 +54,9 @@ public class AuthenticationService {
         Optional<User> userOptByEmail = userRepository.findByEmail(email);
 
         if (userOptByUsername.isPresent())
-            throw new Exception("Username already taken.");
+            throw new Exception("Username " + username + " already taken.");
         if (userOptByEmail.isPresent())
-            throw new Exception("Email already taken.");
+            throw new Exception("Email "+ email +" already taken.");
 
         String hashedPassword = passwordEncoder.encode(password);
         User newUser = new User(username, email, hashedPassword, "user");
@@ -83,7 +83,11 @@ public class AuthenticationService {
         // TODO: user unverified --- throw exception and resend verification code
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty())
-            throw new Exception("User (with email "+ email + ") not found.");
+            throw new Exception("User with email "+ email + " not found.");
+
+        if (!user.get().getIsVerified())
+            throw new Exception("User with email " + email + " is not verified. Please check your email for the verification link.");
+
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password)); 
         if (auth == null || !auth.isAuthenticated()) throw new Exception("Invalid password.");
         else System.out.println("User authenticated successfully.");
