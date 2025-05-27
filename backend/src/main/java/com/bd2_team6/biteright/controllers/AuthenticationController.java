@@ -50,6 +50,18 @@ public class AuthenticationController {
         }
     }
 
+    @GetMapping("/verifyuser")
+    private ResponseEntity<String> verifEntity(@RequestParam String email, @RequestParam String verificationCode) {
+        try {
+            authService.verifyUser(email, verificationCode);
+            return ResponseEntity.status(HttpStatus.OK).body("User verified successfully");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Exception caught during verification.\n" +e.getMessage());
+        }
+    }
+
     @GetMapping("/getusers")
     public ResponseEntity<String> getUsers() {
         try {
