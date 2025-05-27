@@ -6,18 +6,28 @@ import com.bd2_team6.biteright.entities.user_info.UserInfo;
 import com.bd2_team6.biteright.entities.user_info.UserInfoRepository;
 import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
 import com.bd2_team6.biteright.entities.user_preferences.UserPreferencesRepository;
+import com.bd2_team6.biteright.entities.verification_code.VerificationCode;
+import com.bd2_team6.biteright.entities.verification_code.VerificationCodeRepository;
+
+import jakarta.mail.internet.MimeMessage;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +37,15 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final UserGoalRepository userGoalRepository;
     private final UserInfoRepository userInfoRepository;
+    private final VerificationCodeRepository verificationCodeRepository;
     private final UserPreferencesRepository userPreferencesRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    @Autowired
+    private final JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private String emailSender;
 
     public void registerNewUser(String username, String email, String password) throws Exception {
         validateEmail(email);
@@ -53,9 +69,18 @@ public class AuthenticationService {
         UserPreferences newUserPreferences = new UserPreferences(newUser, "english", true, "arial",
                 true);
         userPreferencesRepository.save(newUserPreferences);
+
+        // Assign verification code
+        String code = "000000";
+        LocalDateTime expirationDate = LocalDateTime.now().plusMinutes(60); 
+        VerificationCode newCode = new VerificationCode(code, expirationDate, newUser);
+        verificationCodeRepository.save(newCode);
+
+        sendVerificationEmail(newUser.getEmail(), code);
     }
 
     public void loginUser(String email, String password) throws Exception {
+        // TODO: user unverified --- throw exception and resend verification code
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty())
             throw new Exception("User (with email"+ email + ") not found.");
