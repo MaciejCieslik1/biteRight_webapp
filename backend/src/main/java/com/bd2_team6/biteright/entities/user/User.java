@@ -27,6 +27,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -43,6 +44,9 @@ public class User {
 
     @Column(name = "type")
     private String type;
+
+    @Column(name = "is_verified")
+    private Boolean isVerified = false;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private DailyLimits dailyLimits;
@@ -77,5 +81,6 @@ public class User {
         this.email = email;
         this.passwordHash = passwordHash;
         this.type = type;
+        this.isVerified = false;
     }
 }
