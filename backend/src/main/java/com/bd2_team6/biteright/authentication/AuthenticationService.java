@@ -99,9 +99,13 @@ public class AuthenticationService {
 
     private void sendEmail (String email, String verificationCode, String subject, String path, String body) {
         try {
-            String actionUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+            String actionUrl = ServletUriComponentsBuilder.newInstance()
+                    .scheme("http")
+                    .host("localhost")
+                    .port(80)
                     .path(path)
                     .queryParam("code", verificationCode)
+                    .queryParam("email", email)
                     .build()
                     .toUriString(); 
 
