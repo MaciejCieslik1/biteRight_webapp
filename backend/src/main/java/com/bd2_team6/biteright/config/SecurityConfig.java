@@ -74,7 +74,8 @@ public class SecurityConfig {
                         "/actuator/health", 
                         "/api/auth/register", 
                         "/api/auth/login",
-                        "/api/auth/getusers")
+                        "/api/auth/getusers",
+                        "/api/auth/verifyuser/")
                         .permitAll()
                     .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
