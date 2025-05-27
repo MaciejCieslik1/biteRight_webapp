@@ -83,7 +83,7 @@ public class AuthenticationService {
         // TODO: user unverified --- throw exception and resend verification code
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty())
-            throw new Exception("User (with email"+ email + ") not found.");
+            throw new Exception("User (with email "+ email + ") not found.");
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password)); 
         if (auth == null || !auth.isAuthenticated()) throw new Exception("Invalid password.");
         else System.out.println("User authenticated successfully.");
