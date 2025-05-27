@@ -20,7 +20,8 @@ create table app_user (
         username                    varchar(64) not null,
         email                       varchar(64) not null,
         password_hash               varchar(255) not null,
-        type                        varchar(64) not null
+        type                        varchar(64) not null,
+        is_verified                 boolean default () not null
 );
 
 alter table app_user add constraint user_username_un unique ( username );
