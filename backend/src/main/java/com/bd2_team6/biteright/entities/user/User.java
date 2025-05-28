@@ -7,6 +7,7 @@ import com.bd2_team6.biteright.entities.meal.Meal;
 import com.bd2_team6.biteright.entities.user_exercise.UserExercise;
 import com.bd2_team6.biteright.entities.user_info.UserInfo;
 import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
+import com.bd2_team6.biteright.entities.verification_code.VerificationCode;
 import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
 import com.bd2_team6.biteright.entities.weight_history.WeightHistory;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -46,7 +47,7 @@ public class User {
     private String type;
 
     @Column(name = "is_verified")
-    private Boolean isVerified = false;
+    private Boolean isVerified;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private DailyLimits dailyLimits;
@@ -56,6 +57,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<LimitHistory> limitHistories = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private VerificationCode verificationCode;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -75,6 +79,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<WeightHistory> weightHistories = new HashSet<>();
+
 
     public User(String username, String email, String passwordHash, String type) {
         this.username = username;
