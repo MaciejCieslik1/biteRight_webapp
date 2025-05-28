@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
     private final RecipeService recipeService;
 
-    // Returns recipes that start with provided beginning of a name (i.e. if you write 'spa' it will 
-    // return recipes beginning with 'spa' like Spaghetti)
+    // Returns recipes that contain provided string (i.e. if you write 'ch' it will return recipes containing 
+    // 'ch' like chicken or chili)
     @GetMapping("/findRecipes/{name}")
     public ResponseEntity<?> findRecipes(@PathVariable("name") String name) {
         try {
