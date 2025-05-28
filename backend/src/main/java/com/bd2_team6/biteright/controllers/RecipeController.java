@@ -1,17 +1,15 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.RecipeDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.RecipeCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.RecipeUpdateRequest;
 import com.bd2_team6.biteright.entities.recipe.Recipe;
-import com.bd2_team6.biteright.entities.user.UserRepository;
 import com.bd2_team6.biteright.service.RecipeService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequestMapping("/recipe")
@@ -22,8 +20,8 @@ public class RecipeController {
     @GetMapping("/findByName/{name}")
     public ResponseEntity<?> findRecipeByName(Authentication authentication, @PathVariable("name") String recipeName) {
         try {
-            Recipe recipe = recipeService.findRecipeByName(recipeName);
-            return ResponseEntity.ok(recipe);
+            RecipeDTO recipeDTO = recipeService.findRecipeByName(recipeName);
+            return ResponseEntity.ok(recipeDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
@@ -32,8 +30,8 @@ public class RecipeController {
     @GetMapping("/findById/{id}")
     public ResponseEntity<?> findRecipeByName(Authentication authentication, @PathVariable("id") Integer recipeId) {
         try {
-            Recipe recipe = recipeService.findRecipeById(recipeId);
-            return ResponseEntity.ok(recipe);
+            RecipeDTO recipeDTO = recipeService.findRecipeById(recipeId);
+            return ResponseEntity.ok(recipeDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
@@ -43,7 +41,8 @@ public class RecipeController {
     public ResponseEntity<?> createRecipe(Authentication authentication, @RequestBody RecipeCreateRequest request) {
         try {
             Recipe recipe = recipeService.createRecipe(request);
-            return ResponseEntity.ok(recipe);
+            RecipeDTO recipeDTO = new RecipeDTO(recipe);
+            return ResponseEntity.ok(recipeDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
@@ -54,7 +53,8 @@ public class RecipeController {
                                           @PathVariable("id") Integer recipeId) {
         try {
             Recipe updated = recipeService.updateRecipe(request, recipeId);
-            return ResponseEntity.ok(updated);
+            RecipeDTO recipeDTO = new RecipeDTO(updated);
+            return ResponseEntity.ok(recipeDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }

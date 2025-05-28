@@ -1,6 +1,7 @@
 package com.bd2_team6.biteright.service;
 
 import com.bd2_team6.biteright.controllers.DTO.RecipeContentDTO;
+import com.bd2_team6.biteright.controllers.DTO.RecipeDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.RecipeCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.RecipeUpdateRequest;
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
@@ -18,14 +19,16 @@ public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
 
-    public Recipe findRecipeByName(String name) {
-        return recipeRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+    public RecipeDTO findRecipeByName(String name) {
+        Recipe recipe =  recipeRepository.findByName(name)
+                        .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+        return new RecipeDTO(recipe);
     }
 
-    public Recipe findRecipeById(Integer recipeId) {
-        return recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+    public RecipeDTO findRecipeById(Integer recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                        .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+        return new RecipeDTO(recipe);
     }
 
     public Recipe createRecipe(RecipeCreateRequest request) {
