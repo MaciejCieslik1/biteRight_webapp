@@ -29,6 +29,10 @@ public class VerificationCode {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Boolean isExpired(){
+        return this.expirationDate.isBefore(LocalDateTime.now());
+    }
+    
     public VerificationCode(String code, LocalDateTime expirationDate, User user) {
         this.code = code;
         this.expirationDate = expirationDate;
