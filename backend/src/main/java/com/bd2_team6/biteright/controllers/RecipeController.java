@@ -7,8 +7,10 @@ import com.bd2_team6.biteright.entities.recipe.Recipe;
 import com.bd2_team6.biteright.service.RecipeService;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Set;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +19,20 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
     private final RecipeService recipeService;
 
+    // Returns recipes that start with provided beginning of a name (i.e. if you write 'spa' it will 
+    // return recipes beginning with 'spa' like Spaghetti)
+    @GetMapping("/findRecipes/{name}")
+    public ResponseEntity<?> findRecipes(@PathVariable("name") String name) {
+        try {
+            Set<RecipeDTO> recipesDTO = recipeService.findRecipes(name);
+            return ResponseEntity.ok(recipesDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/findByName/{name}")
-    public ResponseEntity<?> findRecipeByName(Authentication authentication, @PathVariable("name") String recipeName) {
+    public ResponseEntity<?> findRecipeByName(@PathVariable("name") String recipeName) {
         try {
             RecipeDTO recipeDTO = recipeService.findRecipeByName(recipeName);
             return ResponseEntity.ok(recipeDTO);
@@ -28,7 +42,7 @@ public class RecipeController {
     }
 
     @GetMapping("/findById/{id}")
-    public ResponseEntity<?> findRecipeByName(Authentication authentication, @PathVariable("id") Integer recipeId) {
+    public ResponseEntity<?> findRecipeByName(@PathVariable("id") Integer recipeId) {
         try {
             RecipeDTO recipeDTO = recipeService.findRecipeById(recipeId);
             return ResponseEntity.ok(recipeDTO);
@@ -38,7 +52,7 @@ public class RecipeController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createRecipe(Authentication authentication, @RequestBody RecipeCreateRequest request) {
+    public ResponseEntity<?> createRecipe(@RequestBody RecipeCreateRequest request) {
         try {
             Recipe recipe = recipeService.createRecipe(request);
             RecipeDTO recipeDTO = new RecipeDTO(recipe);
@@ -49,7 +63,7 @@ public class RecipeController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateRecipe(Authentication authentication, @RequestBody RecipeUpdateRequest request,
+    public ResponseEntity<?> updateRecipe(@RequestBody RecipeUpdateRequest request,
                                           @PathVariable("id") Integer recipeId) {
         try {
             Recipe updated = recipeService.updateRecipe(request, recipeId);
@@ -61,7 +75,7 @@ public class RecipeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteRecipe(Authentication authentication, @PathVariable("id") Integer recipeId) {
+    public ResponseEntity<?> deleteRecipe(@PathVariable("id") Integer recipeId) {
         try {
             recipeService.deleteRecipe(recipeId);
             return ResponseEntity.ok("Recipe successfully deleted");

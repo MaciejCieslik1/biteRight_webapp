@@ -11,6 +11,10 @@ import com.bd2_team6.biteright.entities.recipe.RecipeRepository;
 import com.bd2_team6.biteright.entities.recipe_content.RecipeContent;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +22,14 @@ import org.springframework.stereotype.Service;
 public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
+
+    public Set<RecipeDTO> findRecipes(String name) {
+        Set<Recipe> recipes = recipeRepository.findByNameContainingIgnoreCase(name);
+        return recipes.stream()
+                    .map(RecipeDTO::new)
+                    .collect(Collectors.toSet());
+    }
+
 
     public RecipeDTO findRecipeByName(String name) {
         Recipe recipe =  recipeRepository.findByName(name)
