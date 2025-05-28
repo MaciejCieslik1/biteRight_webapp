@@ -1,0 +1,64 @@
+.verification-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: whitesmoke;
+}
+
+.message-container {
+    margin-top: 100px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 193, 205);
+    border-radius: 20px;
+    width: 100dvh;
+    height: 30dvh;
+    box-shadow:2px 2px 20px rgba(0,0,0,0.2);
+}
+
+.result-header{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.verification-message {
+    justify-content: center;
+    font-weight: lighter;
+    align-items: center;
+    margin: 5%;
+    color:rgb(118, 37, 56);
+}
+
+.login-link {
+    justify-content: center;
+    align-items: center;
+}
+.link{
+  color:rgb(75, 22, 35);
+}
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
