@@ -11,7 +11,7 @@ import com.bd2_team6.biteright.entities.meal_content.MealContent;
 import com.bd2_team6.biteright.service.MealContentService;
 
 @RestController
-@RequestMapping("/meal")
+@RequestMapping("/mealContent")
 @RequiredArgsConstructor
 public class MealContentController {
     private final MealContentService mealContentService;
