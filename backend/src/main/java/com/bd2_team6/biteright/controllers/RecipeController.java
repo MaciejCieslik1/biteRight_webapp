@@ -18,7 +18,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class RecipeController {
     private final RecipeService recipeService;
-    private final UserRepository userRepository;
 
     @GetMapping("/findByName/{name}")
     public ResponseEntity<?> findRecipeByName(Authentication authentication, @PathVariable("name") String recipeName) {
@@ -33,7 +32,7 @@ public class RecipeController {
     @GetMapping("/findById/{id}")
     public ResponseEntity<?> findRecipeByName(Authentication authentication, @PathVariable("id") Integer recipeId) {
         try {
-            Recipe recipe = recipeService.findRecipeByName(recipeId);
+            Recipe recipe = recipeService.findRecipeById(recipeId);
             return ResponseEntity.ok(recipe);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
