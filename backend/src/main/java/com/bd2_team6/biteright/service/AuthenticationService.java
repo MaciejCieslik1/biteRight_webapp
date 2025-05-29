@@ -1,4 +1,4 @@
-package com.bd2_team6.biteright.authentication;
+package com.bd2_team6.biteright.service;
 
 import com.bd2_team6.biteright.entities.user_goal.UserGoal;
 import com.bd2_team6.biteright.entities.user_goal.UserGoalRepository;
@@ -8,14 +8,9 @@ import com.bd2_team6.biteright.entities.user_preferences.UserPreferences;
 import com.bd2_team6.biteright.entities.user_preferences.UserPreferencesRepository;
 import com.bd2_team6.biteright.entities.verification_code.VerificationCode;
 import com.bd2_team6.biteright.entities.verification_code.VerificationCodeRepository;
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import com.bd2_team6.biteright.entities.user.User;
@@ -37,11 +32,8 @@ public class AuthenticationService {
     private final UserPreferencesRepository userPreferencesRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    @Autowired
-    private final JavaMailSender javaMailSender;
+    private final EmailSendingService emailService;
 
-    @Value("${spring.mail.username}")
-    private String emailSender;
 
     public void registerNewUser(String username, String email, String password) throws Exception {
         validateEmail(email);
@@ -67,13 +59,12 @@ public class AuthenticationService {
                 true);
         userPreferencesRepository.save(newUserPreferences);
 
-        // Assign verification code
-        String code = generateVeryficationCode();
+        String code = emailService.generateVeryficationCode();
         LocalDateTime expirationDate = LocalDateTime.now().plusMinutes(60); 
         VerificationCode newCode = new VerificationCode(code, expirationDate, newUser);
         verificationCodeRepository.save(newCode);
 
-        sendVerificationEmail(newUser.getUsername(), newUser.getEmail(), code);
+        emailService.sendVerificationEmail(newUser.getUsername(), newUser.getEmail(), code);
     }
 
     
@@ -88,40 +79,6 @@ public class AuthenticationService {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password)); 
         if (auth == null || !auth.isAuthenticated()) throw new Exception("Invalid password.");
         else System.out.println("User authenticated successfully.");
-    }
-
-    public void sendVerificationEmail(String username, String email, String verificationCode) {
-        String subject = "BiteRight - Email Verification";
-        String path = "http://localhost:80/verifyuser/" + email + "/" + verificationCode; 
-        String body = "Hello, " + username + "!\nThank you for registering in BiteRight!\nPlease click the link below to verify your email address.";
-
-        sendEmail(email, verificationCode, subject, path, body);
-    }
-
-    private void sendEmail (String email, String verificationCode, String subject, String path, String body) {
-        try {
-            String formattedBody = """
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border-radius: 8px; background-color: #f9f9f9; text-align: center;">
-                        <h2 style="color: #333;">%s</h2>
-                        <p style="font-size: 16px; color: #555;">%s</p>
-                        <a href="%s" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #fff; background-color:rgb(98, 115, 224); text-decoration: none; border-radius: 5px;">Proceed</a>
-                        <p style="font-size: 14px; color: #777;">Or copy and paste this link into your browser:</p>
-                        <p style="font-size: 14px; color:rgb(98, 115, 224);">%s</p>
-                        <p style="font-size: 12px; color: #aaa;">This is an automated message. Please do not reply.</p>
-                    </div>
-                    """.formatted(subject, body, path, path);
-
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setTo(email);
-            helper.setFrom(emailSender); 
-            helper.setSubject(subject);
-            helper.setText(formattedBody, true); 
-            javaMailSender.send(message);
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error building verification URL: " + e.getMessage());
-        }
     }
 
     public void validateEmail(String email) throws Exception {
@@ -143,10 +100,6 @@ public class AuthenticationService {
         }
     }
 
-    String generateVeryficationCode() {
-        return "000000";
-    }
-
     public void verifyUser(String email, String recivedVerificationCode) {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty() || !userOpt.isPresent()) 
@@ -164,10 +117,10 @@ public class AuthenticationService {
             throw new RuntimeException("Invalid verification code for user with email " + email + ".");
         
         if (correctVerificationCode.isExpired()) {
-            correctVerificationCode.setCode(generateVeryficationCode());
+            correctVerificationCode.setCode(emailService.generateVeryficationCode());
             correctVerificationCode.setExpirationDate(LocalDateTime.now().plusMinutes(60));
             verificationCodeRepository.save(correctVerificationCode);
-            sendVerificationEmail(user.getUsername(), email, correctVerificationCode.getCode());
+            emailService.sendVerificationEmail(user.getUsername(), email, correctVerificationCode.getCode());
             throw new RuntimeException("Verification code for user with email " + email + " has expired. We have sent you another verification email.");
         }
         

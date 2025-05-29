@@ -1,12 +1,12 @@
 package com.bd2_team6.biteright.controllers;
 
-import com.bd2_team6.biteright.controllers.requests.RegistrationRequestBody;
+import com.bd2_team6.biteright.controllers.requests.RegistrationRequest;
 import com.bd2_team6.biteright.controllers.requests.VerificationRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.PasswordUpdateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.UsernameUpdateRequest;
 import com.bd2_team6.biteright.authentication.jason_web_token.JwtService;
-import com.bd2_team6.biteright.controllers.requests.LoginRequestBody;
-import com.bd2_team6.biteright.authentication.AuthenticationService;
+import com.bd2_team6.biteright.controllers.requests.LoginRequest;
+import com.bd2_team6.biteright.service.AuthenticationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerNewUser(@RequestBody RegistrationRequestBody registrationRequestBody) {
+    public ResponseEntity<String> registerNewUser(@RequestBody RegistrationRequest registrationRequestBody) {
         try {
             authService.registerNewUser(registrationRequestBody.getUsername(),registrationRequestBody.getEmail(), registrationRequestBody.getPassword());
             return ResponseEntity.status(HttpStatus.OK).body("User registered successfully");
@@ -40,7 +40,7 @@ public class AuthenticationController {
     } 
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequestBody loginRequestBody)  {
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequestBody)  {
         try {
             authService.loginUser(loginRequestBody.getEmail(), loginRequestBody.getPassword());
             String token = jwtService.generateToken(loginRequestBody.getEmail());
