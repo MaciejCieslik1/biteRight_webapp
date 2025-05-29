@@ -3,7 +3,6 @@ package com.bd2_team6.biteright.controllers;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -36,12 +35,12 @@ public class MealController {
         }
     }
 
-    @GetMapping("/findMeal/{name}")
-    public ResponseEntity<?> findMeal(Authentication authentication, @PathVariable("name") String name) {
+    @GetMapping("/findByName/{name}")
+    public ResponseEntity<?> findMealByName(Authentication authentication, @PathVariable("name") String mealName) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
-            MealDTO mealDTO = mealService.findMealByName(username, name);
+            MealDTO mealDTO = mealService.findMealByName(username, mealName);
             return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
@@ -49,8 +48,8 @@ public class MealController {
         }
     }
 
-    @GetMapping("/findMeal/{id}")
-    public ResponseEntity<?> findMeal(Authentication authentication, @PathVariable("id") Integer mealId) {
+    @GetMapping("/findByID/{id}")
+    public ResponseEntity<?> findMealById(Authentication authentication, @PathVariable("id") Integer mealId) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {

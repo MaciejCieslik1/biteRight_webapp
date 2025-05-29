@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
+@Data
 @AllArgsConstructor
-public class UserPreferencesUpdateRequest {
-    String language;
-    Boolean darkmode;
-    String font;
-    Boolean notifications;
+public class RecipeContentUpdateRequest {
+    private Integer recipeId;
+    private Integer ingredientId;
+    private Integer ingredientAmount;
 }

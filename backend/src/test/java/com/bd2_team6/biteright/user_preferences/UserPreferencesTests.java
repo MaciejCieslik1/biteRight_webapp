@@ -28,14 +28,14 @@ public class UserPreferencesTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        UserPreferences preferences = new UserPreferences(user, "PL", true, false, true);
+        UserPreferences preferences = new UserPreferences(user, "PL", true, "Arial", true);
         userPreferencesRepository.save(preferences);
 
         UserPreferences found = userPreferencesRepository.findById(preferences.getUserPreferencesId()).orElse(null);
         assertNotNull(found);
         assertEquals("PL", found.getLanguage());
         assertTrue(found.getDarkmode());
-        assertFalse(found.getFont());
+        assertEquals("Arial", found.getFont());
         assertTrue(found.getNotifications());
         assertEquals(user.getUsername(), found.getUser().getUsername());
     }
@@ -45,7 +45,7 @@ public class UserPreferencesTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        UserPreferences preferences = new UserPreferences(user, "EN", false, true, false);
+        UserPreferences preferences = new UserPreferences(user, "EN", false, "Arial", false);
         userPreferencesRepository.save(preferences);
 
         preferences.setLanguage("FR");
@@ -63,7 +63,7 @@ public class UserPreferencesTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        UserPreferences preferences = new UserPreferences(user, "EN", false, true, false);
+        UserPreferences preferences = new UserPreferences(user, "EN", false, "Arial", false);
         userPreferencesRepository.save(preferences);
 
         userPreferencesRepository.delete(preferences);
@@ -77,7 +77,7 @@ public class UserPreferencesTests {
         User user = new User("john_doe", "john@example.com", "passwordHash", "standard");
         userRepository.save(user);
 
-        UserPreferences preferences = new UserPreferences(user, "PL", true, false, true);
+        UserPreferences preferences = new UserPreferences(user, "PL", true, "Arial", true);
         userPreferencesRepository.save(preferences);
 
         entityManager.flush();
@@ -94,7 +94,7 @@ public class UserPreferencesTests {
     @Test
     public void shouldDeleteUserPreferencesWhenUserDeleted() {
         User user = new User("jane_doe", "jane@example.com", "password", "standard");
-        UserPreferences preferences = new UserPreferences(user, "EN", false, true, false);
+        UserPreferences preferences = new UserPreferences(user, "EN", false, "Arial", false);
 
         user.setUserPreferences(preferences);
         userRepository.save(user);

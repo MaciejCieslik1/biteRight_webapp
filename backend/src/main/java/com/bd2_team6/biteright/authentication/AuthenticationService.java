@@ -50,7 +50,7 @@ public class AuthenticationService {
         UserInfo userInfo = new UserInfo(newUser, newUserGoal, "John", "Doe", 25, 80f,
                 180, "active", 24.69f);
         userInfoRepository.save(userInfo);
-        UserPreferences newUserPreferences = new UserPreferences(newUser, "english", true, true,
+        UserPreferences newUserPreferences = new UserPreferences(newUser, "english", true, "arial",
                 true);
         userPreferencesRepository.save(newUserPreferences);
     }
