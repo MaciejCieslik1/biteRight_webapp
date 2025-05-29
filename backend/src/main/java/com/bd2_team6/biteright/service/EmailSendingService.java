@@ -1,15 +1,13 @@
 package com.bd2_team6.biteright.service;
 
-import java.security.SecureRandom;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import java.security.SecureRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +17,6 @@ public class EmailSendingService {
 
     @Value("${spring.mail.username}")
     private String emailSender;
-
 
     public void sendVerificationEmail(String username, String email, String verificationCode) {
         String subject = "BiteRight - Email Verification";
@@ -56,9 +53,8 @@ public class EmailSendingService {
     }
 
     public String generateVeryficationCode() {
-        // return "000000"; 
         SecureRandom random = new SecureRandom();
-        int code = random.nextInt(1_000_000); 
+        int code = random.nextInt(100_000_000); 
         return String.format("%08d", code);   
     }
 }
