@@ -104,9 +104,9 @@ public class AuthenticationService {
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border-radius: 8px; background-color: #f9f9f9; text-align: center;">
                         <h2 style="color: #333;">%s</h2>
                         <p style="font-size: 16px; color: #555;">%s</p>
-                        <a href="%s" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #fff; background-color:rgb(132, 216, 255); text-decoration: none; border-radius: 5px;">Proceed</a>
+                        <a href="%s" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #fff; background-color:rgb(98, 115, 224); text-decoration: none; border-radius: 5px;">Proceed</a>
                         <p style="font-size: 14px; color: #777;">Or copy and paste this link into your browser:</p>
-                        <p style="font-size: 14px; color:rgb(98, 186, 224);">%s</p>
+                        <p style="font-size: 14px; color:rgb(98, 115, 224);">%s</p>
                         <p style="font-size: 12px; color: #aaa;">This is an automated message. Please do not reply.</p>
                     </div>
                     """.formatted(subject, body, path, path);
@@ -176,15 +176,14 @@ public class AuthenticationService {
         System.out.println("User with email " + email + " verified successfully.");
     }
 
-    public void changeEmail(String oldEmail, String newEmail) throws Exception {
-        Optional<User> userOpt = userRepository.findByEmail(oldEmail);
+    public void changeUsername(String email, String newUsername) throws Exception {
+        Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty() || !userOpt.isPresent()) 
-            throw new RuntimeException("User with email " + oldEmail + " not found.");
+            throw new RuntimeException("User with email " + email + " not found.");
         User user = userOpt.get();
-        validateEmail(newEmail);
-        user.setEmail(newEmail);
+        user.setUsername(newUsername);
         userRepository.save(user);
-        System.out.println("Email for user with email " + oldEmail + " changed to " + newEmail + ".");
+        System.out.println("Email for user with email " + email + " changed to " + newUsername + ".");
     }
     
     public void changePassword(String email, String oldPassword,  String newPassword) throws Exception {

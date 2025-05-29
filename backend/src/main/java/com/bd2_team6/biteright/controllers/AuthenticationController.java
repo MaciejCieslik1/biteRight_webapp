@@ -1,13 +1,15 @@
 package com.bd2_team6.biteright.controllers;
 
-import com.bd2_team6.biteright.authentication.AuthenticationService;
+import com.bd2_team6.biteright.controllers.requests.RegistrationRequestBody;
+import com.bd2_team6.biteright.controllers.requests.VerificationRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.PasswordUpdateRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.UsernameUpdateRequest;
 import com.bd2_team6.biteright.authentication.jason_web_token.JwtService;
 import com.bd2_team6.biteright.controllers.requests.LoginRequestBody;
-import com.bd2_team6.biteright.controllers.requests.RegistrationRequestBody;
+import com.bd2_team6.biteright.authentication.AuthenticationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 
@@ -50,10 +52,10 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/verifyuser")
-    private ResponseEntity<String> verifEntity(@RequestParam String email, @RequestParam String verificationCode) {
+    @PostMapping("/verifyuser")
+    private ResponseEntity<String> verifyUser(@RequestBody VerificationRequest request) {
         try {
-            authService.verifyUser(email, verificationCode);
+            authService.verifyUser(request.getEmail(), request.getCode());
             return ResponseEntity.status(HttpStatus.OK).body("User verified successfully");
         }
         catch (Exception e) {
@@ -70,6 +72,34 @@ public class AuthenticationController {
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("Exception caught during getting users.\n" +e.getMessage());
+        }
+    }
+
+    @PostMapping("/changeusername")
+    public ResponseEntity<String> changeUsername(Authentication authentication,  @RequestBody UsernameUpdateRequest request) {
+        String oldEmail = authentication.getName();
+        try {
+            authService.changeUsername(oldEmail, request.getNewUsername());
+            return ResponseEntity.status(HttpStatus.OK).body("Email changed successfully.");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Exception caught during changing email.\n" +e.getMessage());
+        }
+    }
+
+    @PostMapping("/changepassword")
+    public ResponseEntity<String> changePassword(Authentication authentication, @RequestBody PasswordUpdateRequest request) {
+        String email = authentication.getName();
+        try {
+            System.out.println(email);
+            System.out.println(request.getOldPassword());
+            authService.changePassword(email, request.getOldPassword(), request.getNewPassword());
+            return ResponseEntity.status(HttpStatus.OK).body("Password changed successfully.");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Exception caught during changing password.\n" +e.getMessage());
         }
     }
 
