@@ -139,6 +139,17 @@ public class AuthenticationService {
         System.out.println("Email for user with email " + email + " changed to " + newUsername + ".");
     }
     
+    public void changeEmail(String email, String newEmail) throws Exception {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty() || !userOpt.isPresent()) 
+            throw new RuntimeException("User with email " + email + " not found.");
+        User user = userOpt.get();
+        validateEmail(newEmail);
+        user.setEmail(newEmail);
+        userRepository.save(user);
+        System.out.println("Email for user with email " + email + " changed to " + newEmail + ".");
+    }
+
     public void changePassword(String email, String oldPassword,  String newPassword) throws Exception {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty() || !userOpt.isPresent()) 
