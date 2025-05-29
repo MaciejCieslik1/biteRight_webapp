@@ -2,6 +2,7 @@ package com.bd2_team6.biteright.controllers;
 
 import com.bd2_team6.biteright.controllers.requests.RegistrationRequest;
 import com.bd2_team6.biteright.controllers.requests.VerificationRequest;
+import com.bd2_team6.biteright.controllers.requests.update_requests.EmailUpdateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.PasswordUpdateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.UsernameUpdateRequest;
 import com.bd2_team6.biteright.authentication.jason_web_token.JwtService;
@@ -77,10 +78,24 @@ public class AuthenticationController {
 
     @PostMapping("/changeusername")
     public ResponseEntity<String> changeUsername(Authentication authentication,  @RequestBody UsernameUpdateRequest request) {
+        String email = authentication.getName();
+        try {
+            authService.changeUsername(email, request.getNewUsername());
+            return ResponseEntity.status(HttpStatus.OK).body("Email changed successfully.");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Exception caught while changing username.\n" +e.getMessage());
+        }
+    }
+
+        @PostMapping("/changeemail")
+    public ResponseEntity<String> changeEmail(Authentication authentication,  @RequestBody EmailUpdateRequest request) {
         String oldEmail = authentication.getName();
         try {
-            authService.changeUsername(oldEmail, request.getNewUsername());
-            return ResponseEntity.status(HttpStatus.OK).body("Email changed successfully.");
+            authService.changeEmail(oldEmail, request.getNewEmail());
+            String token = jwtService.generateToken(request.getNewEmail());
+            return ResponseEntity.status(HttpStatus.OK).body(token);
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
