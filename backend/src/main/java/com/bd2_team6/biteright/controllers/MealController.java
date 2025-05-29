@@ -2,8 +2,10 @@ package com.bd2_team6.biteright.controllers;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,20 @@ public class MealController {
 
         try {
             Set<MealDTO> mealsDTO = mealService.findUserMealsByUsername(username);
+            return ResponseEntity.ok(mealsDTO);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/findByDate/{date}") 
+    public ResponseEntity<?> findMealsByDate(Authentication authentication, 
+                                             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
+        try {
+            Set<MealDTO> mealsDTO = mealService.findMealsByDate(username, date);
             return ResponseEntity.ok(mealsDTO);
         }
         catch (IllegalArgumentException e) {
