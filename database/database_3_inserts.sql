@@ -305,7 +305,7 @@ INSERT INTO user_info
 INSERT INTO daily_limits 
     (CALORIE_LIMIT, PROTEIN_LIMIT, FAT_LIMIT, CARB_LIMIT, WATER_GOAL, USER_ID) 
 VALUES 
-    (2000, 100, 70, 250, 2000, 1);
+    (2000, 100, 70, 250, 3000, 1);
    
 -- ----------->   EXMAPLE MEAL DATA   <--------------------------------
 
