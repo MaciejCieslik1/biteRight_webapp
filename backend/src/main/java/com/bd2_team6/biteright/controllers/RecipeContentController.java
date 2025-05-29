@@ -4,9 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bd2_team6.biteright.controllers.DTO.RecipeContentDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.RecipeContentCreateRequest;
-import com.bd2_team6.biteright.controllers.requests.create_requests.RecipeCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.RecipeContentUpdateRequest;
-import com.bd2_team6.biteright.entities.recipe_content.RecipeContent;
 import com.bd2_team6.biteright.service.RecipeContentService;
 
 import lombok.RequiredArgsConstructor;
@@ -50,8 +48,8 @@ public class RecipeContentController {
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> add(@RequestBody RecipeContentCreateRequest request) {
+    @PostMapping("/add")
+    public ResponseEntity<?> addRecipeContent(@RequestBody RecipeContentCreateRequest request) {
         try {
             RecipeContentDTO recipeContent = recipeContentService.addContentToRecipe(request);
             return ResponseEntity.ok(recipeContent);
@@ -62,7 +60,7 @@ public class RecipeContentController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer contentId, @RequestBody RecipeContentUpdateRequest request) {
+    public ResponseEntity<?> updateRecipeContent(@PathVariable("id") Integer contentId, @RequestBody RecipeContentUpdateRequest request) {
         try {
             RecipeContentDTO recipeContent = recipeContentService.updateContent(contentId, request);
             return ResponseEntity.ok(recipeContent);
@@ -73,7 +71,7 @@ public class RecipeContentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteRecipeContent(@PathVariable("id") Integer id) {
         try {
             recipeContentService.deleteRecipeContent(id);
             return ResponseEntity.ok("Recipe content successfully deleted");

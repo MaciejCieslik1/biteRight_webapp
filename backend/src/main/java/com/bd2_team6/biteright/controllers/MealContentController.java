@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import com.bd2_team6.biteright.controllers.DTO.MealContentDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.MealContentCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.MealContentUpdateRequest;
-import com.bd2_team6.biteright.entities.meal_content.MealContent;
 import com.bd2_team6.biteright.service.MealContentService;
 
 @RestController
@@ -40,8 +39,8 @@ public class MealContentController {
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> add(@RequestBody MealContentCreateRequest request) {
+    @PostMapping("/add")
+    public ResponseEntity<?> addMealContent(@RequestBody MealContentCreateRequest request) {
         try {
             MealContentDTO mealContent = mealContentService.addContentToMeal(request);
             return ResponseEntity.ok(mealContent);
@@ -51,7 +50,7 @@ public class MealContentController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer contentId,
+    public ResponseEntity<?> updateMealContent(@PathVariable("id") Integer contentId,
                                     @RequestBody MealContentUpdateRequest request) {
         try {
             MealContentDTO mealContent = mealContentService.updateContent(contentId, request);
@@ -62,7 +61,7 @@ public class MealContentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteMealContent(@PathVariable("id") Integer id) {
         try {
             mealContentService.deleteMealContent(id);
             return ResponseEntity.ok("Meal content successfully deleted");
