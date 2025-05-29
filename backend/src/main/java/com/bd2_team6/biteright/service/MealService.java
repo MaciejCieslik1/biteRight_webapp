@@ -14,6 +14,7 @@ import com.bd2_team6.biteright.entities.meal_type.MealTypeRepository;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,6 +45,20 @@ public class MealService {
         return user.getMeals().stream()
                 .map(MealDTO::new)
                 .collect(Collectors.toSet());
+    }
+
+    public Set<MealDTO> findMealsByDate(String username, LocalDate date) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay().minusNanos(1);
+
+        Set<Meal> meals = mealRepository.findAllByUserAndMealDateBetween(user, startOfDay, endOfDay);
+
+        return meals.stream()
+            .map(MealDTO::new)
+            .collect(Collectors.toSet());
     }
 
     public MealDTO findMealByName(String username, String mealName) {
