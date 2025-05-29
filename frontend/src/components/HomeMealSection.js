@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./HomeMealSection.css";
+
 const HomeMealSection = ({ title, products }) => {
   const maxVisibleProducts = 3;
   const visibleProducts = products.slice(0, maxVisibleProducts);
@@ -17,6 +19,10 @@ const HomeMealSection = ({ title, products }) => {
   );
   const totalCarbs = products.reduce((sum, product) => sum + product.carbs, 0);
   const totalFat = products.reduce((sum, product) => sum + product.fat, 0);
+  const navigate = useNavigate();
+  const handleAddProductClick = () => {
+    navigate("/meal");
+  };
   return (
     <div className="meal-container">
       <div className="meal-header">
@@ -30,12 +36,20 @@ const HomeMealSection = ({ title, products }) => {
               {product.name} - {product.calories} kcal
             </div>
           ))}
+          {moreProductsCount > 0 && (
+            <div className="product-item more-indicator">
+              +{moreProductsCount} more...
+            </div>
+          )}
         </div>
-        {moreProductsCount > 0 && (
-          <div className="product-item more-indicator">
-            +{moreProductsCount} more...
-          </div>
-        )}
+        <div className="add-product-button-container">
+          <button
+            className="add-product-button"
+            onClick={handleAddProductClick}
+          >
+            +
+          </button>
+        </div>
       </div>
       <div className="meal-footer">
         <div className="meal-macros">
