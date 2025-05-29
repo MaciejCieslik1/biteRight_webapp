@@ -22,7 +22,7 @@ public class MealContentController {
     @GetMapping("/findByName/{name}")
     public ResponseEntity<?> findMealContentByName(@PathVariable("name") String mealName) {
         try {
-            Set<MealContent> mealContents = mealContentService.findMealContentByName(mealName);
+            Set<MealContentDTO> mealContents = mealContentService.findMealContentByName(mealName);
             return ResponseEntity.ok(mealContents);
         }
         catch (IllegalArgumentException e) {
@@ -30,10 +30,10 @@ public class MealContentController {
         }
     }
 
-    @GetMapping("/findByName/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<?> findMealContentById(@PathVariable("id") Integer mealId) {
         try {
-            MealContentDTO mealContent = mealContentService.findMealContentById(mealId);
+            Set<MealContentDTO> mealContent = mealContentService.findMealContentById(mealId);
             return ResponseEntity.ok(mealContent);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

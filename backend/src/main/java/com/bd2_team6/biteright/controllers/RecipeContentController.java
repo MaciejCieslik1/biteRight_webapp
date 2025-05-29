@@ -11,6 +11,9 @@ import com.bd2_team6.biteright.service.RecipeContentService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Set;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +28,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RecipeContentController {
     private final RecipeContentService recipeContentService;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/findByName/{name}")
+    public ResponseEntity<?> findRecipeContentByName(@PathVariable("id") String recipeName) {
+        try {
+            Set<RecipeContentDTO> recipeContent = recipeContentService.findRecipeContentByName(recipeName);
+            return ResponseEntity.ok(recipeContent);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/findById/{id}")
     public ResponseEntity<?> findRecipeContentById(@PathVariable("id") Integer recipeId) {
         try {
-            RecipeContent recipeContent = recipeContentService.findRecipeContentById(recipeId);
+            Set<RecipeContentDTO> recipeContent = recipeContentService.findRecipeContentById(recipeId);
             return ResponseEntity.ok(recipeContent);
         }
         catch (IllegalArgumentException e) {
