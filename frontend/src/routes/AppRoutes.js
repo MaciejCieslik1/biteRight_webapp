@@ -13,7 +13,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/home" element={<HomePage />} />
-      <Route path="/verifyuser/:email/:code" element={<VerificationPage />} />
+      <Route path="/verifyuser/:email/:code" element={<VerificationPage/>} />
     </Routes>
   );
 };

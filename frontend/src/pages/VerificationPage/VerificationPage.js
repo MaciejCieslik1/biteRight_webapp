@@ -5,7 +5,7 @@ import "./VerificationPage.css";
 
 const VerificationPage = () => {
     const { email, code } = useParams();
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState("Loading");
     const [message, setMessage] = useState("Veryfing your account...");
 
         useEffect(() => {
@@ -26,34 +26,36 @@ const VerificationPage = () => {
                 }
                 else {
                     setStatus('Failure...');
-                    setMessage(text);
+                    if (text) setMessage(text);
+                    else setMessage("Verification failed. The link may be expired or invalid.");
                 }
             } catch (error) {
                 setStatus('Failure...');
                 setMessage("Verification failed. The link may be expired or invalid.");
             }
         };
-
         verifyEmail();
     }, [email, code]);
 
   return (
     <div>
         <NavBar showButtons={false} />
-    <div className="verification-page-container ">
-            <div className="message-container slide-in">
-                <div className="verification-message fade-in">
-                    <div className="result-header">{status}</div>
-                    {status === 'Success!' ? (
-                        <h2>{message}</h2>
-                    ) : (
-                        <h2>{message}</h2>
-                    )}
-                </div>  
+    <div className="verification-page-container">
+            <div className="message-background">
+                    <div className="message-container">
+                    <div className="verification-message">
+                        <div className="result-header">{status}</div>
+                        {status === 'Success!' ? (
+                            <h2>{message}</h2>
+                        ) : (
+                            <h2>{message}</h2>
+                        )}
+                    </div>  
 
-                <div className="login-link">
-                        <a className="link" href="/login">Go to login</a>
-                </div>
+                    <div className="login-link">
+                            <a className="link-itself" href="/login">Go to our login page</a>
+                    </div>
+                    </div>
             </div>
         </div>
     </div>
