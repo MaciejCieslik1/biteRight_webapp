@@ -1,7 +1,7 @@
 .settings-container {
   display: flex;
   height: 100vh;
-  background-color: #f0f4f8;
+  background-color: var(--color-bg-main);
   padding-left: 0;
   margin: 0;
 }
@@ -10,14 +10,13 @@
   flex: 1;
   border-radius: 20px;
   margin: 10px;
-  background-color: rgb(255, 255, 255);
-
+  background-color: var(--color-bg-secondary);
   overflow-y: auto;
   padding: 20px;
 }
 
 .settings-title {
-    margin: 30px 80px 0px 80px;
+  margin: 30px 80px 0px 80px;
 }
 
 .field-wrapper {
@@ -39,7 +38,7 @@
 hr {
   border: none;
   height: 1px;
-  background-color: #ccc;
+  background-color: var(--color-border-light);
   margin: 30px 80px 30px 80px;
 }
 
@@ -53,22 +52,23 @@ hr {
 .field-label {
   font-size: 14px;
   font-weight: 600;
-  color: #555;
+  color: var(--color-text-secondary);
 }
 
 .field-input {
   padding: 12px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border-default);
   border-radius: 12px;
   font-size: 16px;
-  background-color: #fafafa;
-  transition: border 0.2s;
+  background-color: var(--color-bg-input);
+  color: var(--color-text-main);
+  transition: border 0.2s, background-color 0.2s;
 }
 
 .field-input:focus {
   outline: none;
-  border-color: #27374d;
-  background-color: #fff;
+  border-color: var(--color-border-focus);
+  background-color: var(--color-bg-secondary);
 }
 
 .field-actions {
@@ -81,7 +81,6 @@ hr {
 .save-btn,
 .cancel-btn {
   padding: 6px 14px;
-  border: none;
   border-radius: 8px;
   font-weight: 500;
   font-size: 14px;
@@ -89,22 +88,23 @@ hr {
 }
 
 .save-btn {
-  background-color: #496285;
-  color: white;
+  background-color: var(--color-btn-primary);
+  color: var(--color-btn-text);
+  border: none;
 }
 
 .cancel-btn {
-  background-color: transparent;
-  color: #888;
-  border: 1px solid #ccc;
+  background-color: var(--color-btn-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-light);
 }
 
 .bmi-info {
   margin-left: 80px;
-  margin-top: 10;
-  max-width: 300;
-  font-weight: 600; 
-  color: #444;
+  margin-top: 10px;
+  max-width: 300px;
+  font-weight: 600;
+  color: var(--color-text-main);
 }
 
 .full-width {
@@ -121,23 +121,23 @@ hr {
 
 .btn-option {
   padding: 8px 16px;
-  border: 1px solid #bbb;
-  background-color: white;
+  border: 1px solid var(--color-border-medium);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-main);
   border-radius: 20px;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
 .btn-option.active {
-  background-color: #496285;
-  color: white;
-  border-color: #496285;
+  background-color: var(--color-btn-primary);
+  color: var(--color-btn-text);
+  border-color: var(--color-btn-primary);
 }
 
 .btn-option:hover {
-  background-color: #dfe8f5;
+  background-color: var(--color-bg-hover);
 }
-
 
 .toggle {
   position: relative;
@@ -156,9 +156,11 @@ hr {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
-  background-color: #ccc;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-toggle-bg);
   transition: 0.4s;
   border-radius: 28px;
 }
@@ -170,13 +172,13 @@ hr {
   width: 20px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--color-toggle-dot);
   transition: 0.4s;
   border-radius: 50%;
 }
 
 .toggle input:checked + .slider {
-  background-color: #496285;
+  background-color: var(--color-toggle-checked);
 }
 
 .toggle input:checked + .slider::before {
@@ -184,7 +186,7 @@ hr {
 }
 
 .save-message {
-  color: green;
+  color: var(--color-success);
   margin-left: 80px;
   margin-top: 10px;
 }

@@ -6,7 +6,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  
 }
 
 .header {
@@ -21,14 +20,12 @@
   all: unset;
   cursor: pointer;
   font-size: 1.1rem;
-  color: #27374d;
+  color: var(--color-text-main);
   margin-left: 20px;
   padding: 10px;
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }
-
-
 
 .menu--list {
   display: flex;
@@ -38,9 +35,8 @@
   margin: 0;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #27374d;
+  color: var(--color-text-main);
 }
-
 
 .item {
   all: unset;
@@ -54,31 +50,23 @@
   color: inherit;
 }
 
-.menu-icon {
-  font-size: 1.2em;
-  margin: 0;
-  padding-right: 10px;
-  display: block;
-  line-height: 1;
-  width: 1.2em;
-  height: 1.2em;
-  flex-shrink: 0;
-}
-
-
-
 .item:hover {
-  background-color: #d9e0eb;
+  background-color: var(--color-bg-hover);
 }
 
 .menu--list .item.active {
-    background-color: #27374d;
-    color: #eaeff2;
-  
+  background-color: var(--color-btn-primary);
+  color: var(--color-btn-text);
   font-weight: bold;
   pointer-events: none;
 }
 
 .menu--list .item.active:hover {
-  background-color: #ddd;
+  background-color: var(--color-bg-hover);
+}
+
+.menu-icon {
+  font-size: 1.2em;
+  padding-right: 10px;
+  flex-shrink: 0;
 }

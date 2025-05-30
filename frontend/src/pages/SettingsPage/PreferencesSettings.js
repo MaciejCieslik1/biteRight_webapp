@@ -1,43 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './SettingsPage.css'
+import { usePreferences } from '../../contexts/PreferencesContext'
 
 const PreferencesSettings = () => {
-  const [prefs, setPrefs] = useState({
-    language: 'en',
-    darkmode: false,
-    font: 'system-ui',
-    notifications: false,
-  })
-
+  const { prefs, setPrefs } = usePreferences()
   const [saving, setSaving] = useState(false)
-  const [saveMessage, setSaveMessage] = useState('')
-  const [error, setError] = useState('')
-
-  const token = localStorage.getItem('jwt')
+  const initialPrefsRef = useRef(prefs)
 
   useEffect(() => {
-    const fetchPreferences = async () => {
-      try {
-        const res = await fetch('http://localhost:8080/userPreferences/findUserPreferences', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/json',
-          },
-        })
-
-        if (!res.ok) throw new Error('Failed to fetch preferences')
-
-        const data = await res.json()
-        setPrefs(data)
-      } catch (err) {
-        console.error(err)
-        setError('Failed to load preferences')
-      }
+    if (prefs) {
+      initialPrefsRef.current = prefs
     }
-
-    fetchPreferences()
-  }, [token])
+  }, [prefs])
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target
@@ -47,17 +21,20 @@ const PreferencesSettings = () => {
     }))
   }
 
+  const isPrefsChanged = JSON.stringify(prefs) !== JSON.stringify(initialPrefsRef.current)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!isPrefsChanged) return
+
     setSaving(true)
-    setSaveMessage('')
-    setError('')
 
     try {
+      const token = localStorage.getItem('jwt')
       const res = await fetch('http://localhost:8080/userPreferences/update', {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(prefs),
@@ -67,14 +44,17 @@ const PreferencesSettings = () => {
 
       const result = await res.json()
       setPrefs(result)
-      setSaveMessage('Saved successfully')
+      initialPrefsRef.current = result
+      alert('Preferences saved successfully!')
     } catch (err) {
+      alert('Failed to save preferences.')
       console.error(err)
-      setError('Failed to save preferences')
     } finally {
       setSaving(false)
     }
   }
+
+  if (!prefs) return null
 
   return (
     <div className="settings-content">
@@ -84,7 +64,6 @@ const PreferencesSettings = () => {
       </div>
 
       <form className="field-wrapper" onSubmit={handleSubmit}>
-
         <div className="field-container full-width">
           <label className="field-label" htmlFor="language">Language</label>
           <select
@@ -94,7 +73,7 @@ const PreferencesSettings = () => {
             onChange={handleChange}
             className="field-input"
           >
-            <option value="english">English</option>
+            <option value="en">English</option>
           </select>
         </div>
 
@@ -107,11 +86,11 @@ const PreferencesSettings = () => {
             onChange={handleChange}
             className="field-input"
           >
-            <option value="system">System Default</option>
+            <option value="system-ui">System Default</option>
+            <option value="arial">Arial</option>
             <option value="roboto">Roboto</option>
             <option value="inter">Inter</option>
             <option value="georgia">Georgia</option>
-            <option value="arial">Arial</option>
           </select>
         </div>
 
@@ -141,11 +120,13 @@ const PreferencesSettings = () => {
           </label>
         </div>
 
-        <div className="field-container full-width">
-          <button type="submit" className="save-btn" disabled={saving}>
-            {saving ? 'Saving...' : 'Save Preferences'}
-          </button>
-        </div>
+        {isPrefsChanged && (
+          <div className="field-container full-width">
+            <button type="submit" className="save-btn" disabled={saving}>
+              {saving ? 'Saving...' : 'Save Preferences'}
+            </button>
+          </div>
+        )}
       </form>
     </div>
   )
