@@ -56,7 +56,7 @@ public class IngredientController {
             return ResponseEntity.ok(updatedIngredient);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class IngredientController {
             return ResponseEntity.ok("Ingredient deleted successfully");
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

@@ -45,7 +45,7 @@ public class MealContentController {
             MealContentDTO mealContent = mealContentService.addContentToMeal(request);
             return ResponseEntity.ok(mealContent);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -56,7 +56,7 @@ public class MealContentController {
             MealContentDTO mealContent = mealContentService.updateContent(contentId, request);
             return ResponseEntity.ok(mealContent);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class MealContentController {
             mealContentService.deleteMealContent(id);
             return ResponseEntity.ok("Meal content successfully deleted");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

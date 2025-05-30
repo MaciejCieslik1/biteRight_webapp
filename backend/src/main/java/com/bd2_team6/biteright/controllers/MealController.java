@@ -78,7 +78,7 @@ public class MealController {
     }
 
     @PostMapping("/create") 
-    public ResponseEntity<?> findMeal(Authentication authentication, @RequestBody MealCreateRequest request) {
+    public ResponseEntity<?> createMeal(Authentication authentication, @RequestBody MealCreateRequest request) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
@@ -87,7 +87,7 @@ public class MealController {
             return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ public class MealController {
             return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -115,7 +115,7 @@ public class MealController {
             return ResponseEntity.ok("Meal successfully deleted");
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
