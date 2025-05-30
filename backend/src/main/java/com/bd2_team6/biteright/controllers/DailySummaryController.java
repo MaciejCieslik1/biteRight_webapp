@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/dailySummary")
@@ -19,14 +21,32 @@ public class DailySummaryController {
     private final UserRepository userRepository;
 
     @GetMapping("/find")
-    public ResponseEntity<?> findDailySummary(Authentication authentication) {
+    public ResponseEntity<?> findDailySummary(
+            Authentication authentication,
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
+        
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
-            DailySummary dailySummary = dailySummaryService.findDailySummaryByUsername(username);
-            return ResponseEntity.ok(dailySummary);
-        }
-        catch (IllegalArgumentException e) {
+            if (date != null) {
+                // Pojedyncza data
+                LocalDate summaryDate = LocalDate.parse(date);
+                DailySummary dailySummary = dailySummaryService.findDailySummaryByUsernameAndDate(username, summaryDate);
+                return ResponseEntity.ok(dailySummary);
+            } else if (startDate != null && endDate != null) {
+                // Zakres dat
+                LocalDate start = LocalDate.parse(startDate);
+                LocalDate end = LocalDate.parse(endDate);
+                List<DailySummary> summaries = dailySummaryService.findDailySummariesByUsernameBetweenDates(username, start, end);
+                return ResponseEntity.ok(summaries);
+            } else {
+                // Domyślnie dzisiejsza data
+                DailySummary dailySummary = dailySummaryService.findDailySummaryByUsernameAndDate(username, LocalDate.now());
+                return ResponseEntity.ok(dailySummary);
+            }
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }
