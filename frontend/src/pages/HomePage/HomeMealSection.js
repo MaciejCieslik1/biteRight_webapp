@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomeMealSection.css";
 
-const HomeMealSection = ({ title, products }) => {
+const HomeMealSection = ({ title, meal, products }) => {
   const maxVisibleProducts = 3;
   const visibleProducts = products.slice(0, maxVisibleProducts);
   const moreProductsCount =
@@ -21,7 +21,7 @@ const HomeMealSection = ({ title, products }) => {
   const totalFat = products.reduce((sum, product) => sum + product.fat, 0);
   const navigate = useNavigate();
   const handleAddProductClick = () => {
-    navigate("/meal");
+    navigate("/meal", { state: { meal } });
   };
   return (
     <div className="meal-container">

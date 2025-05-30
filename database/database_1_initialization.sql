@@ -83,8 +83,6 @@ create table meal (
         description                 varchar(256)
 );
 
-alter table meal add constraint users_meal_un unique ( name, user_id );
-
 create table meal_content (
         meal_content_id             integer unsigned not null auto_increment primary key,
         ingredient_id               integer unsigned not null,
