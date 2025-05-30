@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './SettingsPage.css'
 import ChangePasswordModal from '../../components/PasswordModal'
-import { jwtDecode } from 'jwt-decode'
 
 const AccountSettings = () => {
   const token = localStorage.getItem("jwt")
-  console.log(localStorage.getItem("jwt"))
-
-console.log(jwtDecode(localStorage.getItem("jwt")))
-
   const [formData, setFormData] = useState(null)
   const [originalData, setOriginalData] = useState(null)
   const [addressId, setAddressId] = useState(null)
@@ -17,15 +12,31 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
 
   useEffect(() => {
     const baseData = {
-      username: 'username',
-      email: 'email@gmail.com',
+      username: '',
+      email: '',
       address: '',
       city: '',
       postalCode: '',
       country: '',
     }
+
     setOriginalData(baseData)
     setFormData({ ...baseData })
+
+    fetch('http://localhost:8080/user/find', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async res => {
+        if (!res.ok) throw new Error("Failed to fetch user info")
+        const text = await res.text()
+        return JSON.parse(text)
+      })
+      .then(userData => {
+        const { username, email } = userData
+        setOriginalData(prev => ({ ...prev, username, email }))
+        setFormData(prev => ({ ...prev, username, email }))
+      })
+      .catch(err => console.error("Error fetching user info:", err))
 
     fetch('http://localhost:8080/address/find', {
       headers: { Authorization: `Bearer ${token}` },
@@ -38,21 +49,17 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
         if (Array.isArray(data) && data.length > 0) {
           const address = data[0]
           setAddressId(address.addressId)
-
           const updatedData = {
             address: address.address || '',
             city: address.city || '',
             postalCode: address.postalCode || '',
             country: address.country || '',
           }
-
           setOriginalData(prev => ({ ...prev, ...updatedData }))
           setFormData(prev => ({ ...prev, ...updatedData }))
         }
       })
-      .catch(() => {
-        // No address found, leave fields blank
-      })
+      .catch(() => {})
   }, [token])
 
   const handleChange = e => {
@@ -60,7 +67,54 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleCancel = () => setFormData({ ...originalData })
+  const handleCancelUsername = () => {
+    setFormData(prev => ({ ...prev, username: originalData.username }))
+  }
+
+  const handleCancelEmail = () => {
+    setFormData(prev => ({ ...prev, email: originalData.email }))
+  }
+
+  const handleSaveUsername = () => {
+    fetch('http://localhost:8080/api/auth/changeusername', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ newUsername: formData.username }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Error updating username")
+        return res.text()
+      })
+      .then(() => {
+        setOriginalData(prev => ({ ...prev, username: formData.username }))
+        alert("Username updated successfully")
+      })
+      .catch(err => alert(err.message))
+  }
+
+  const handleSaveEmail = () => {
+    fetch('http://localhost:8080/api/auth/changeemail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ newEmail: formData.email }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Error updating email")
+        return res.text()
+      })
+      .then(newToken => {
+        localStorage.setItem("jwt", newToken)
+        setOriginalData(prev => ({ ...prev, email: formData.email }))
+        alert("Email updated successfully")
+      })
+      .catch(err => alert(err.message))
+  }
 
   const handleCreateAddress = () => {
     fetch('http://localhost:8080/address/create', {
@@ -80,7 +134,7 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
         if (!res.ok) throw new Error('Error creating address')
         return res.json()
       })
-      .then((createdAddress) => {
+      .then(createdAddress => {
         setAddressId(createdAddress.addressId)
         setOriginalData({ ...formData })
         alert('Address added successfully')
@@ -118,7 +172,6 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
   const handleDeleteAddress = () => {
     if (!addressId) return alert("No address to delete")
     const confirmDelete = window.confirm("Are you sure you want to delete your address?")
-
     if (!confirmDelete) return
 
     fetch(`http://localhost:8080/address/delete/${addressId}`, {
@@ -144,21 +197,44 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
       .catch(err => alert(err.message))
   }
 
-  const handleCancelPassword = () => {
-    setShowPasswordForm(false)
-    setPasswords({ current: '', new: '', confirm: '' })
+  const handleSavePassword = () => {
+    if (passwords.new !== passwords.confirm) {
+      alert("New password and confirmation do not match")
+      return
+    }
+
+    fetch("http://localhost:8080/api/auth/changepassword", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        oldPassword: passwords.current,
+      newPassword: passwords.new,
+      }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Error changing password")
+        return res.text()
+      })
+      .then(() => {
+        alert("Password changed successfully")
+        setShowPasswordForm(false)
+        setPasswords({ current: '', new: '', confirm: '' })
+      })
+      .catch(err => alert(err.message))
   }
 
-  const handleSavePassword = () => {
+  const handleCancelPassword = () => {
     setShowPasswordForm(false)
     setPasswords({ current: '', new: '', confirm: '' })
   }
 
   if (!formData) return <p className="settings-content">Loading...</p>
 
-  const infoChanged =
-    formData.username !== originalData.username ||
-    formData.email !== originalData.email
+  const usernameChanged = formData.username !== originalData.username
+  const emailChanged = formData.email !== originalData.email
 
   const addressChanged =
     formData.address !== originalData.address ||
@@ -174,32 +250,38 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
       </div>
 
       <div className="field-wrapper">
-        {[
-          { label: 'Username', name: 'username' },
-          { label: 'Email', name: 'email' },
-        ].map(({ label, name }) => (
-          <div key={name} className="field-container">
-            <label className="field-label">{label}</label>
-            <input
-              className="field-input"
-              name={name}
-              value={formData[name] || ''}
-              placeholder={label}
-              onChange={handleChange}
-            />
-          </div>
-        ))}
-      </div>
-
-      {infoChanged && (
-        <div className="field-actions" >
-          <button className="save-btn" onClick={() => {
-            setOriginalData(prev => ({ ...prev, username: formData.username, email: formData.email }))
-            alert("Saved locally – backend not yet connected")
-          }}>Save</button>
-          <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
+        <div className="field-container">
+          <label className="field-label">Username</label>
+          <input
+            className="field-input"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          {usernameChanged && (
+            <div className="field-actions">
+              <button className="save-btn" onClick={handleSaveUsername}>Save</button>
+              <button className="cancel-btn" onClick={handleCancelUsername}>Cancel</button>
+            </div>
+          )}
         </div>
-      )}
+
+        <div className="field-container">
+          <label className="field-label">Email</label>
+          <input
+            className="field-input"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          {emailChanged && (
+            <div className="field-actions">
+              <button className="save-btn" onClick={handleSaveEmail}>Save</button>
+              <button className="cancel-btn" onClick={handleCancelEmail}>Cancel</button>
+            </div>
+          )}
+        </div>
+      </div>
 
       <button className="password-button" onClick={() => setShowPasswordForm(true)}>
         Change password
@@ -210,6 +292,7 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
       <div className="settings-title">
         <h2>Address</h2>
       </div>
+
       <div className="field-wrapper">
         {[
           { label: 'Address', name: 'address' },
@@ -230,28 +313,25 @@ console.log(jwtDecode(localStorage.getItem("jwt")))
         ))}
       </div>
 
-      <div className="field-actions" style={{ marginLeft: 80, marginTop: 20 }}>
-  {addressChanged ? (
-    <>
-      <button
-        className="save-btn"
-        onClick={addressId ? handleUpdateAddress : handleCreateAddress}
-      >
-        {addressId ? 'Save' : 'Add Address'}
-      </button>
-      <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
-    </>
-  ) : (
-    addressId && (
-      <button
-        className="save-btn"
-        onClick={handleDeleteAddress}
-      >
-        Delete Address
-      </button>
-    )
-  )}
-</div>
+      <div className="field-actions">
+        {addressChanged ? (
+          <>
+            <button
+              className="save-btn"
+              onClick={addressId ? handleUpdateAddress : handleCreateAddress}
+            >
+              {addressId ? 'Save' : 'Add Address'}
+            </button>
+            <button className="cancel-btn" onClick={() => setFormData({ ...originalData })}>Cancel</button>
+          </>
+        ) : (
+          addressId && (
+            <button className="save-btn" onClick={handleDeleteAddress}>
+              Delete Address
+            </button>
+          )
+        )}
+      </div>
 
       {showPasswordForm && (
         <ChangePasswordModal
