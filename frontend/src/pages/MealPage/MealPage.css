@@ -1,0 +1,107 @@
+.meal-page-container {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.meal-header h1 {
+  text-transform: capitalize;
+  border-bottom: 2px solid #444;
+  padding-bottom: 0.5rem;
+}
+
+.meal-form {
+  margin-top: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.ingredient-search input,
+.ingredient-create input {
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.ingredient-search {
+  margin-bottom: 1rem;
+}
+
+.ingredient-results-list {
+  list-style: none;
+  padding-left: 0;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 0.3rem;
+}
+
+.ingredient-result-item {
+  padding: 0.3rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.ingredient-result-item:hover {
+  background-color: #f0f0f0;
+}
+
+.ingredient-create {
+  margin-bottom: 1rem;
+}
+
+.ingredient-create input {
+  margin-bottom: 0.5rem;
+}
+
+.button-ingredient {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background-color: #2c7be5;
+  border: none;
+  color: white;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.button-ingredient:disabled {
+  background-color: #7da8f5;
+  cursor: not-allowed;
+}
+
+.save-btn {
+  margin-top: 1rem;
+}
+
+.ingredient-list ul {
+  padding-left: 1.2rem;
+}
+
+.error {
+  color: red;
+  margin-top: 0.3rem;
+}
+
+.status-msg {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: green;
+}
+
+.meal-page-footer {
+  margin-top: 1.5rem;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}

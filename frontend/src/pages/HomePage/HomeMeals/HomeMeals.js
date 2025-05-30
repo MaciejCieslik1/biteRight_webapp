@@ -15,7 +15,7 @@ const emptyMealsState = {
   BREAKFAST: null,
   LUNCH: null,
   DINNER: null,
-  SNACK: null,
+  SNACKS: null,
 };
 
 const HomeMeals = ({ selectedDate = new Date() }) => {
