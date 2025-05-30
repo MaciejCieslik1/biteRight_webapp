@@ -75,10 +75,10 @@ public class MealService {
 
     public Meal createMeal(String username, MealCreateRequest request) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         MealType mealType = mealTypeRepository.findById(request.getMealTypeId())
-                .orElseThrow(() -> new RuntimeException("Meal type not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Meal type not found"));
 
         Meal newMeal = new Meal();
         newMeal.setUser(user);
@@ -94,7 +94,7 @@ public class MealService {
 
         for (MealContentDTO contentDTO : request.getContents()) {
             Ingredient ingredient = ingredientRepository.findById(contentDTO.getIngredientId())
-                    .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+                    .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
 
             MealContent content = new MealContent();
 
@@ -111,10 +111,10 @@ public class MealService {
 
     public Meal updateMeal(String username, MealUpdateRequest request, Integer mealId) {
         MealType mealType = mealTypeRepository.findById(request.getMealTypeId())
-                .orElseThrow(() -> new RuntimeException("Meal type not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Meal type not found"));
 
         Meal newMeal = mealRepository.findByUsernameAndMealId(username, mealId)
-                .orElseThrow(() -> new RuntimeException("Meal not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
 
         newMeal.setMealType(mealType);
         newMeal.setName(request.getName());
@@ -124,7 +124,7 @@ public class MealService {
 
         for (MealContentDTO contentDTO : request.getContents()) {
             Ingredient ingredient = ingredientRepository.findById(contentDTO.getIngredientId())
-                    .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+                    .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
 
             MealContent content = new MealContent();
 
@@ -140,7 +140,7 @@ public class MealService {
 
     public void deleteMeal(String username, Integer mealId) {
         Meal meal = mealRepository.findByUsernameAndMealId(username, mealId)
-                .orElseThrow(() -> new RuntimeException("Meal not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Meal not found"));
         mealRepository.delete(meal);
     }
 }

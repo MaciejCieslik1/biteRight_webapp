@@ -58,7 +58,7 @@ public class RecipeController {
             RecipeDTO recipeDTO = new RecipeDTO(recipe);
             return ResponseEntity.ok(recipeDTO);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class RecipeController {
             RecipeDTO recipeDTO = new RecipeDTO(updated);
             return ResponseEntity.ok(recipeDTO);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -80,7 +80,7 @@ public class RecipeController {
             recipeService.deleteRecipe(recipeId);
             return ResponseEntity.ok("Recipe successfully deleted");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

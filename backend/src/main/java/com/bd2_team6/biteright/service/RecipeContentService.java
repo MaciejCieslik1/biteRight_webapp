@@ -1,7 +1,5 @@
 package com.bd2_team6.biteright.service;
 
-import com.bd2_team6.biteright.controllers.DTO.MealContentDTO;
-import com.bd2_team6.biteright.controllers.DTO.MealDTO;
 import com.bd2_team6.biteright.controllers.DTO.RecipeContentDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.RecipeContentCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.RecipeContentUpdateRequest;

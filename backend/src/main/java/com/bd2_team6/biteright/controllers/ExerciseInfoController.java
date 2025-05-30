@@ -30,7 +30,7 @@ public class ExerciseInfoController {
             ExerciseInfo newInfo = exerciseInfoService.createExerciseInfo(request);
             return ResponseEntity.ok(newInfo);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -40,7 +40,7 @@ public class ExerciseInfoController {
             ExerciseInfo updatedInfo = exerciseInfoService.updateExerciseInfo(exerciseName, request);
             return ResponseEntity.ok(updatedInfo);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class ExerciseInfoController {
             exerciseInfoService.deleteExerciseInfo(exerciseName);
             return ResponseEntity.ok("Exercise info delete successfully");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
