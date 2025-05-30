@@ -1,9 +1,11 @@
 package com.bd2_team6.biteright.service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.bd2_team6.biteright.controllers.DTO.IngredientDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.IngredientCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.IngredientUpdateRequest;
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
@@ -17,9 +19,11 @@ public class IngredientService {
         this.ingredientRepository = ingredientRepository;
     }
 
-    public Set<Ingredient> findIngredientsByName(String name) {
+    public Set<IngredientDTO> findIngredientsByName(String name) {
         Set<Ingredient> ingredients = ingredientRepository.findByNameContainingIgnoreCase(name);
-        return ingredients;
+        return ingredients.stream() 
+                .map(IngredientDTO::new)
+                .collect(Collectors.toSet());
     }
 
     public Ingredient createIngredient(IngredientCreateRequest request) {
