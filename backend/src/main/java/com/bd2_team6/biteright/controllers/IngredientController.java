@@ -2,6 +2,7 @@ package com.bd2_team6.biteright.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bd2_team6.biteright.controllers.DTO.IngredientDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.IngredientCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.IngredientUpdateRequest;
 import com.bd2_team6.biteright.entities.ingredient.Ingredient;
@@ -30,7 +31,7 @@ public class IngredientController {
     @GetMapping("/find/{name}")
     public ResponseEntity<?> findIngredient(@PathVariable("name") String name) {
         try {
-            Set<Ingredient> ingredients = ingredientService.findIngredientsByName(name);
+            Set<IngredientDTO> ingredients = ingredientService.findIngredientsByName(name);
             return ResponseEntity.ok(ingredients);
         }
         catch (IllegalArgumentException e) {
@@ -53,7 +54,8 @@ public class IngredientController {
     public ResponseEntity<?> updateIngredient(@PathVariable("id") Integer id, @RequestBody IngredientUpdateRequest request) {
         try {
             Ingredient updatedIngredient = ingredientService.updateIngredient(id, request);
-            return ResponseEntity.ok(updatedIngredient);
+            IngredientDTO updatedIngredientDTO = new IngredientDTO(updatedIngredient);
+            return ResponseEntity.ok(updatedIngredientDTO);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
