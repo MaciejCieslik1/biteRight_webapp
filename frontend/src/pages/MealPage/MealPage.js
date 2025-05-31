@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
+import MealForm from "./MealForm";
+import IngredientSearch from "./IngredientSearch";
+import IngredientCreate from "./IngredientCreate";
+import IngredientList from "./IngredientList";
 import "./MealPage.css";
 
 const MealPage = () => {
@@ -11,23 +15,13 @@ const MealPage = () => {
   const [currentMeal, setCurrentMeal] = useState(null);
   const [status, setStatus] = useState(null);
 
-  // Stany do wyszukiwania składników
   const [ingredientQuery, setIngredientQuery] = useState("");
   const [ingredientResults, setIngredientResults] = useState([]);
   const [ingredientLoading, setIngredientLoading] = useState(false);
   const [ingredientError, setIngredientError] = useState(null);
 
-  // Stany do tworzenia nowego składnika
-  const [newIngredientName, setNewIngredientName] = useState("");
-  const [newIngredientBrand, setNewIngredientBrand] = useState("");
-  const [newIngredientPortionSize, setNewIngredientPortionSize] = useState("");
-  const [newIngredientCalories, setNewIngredientCalories] = useState("");
-  const [newIngredientProtein, setNewIngredientProtein] = useState("");
-  const [newIngredientFat, setNewIngredientFat] = useState("");
-  const [newIngredientCarbs, setNewIngredientCarbs] = useState("");
-
-  const [creatingIngredient, setCreatingIngredient] = useState(false);
-  const [createIngredientError, setCreateIngredientError] = useState(null);
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const [ingredientAmount, setIngredientAmount] = useState("");
 
   useEffect(() => {
     if (meal) {
@@ -35,13 +29,11 @@ const MealPage = () => {
     }
   }, [meal]);
 
-  // Funkcja wyszukiwania składników po nazwie
   const searchIngredients = async (query) => {
     if (!query) {
       setIngredientResults([]);
       return;
     }
-    console.log("🔍 Searching ingredients for query:", query);
     setIngredientLoading(true);
     setIngredientError(null);
     try {
@@ -49,58 +41,64 @@ const MealPage = () => {
       const res = await fetch(
         `http://localhost:8080/ingredient/find/${query}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
-      if (!res.ok) throw new Error("Błąd podczas wyszukiwania składników");
       const data = await res.json();
       setIngredientResults(Array.isArray(data) ? data : []);
     } catch (e) {
       setIngredientError(e.message);
       setIngredientResults([]);
-      console.error("MealPage.js:51 ❌ Error searching ingredients:", e);
     } finally {
       setIngredientLoading(false);
     }
   };
 
-  // Obsługa zmiany pola wyszukiwania składnika
-  const handleIngredientChange = (e) => {
-    const value = e.target.value;
-    setIngredientQuery(value);
-    searchIngredients(value);
-  };
+  const addIngredientToMeal = async (ingredient, amount) => {
+    const token = localStorage.getItem("jwt");
+    const url = `http://localhost:8080/mealContent/add`;
+    const body = {
+      ingredientId: ingredient.ingredientId,
+      mealId: currentMeal.mealId,
+      ingredientAmount: amount,
+    };
 
-  // Dodanie składnika do currentMeal.contents
-  const addIngredientToMeal = (ingredient) => {
-    setCurrentMeal((prev) => {
-      const contents = prev.contents || [];
-      if (contents.find((i) => i.id === ingredient.id)) return prev;
-      return {
-        ...prev,
-        contents: [...contents, ingredient],
-      };
-    });
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const text = await response.text();
+      let json = null;
+      try {
+        json = JSON.parse(text);
+      } catch {}
+
+      if (response.ok && json) {
+        console.log("COntent added:", json);
+        setCurrentMeal((prev) => ({
+          ...prev,
+          contents: [...(prev.contents || []), json],
+        }));
+        setStatus("Ingredient added successfully!");
+      } else {
+        setStatus("Ingredient add failed: " + (json?.message || text));
+      }
+    } catch (e) {
+      setStatus("Unexpected error occurred.");
+    }
+
     setIngredientQuery("");
     setIngredientResults([]);
   };
 
-  // Obsługa zmian pól meal (name, description)
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setCurrentMeal((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Funkcja zapisu meal
   const handleSave = async () => {
     if (!currentMeal) return;
-
-    console.log("📤 Attempting to save meal:", currentMeal);
 
     const body = {
       mealTypeId: currentMeal.mealTypeId,
@@ -109,75 +107,12 @@ const MealPage = () => {
       contents: currentMeal.contents || [],
     };
 
-    if (!currentMeal?.mealId) {
-      console.error("❌ Meal ID is missing in currentMeal:", currentMeal);
-      setStatus("Meal ID is missing.");
-      return;
-    }
-
     const token = localStorage.getItem("jwt");
     const url = `http://localhost:8080/meal/update/${currentMeal.mealId}`;
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    };
 
     try {
-      const response = await fetch(url, requestOptions);
-      const responseText = await response.text();
-
-      let responseJson = null;
-      try {
-        responseJson = JSON.parse(responseText);
-      } catch (e) {
-        // response not JSON
-      }
-
-      if (response.ok) {
-        if (responseJson) setCurrentMeal(responseJson);
-        setStatus("Saved successfully!");
-      } else {
-        setStatus("Save failed. " + (responseJson?.message || responseText));
-      }
-    } catch (error) {
-      console.error("❗ Error during save operation:", error);
-      setStatus("Unexpected error occurred.");
-    }
-  };
-
-  // Funkcja tworzenia nowego składnika w bazie
-  const handleCreateIngredient = async () => {
-    if (!newIngredientName.trim()) {
-      setCreateIngredientError("Name cannot be empty");
-      return;
-    }
-
-    setCreatingIngredient(true);
-    setCreateIngredientError(null);
-    setStatus(null);
-
-    const body = {
-      name: newIngredientName.trim(),
-      brand: newIngredientBrand.trim() || null,
-      portionSize: newIngredientPortionSize
-        ? Number(newIngredientPortionSize)
-        : null,
-      calories: newIngredientCalories ? Number(newIngredientCalories) : null,
-      protein: newIngredientProtein ? Number(newIngredientProtein) : null,
-      fat: newIngredientFat ? Number(newIngredientFat) : null,
-      carbs: newIngredientCarbs ? Number(newIngredientCarbs) : null,
-    };
-
-    try {
-      const token = localStorage.getItem("jwt");
-      console.log("📤 Creating ingredient with body:", body);
-
-      const response = await fetch("http://localhost:8080/ingredient/create", {
-        method: "POST",
+      const response = await fetch(url, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -185,196 +120,88 @@ const MealPage = () => {
         body: JSON.stringify(body),
       });
 
-      const responseText = await response.text();
-      console.log("📥 Create ingredient response text:", responseText);
-
-      let responseJson = null;
+      const text = await response.text();
+      let json = null;
       try {
-        responseJson = JSON.parse(responseText);
-      } catch {
-        // Not JSON
-      }
+        json = JSON.parse(text);
+      } catch {}
 
-      if (response.ok) {
-        setStatus(`Ingredient "${newIngredientName}" created successfully!`);
-        // Dodaj nowy składnik do currentMeal.contents
-        if (responseJson) addIngredientToMeal(responseJson);
-
-        // Reset formularza
-        setNewIngredientName("");
-        setNewIngredientBrand("");
-        setNewIngredientPortionSize("");
-        setNewIngredientCalories("");
-        setNewIngredientProtein("");
-        setNewIngredientFat("");
-        setNewIngredientCarbs("");
+      if (response.ok && json) {
+        setCurrentMeal(json);
+        setStatus("Saved successfully!");
       } else {
-        setCreateIngredientError(
-          responseJson?.message || responseText || "Failed to create ingredient"
-        );
+        setStatus("Save failed: " + (json?.message || text));
       }
     } catch (error) {
-      setCreateIngredientError("Unexpected error occurred");
-      console.error("❗ Error creating ingredient:", error);
-    } finally {
-      setCreatingIngredient(false);
+      setStatus("Unexpected error occurred.");
     }
   };
 
-  if (!currentMeal) {
-    return <div>Loading meal data...</div>;
-  }
+  if (!currentMeal) return <div>Loading meal data...</div>;
 
   return (
     <div className="meal-page-container" style={{ padding: "1rem" }}>
       <header className="meal-header">
         <h1>
-          {currentMeal.mealTypeName.charAt(0).toUpperCase() +
-            currentMeal.mealTypeName.slice(1).toLowerCase()}
+          {currentMeal.mealTypeName?.[0].toUpperCase() +
+            currentMeal.mealTypeName?.slice(1).toLowerCase()}
         </h1>
       </header>
 
-      <form
-        className="meal-form"
-        style={{ maxWidth: "400px", marginTop: "10px" }}
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <div className="meal-info">
-          <div className="form-group">
-            <label htmlFor="name">Meal name:</label>
-            <input
-              id="name"
-              name="name"
-              value={currentMeal.name}
-              onChange={handleInputChange}
-              type="text"
-            />
-          </div>
+      <MealForm meal={currentMeal} setMeal={setCurrentMeal} />
 
-          <div className="form-group">
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              value={currentMeal.description}
-              onChange={handleInputChange}
-              rows="3"
-            />
-          </div>
-        </div>
+      <IngredientSearch
+        query={ingredientQuery}
+        results={ingredientResults}
+        loading={ingredientLoading}
+        error={ingredientError}
+        onQueryChange={(val) => {
+          setIngredientQuery(val);
+          searchIngredients(val);
+        }}
+        onSelect={(ing) => {
+          setSelectedIngredient(ing);
+          setIngredientQuery("");
+          setIngredientResults([]);
+        }}
+      />
 
-        <div className="ingredient-search">
-          <label htmlFor="ingredientSearch">Add ingredient:</label>
-          <input
-            id="ingredientSearch"
-            name="ingredientSearch"
-            value={ingredientQuery}
-            onChange={handleIngredientChange}
-            type="text"
-            placeholder="Type ingredient name..."
-            autoComplete="off"
-          />
-          {ingredientLoading && <p>Loading ingredients...</p>}
-          {ingredientError && <p className="error">{ingredientError}</p>}
-          {ingredientResults.length > 0 && (
-            <ul className="ingredient-results-list">
-              {ingredientResults.map((ing) => (
-                <li
-                  key={ing.id}
-                  onClick={() => addIngredientToMeal(ing)}
-                  className="ingredient-result-item"
-                >
-                  {ing.name}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="ingredient-create">
-          <label>Add new ingredient to database:</label>
-          <input
-            type="text"
-            placeholder="Name (required)"
-            value={newIngredientName}
-            onChange={(e) => setNewIngredientName(e.target.value)}
-            disabled={creatingIngredient}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Brand"
-            value={newIngredientBrand}
-            onChange={(e) => setNewIngredientBrand(e.target.value)}
-            disabled={creatingIngredient}
-          />
+      {selectedIngredient && (
+        <div className="selected-ingredient-form">
+          <p>
+            Selected: <strong>{selectedIngredient.name}</strong>
+          </p>
           <input
             type="number"
-            placeholder="Portion size (g)"
-            value={newIngredientPortionSize}
-            onChange={(e) => setNewIngredientPortionSize(e.target.value)}
-            disabled={creatingIngredient}
+            placeholder="Amount (g)"
+            value={ingredientAmount}
+            onChange={(e) => setIngredientAmount(e.target.value)}
             min="0"
           />
-          <input
-            type="number"
-            placeholder="Calories"
-            value={newIngredientCalories}
-            onChange={(e) => setNewIngredientCalories(e.target.value)}
-            disabled={creatingIngredient}
-            min="0"
-          />
-          <input
-            type="number"
-            placeholder="Protein (g)"
-            value={newIngredientProtein}
-            onChange={(e) => setNewIngredientProtein(e.target.value)}
-            disabled={creatingIngredient}
-            min="0"
-          />
-          <input
-            type="number"
-            placeholder="Fat (g)"
-            value={newIngredientFat}
-            onChange={(e) => setNewIngredientFat(e.target.value)}
-            disabled={creatingIngredient}
-            min="0"
-          />
-          <input
-            type="number"
-            placeholder="Carbs (g)"
-            value={newIngredientCarbs}
-            onChange={(e) => setNewIngredientCarbs(e.target.value)}
-            disabled={creatingIngredient}
-            min="0"
-          />
-
           <button
-            type="button-ingredient"
-            onClick={handleCreateIngredient}
-            disabled={creatingIngredient}
+            type="button"
+            onClick={() => {
+              if (
+                !ingredientAmount ||
+                isNaN(ingredientAmount) ||
+                ingredientAmount <= 0
+              ) {
+                setStatus("Please enter a valid amount.");
+                return;
+              }
+              addIngredientToMeal(selectedIngredient, Number(ingredientAmount));
+              setSelectedIngredient(null);
+              setIngredientAmount("");
+            }}
           >
-            {creatingIngredient ? "Creating..." : "Create Ingredient"}
+            Add Ingredient
           </button>
-
-          {createIngredientError && (
-            <p className="error">{createIngredientError}</p>
-          )}
         </div>
+      )}
 
-        <div className="ingredient-list">
-          <h3>Current Ingredients:</h3>
-          {currentMeal.contents && currentMeal.contents.length > 0 ? (
-            <ul>
-              {currentMeal.contents.map((ing) => (
-                <li key={ing.id}>{ing.name}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>No ingredients added yet.</p>
-          )}
-        </div>
-      </form>
+      <IngredientCreate onStatus={setStatus} />
+
+      <IngredientList contents={currentMeal.contents} />
 
       <footer className="meal-page-footer">
         <p>
@@ -383,11 +210,9 @@ const MealPage = () => {
             currentMeal.mealDate || currentMeal.meal_date
           ).toDateString()}
         </p>
-
         <button onClick={handleSave} className="save-btn">
           Save
         </button>
-
         {status && <p className="status-msg">{status}</p>}
       </footer>
     </div>
