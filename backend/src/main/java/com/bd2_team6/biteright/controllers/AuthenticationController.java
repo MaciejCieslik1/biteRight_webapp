@@ -7,11 +7,14 @@ import com.bd2_team6.biteright.controllers.requests.update_requests.PasswordUpda
 import com.bd2_team6.biteright.controllers.requests.update_requests.UsernameUpdateRequest;
 import com.bd2_team6.biteright.authentication.jason_web_token.JwtService;
 import com.bd2_team6.biteright.controllers.requests.LoginRequest;
+import com.bd2_team6.biteright.controllers.requests.PasswordResetRequest;
 import com.bd2_team6.biteright.service.AuthenticationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+
 import lombok.RequiredArgsConstructor;
 
 
@@ -118,4 +121,24 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/forgottenpassword/{email}")
+    public ResponseEntity<String> manageForgottenPassword(@PathVariable("email") String email) {
+        try {
+            authService.manageForgottenPassword(email);
+            return ResponseEntity.status(HttpStatus.OK).body("You have sent you an email with a special link. Please check your inbox.\n");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Exception.\n" +e.getMessage());
+        }
+    }
+
+    @PostMapping("/resetforgottenpassword")
+    public ResponseEntity<String> resetForgottenPassword(@RequestBody PasswordResetRequest request) {
+        try {
+            authService.verifyForgottenPasswordCode(request.getEmail(), request.getCode());
+            authService.resetForgottenPassword(request.getEmail(), request.getNewPassword());
+            return ResponseEntity.status(HttpStatus.OK).body("You have successfully changed your password.\n");
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.OK).body("Failure. " +e.getMessage());
+        }
+    }
 }
