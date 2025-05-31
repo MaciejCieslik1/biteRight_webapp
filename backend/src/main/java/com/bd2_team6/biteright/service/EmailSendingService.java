@@ -26,6 +26,15 @@ public class EmailSendingService {
         sendEmail(email, verificationCode, subject, path, body);
     }
 
+    public void sendForgotPasswordEmail(String username, String email, String forgottenPasswordCode){
+        String subject = "BiteRight - Forgotten password";
+        String path = "http://localhost:80/forgottenpassword/" + email + "/" + forgottenPasswordCode; 
+        String body = "Hello, " + username + 
+                    "!\nIf you requested to reset your password, please click the link below to complete the process.\n"+
+                    "If it wasn't you then ignore this email.";
+        sendEmail(email, forgottenPasswordCode, subject, path, body);
+    }
+
     private void sendEmail (String email, String verificationCode, String subject, String path, String body) {
         try {
             String formattedBody = """
