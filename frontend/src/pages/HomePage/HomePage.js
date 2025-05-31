@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import NavBar from "../../components/NavBar";
 import Calendar from "../../components/Calendar";
 import WaterIntake from "../../components/WaterIntake";
@@ -18,7 +18,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <NavBar showButtons={false} />
+      <NavBar showButtons={false} showLogoutButton={true} logoTarget="/home" />
       <div className="home-container">
         <div className="home-left">
           <div className="welcome-text-container">

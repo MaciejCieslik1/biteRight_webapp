@@ -43,7 +43,7 @@ const MealPage = () => {
 
   return (
     <div className="meal-page">
-      <NavBar showButtons={false} />
+      <NavBar showButtons={false} showLogoutButton={true} logoTarget="/home" />
       <div className="meal-page-container" style={{ padding: "1rem" }}>
         <div className="meal-page-left">
           <header className="meal-page-header">
