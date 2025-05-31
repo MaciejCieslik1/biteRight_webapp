@@ -17,15 +17,25 @@ const emptyMealsState = {
 };
 
 async function fetchMealsForUser(token, dateStr) {
+  console.debug(`[fetchMealsForUser] Fetching meals for date: ${dateStr}`);
   const res = await fetch(`http://localhost:8080/meal/findByDate/${dateStr}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  if (!res.ok) throw new Error(await res.text());
-  return await res.json();
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error(`[fetchMealsForUser] Error response: ${errorText}`);
+    throw new Error(errorText);
+  }
+  const data = await res.json();
+  console.debug(`[fetchMealsForUser] Fetched meals:`, data);
+  return data;
 }
 
 async function createDefaultMeals(token, dateStr) {
+  console.debug(
+    `[createDefaultMeals] Creating default meals for date: ${dateStr}`
+  );
   await Promise.all(
     DEFAULT_MEALS.map(async (meal) => {
       const body = {
@@ -36,6 +46,7 @@ async function createDefaultMeals(token, dateStr) {
         contents: [],
       };
 
+      console.debug(`[createDefaultMeals] Creating meal:`, body);
       const res = await fetch(`http://localhost:8080/meal/create`, {
         method: "POST",
         headers: {
@@ -46,13 +57,23 @@ async function createDefaultMeals(token, dateStr) {
       });
 
       if (!res.ok) {
-        console.warn(`Failed to create ${meal.name}:`, await res.text());
+        const errorText = await res.text();
+        console.warn(
+          `[createDefaultMeals] Failed to create ${meal.name}:`,
+          errorText
+        );
+      } else {
+        console.debug(`[createDefaultMeals] Successfully created ${meal.name}`);
       }
     })
   );
 }
 
 async function getMealsWithContents(token, mealList) {
+  console.debug(
+    `[getMealsWithContents] Fetching contents for meals:`,
+    mealList
+  );
   const mealsByType = {
     BREAKFAST: null,
     LUNCH: null,
@@ -61,8 +82,14 @@ async function getMealsWithContents(token, mealList) {
   };
 
   for (const meal of mealList) {
-    if (!meal.mealId || !meal.mealTypeName) continue;
+    if (!meal.mealId || !meal.mealTypeName) {
+      console.warn(`[getMealsWithContents] Skipping invalid meal:`, meal);
+      continue;
+    }
 
+    console.debug(
+      `[getMealsWithContents] Fetching contents for mealId ${meal.mealId}`
+    );
     const res = await fetch(
       `http://localhost:8080/mealContent/findById/${meal.mealId}`,
       {
@@ -70,12 +97,22 @@ async function getMealsWithContents(token, mealList) {
       }
     );
 
-    if (!res.ok) continue;
+    if (!res.ok) {
+      console.warn(
+        `[getMealsWithContents] Failed to fetch contents for mealId ${meal.mealId}`
+      );
+      continue;
+    }
 
     const contents = await res.json();
+    console.debug(
+      `[getMealsWithContents] Contents for mealId ${meal.mealId}:`,
+      contents
+    );
     mealsByType[meal.mealTypeName] = { ...meal, contents };
   }
 
+  console.debug(`[getMealsWithContents] Completed mealsByType:`, mealsByType);
   return mealsByType;
 }
 
@@ -89,26 +126,47 @@ export function useHomeMeals(selectedDate) {
   const dateStr = parsedDate.format("YYYY-MM-DD");
 
   useEffect(() => {
-    if (!user) return;
+    console.debug(
+      `[useHomeMeals] Effect triggered for dateStr: ${dateStr} and user:`,
+      user
+    );
+
+    if (!user) {
+      console.debug("[useHomeMeals] No user found, skipping fetch");
+      return;
+    }
 
     const token = localStorage.getItem("jwt");
-    if (!token) return;
+    if (!token) {
+      console.debug("[useHomeMeals] No JWT token found, skipping fetch");
+      return;
+    }
 
     const loadMeals = async () => {
+      console.debug("[useHomeMeals] Loading meals...");
       setLoading(true);
       setError(null);
       try {
         let mealList = await fetchMealsForUser(token, dateStr);
+        console.debug("[useHomeMeals] Initial mealList:", mealList);
         if (mealList.length === 0) {
+          console.debug("[useHomeMeals] No meals found, creating defaults");
           await createDefaultMeals(token, dateStr);
           mealList = await fetchMealsForUser(token, dateStr);
+          console.debug(
+            "[useHomeMeals] Reloaded mealList after defaults created:",
+            mealList
+          );
         }
         const mealsByType = await getMealsWithContents(token, mealList);
+        console.debug("[useHomeMeals] Setting meals state:", mealsByType);
         setMeals(mealsByType);
       } catch (e) {
+        console.error("[useHomeMeals] Error loading meals:", e.message);
         setError(e.message);
       } finally {
         setLoading(false);
+        console.debug("[useHomeMeals] Finished loading meals");
       }
     };
 

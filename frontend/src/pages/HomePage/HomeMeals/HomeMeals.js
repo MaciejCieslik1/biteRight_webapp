@@ -36,8 +36,8 @@ const HomeMeals = ({ selectedDate = new Date() }) => {
         />
         <MealSection
           title="Snacks"
-          meal={meals.SNACK}
-          products={meals.SNACK?.contents || []}
+          meal={meals.SNACKS}
+          products={meals.SNACKS?.contents || []}
         />
       </div>
 

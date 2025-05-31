@@ -49,7 +49,7 @@ const MealPage = () => {
           <header className="meal-page-header">
             <MealForm meal={currentMeal} setMeal={setCurrentMeal} />
           </header>
-          <button onClick={saveMeal} className="save-btn">
+          <button onClick={saveMeal} className="meal-save-btn">
             Save
           </button>
 
