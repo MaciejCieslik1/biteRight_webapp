@@ -30,7 +30,7 @@ public class MealInfoController {
         }
     }
 
-    @GetMapping("/find/{name}")
+    @GetMapping("/findByName/{name}")
     public ResponseEntity<?> findMealInfoByName(@PathVariable("name") String mealName) {
         try {
             MealInfo mealInfo = mealInfoService.findMealInfoByName(mealName);

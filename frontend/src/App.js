@@ -8,11 +8,11 @@ import { PreferencesProvider } from "./contexts/PreferencesContext";
 function App() {
   return (
     <PreferencesProvider>
-    <UserProvider>
-      <Router>
-        <AppRoutes />
-      </Router>
-    </UserProvider>
+      <UserProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </UserProvider>
     </PreferencesProvider>
   );
 }

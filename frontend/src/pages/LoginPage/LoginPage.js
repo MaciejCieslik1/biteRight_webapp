@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import "./LoginPage.css";
 import login_photo from "../../assets/login-photo.jpg";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { jwtDecode } from "jwt-decode";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleLogin = async () => {
     try {
@@ -22,6 +26,8 @@ const LoginPage = () => {
       const text = await response.text();
       if (response.ok) {
         localStorage.setItem("jwt", text);
+        const decodedUser = jwtDecode(text);
+        setUser(decodedUser);
         navigate("/home");
       } else {
         setError(text);

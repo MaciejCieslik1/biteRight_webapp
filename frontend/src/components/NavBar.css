@@ -10,6 +10,17 @@
 .logo {
   height: 10vh;
   width: auto;
+  cursor: pointer;
+}
+
+.logo-button {
+  cursor: pointer;
+  border: none;
+  background-color: whitesmoke;
+}
+
+.logo-button:hover {
+  cursor: pointer;
 }
 
 .button-container {
@@ -47,6 +58,10 @@
 
 .register {
   background: pink;
+}
+
+.logout {
+  background: #fdf28e;
 }
 
 .fade-in {
