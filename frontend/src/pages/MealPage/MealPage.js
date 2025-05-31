@@ -1,220 +1,144 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { UserContext } from "../../contexts/UserContext";
+import { useMealPage } from "./useMealPage";
 import MealForm from "./MealForm";
 import IngredientSearch from "./IngredientSearch";
 import IngredientCreate from "./IngredientCreate";
 import IngredientList from "./IngredientList";
+import NavBar from "../../components/NavBar";
 import "./MealPage.css";
 
 const MealPage = () => {
   const location = useLocation();
-  const { meal } = location.state || {};
-  const { user } = useContext(UserContext);
-
-  const [currentMeal, setCurrentMeal] = useState(null);
-  const [status, setStatus] = useState(null);
-
-  const [ingredientQuery, setIngredientQuery] = useState("");
-  const [ingredientResults, setIngredientResults] = useState([]);
-  const [ingredientLoading, setIngredientLoading] = useState(false);
-  const [ingredientError, setIngredientError] = useState(null);
-
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
-  const [ingredientAmount, setIngredientAmount] = useState("");
+  const { meal, mealInfo } = location.state || {};
+  console.log("[MealPage] Received meal:", meal);
+  console.log("[MealPage] Received mealInfo:", mealInfo);
+  const {
+    currentMeal,
+    setCurrentMeal,
+    status,
+    setStatus,
+    ingredientQuery,
+    setIngredientQuery,
+    ingredientResults,
+    setIngredientResults,
+    ingredientLoading,
+    ingredientError,
+    searchIngredients,
+    selectedIngredient,
+    setSelectedIngredient,
+    ingredientAmount,
+    setIngredientAmount,
+    addIngredientToMeal,
+    saveMeal,
+  } = useMealPage(meal);
 
   useEffect(() => {
     if (meal) {
       setCurrentMeal(meal);
     }
-  }, [meal]);
-
-  const searchIngredients = async (query) => {
-    if (!query) {
-      setIngredientResults([]);
-      return;
-    }
-    setIngredientLoading(true);
-    setIngredientError(null);
-    try {
-      const token = localStorage.getItem("jwt");
-      const res = await fetch(
-        `http://localhost:8080/ingredient/find/${query}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await res.json();
-      setIngredientResults(Array.isArray(data) ? data : []);
-    } catch (e) {
-      setIngredientError(e.message);
-      setIngredientResults([]);
-    } finally {
-      setIngredientLoading(false);
-    }
-  };
-
-  const addIngredientToMeal = async (ingredient, amount) => {
-    const token = localStorage.getItem("jwt");
-    const url = `http://localhost:8080/mealContent/add`;
-    const body = {
-      ingredientId: ingredient.ingredientId,
-      mealId: currentMeal.mealId,
-      ingredientAmount: amount,
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-
-      const text = await response.text();
-      let json = null;
-      try {
-        json = JSON.parse(text);
-      } catch {}
-
-      if (response.ok && json) {
-        console.log("COntent added:", json);
-        setCurrentMeal((prev) => ({
-          ...prev,
-          contents: [...(prev.contents || []), json],
-        }));
-        setStatus("Ingredient added successfully!");
-      } else {
-        setStatus("Ingredient add failed: " + (json?.message || text));
-      }
-    } catch (e) {
-      setStatus("Unexpected error occurred.");
-    }
-
-    setIngredientQuery("");
-    setIngredientResults([]);
-  };
-
-  const handleSave = async () => {
-    if (!currentMeal) return;
-
-    const body = {
-      mealTypeId: currentMeal.mealTypeId,
-      name: currentMeal.name,
-      description: currentMeal.description,
-      contents: currentMeal.contents || [],
-    };
-
-    const token = localStorage.getItem("jwt");
-    const url = `http://localhost:8080/meal/update/${currentMeal.mealId}`;
-
-    try {
-      const response = await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(body),
-      });
-
-      const text = await response.text();
-      let json = null;
-      try {
-        json = JSON.parse(text);
-      } catch {}
-
-      if (response.ok && json) {
-        setCurrentMeal(json);
-        setStatus("Saved successfully!");
-      } else {
-        setStatus("Save failed: " + (json?.message || text));
-      }
-    } catch (error) {
-      setStatus("Unexpected error occurred.");
-    }
-  };
+  }, [meal, setCurrentMeal]);
 
   if (!currentMeal) return <div>Loading meal data...</div>;
 
   return (
-    <div className="meal-page-container" style={{ padding: "1rem" }}>
-      <header className="meal-header">
-        <h1>
-          {currentMeal.mealTypeName?.[0].toUpperCase() +
-            currentMeal.mealTypeName?.slice(1).toLowerCase()}
-        </h1>
-      </header>
-
-      <MealForm meal={currentMeal} setMeal={setCurrentMeal} />
-
-      <IngredientSearch
-        query={ingredientQuery}
-        results={ingredientResults}
-        loading={ingredientLoading}
-        error={ingredientError}
-        onQueryChange={(val) => {
-          setIngredientQuery(val);
-          searchIngredients(val);
-        }}
-        onSelect={(ing) => {
-          setSelectedIngredient(ing);
-          setIngredientQuery("");
-          setIngredientResults([]);
-        }}
-      />
-
-      {selectedIngredient && (
-        <div className="selected-ingredient-form">
-          <p>
-            Selected: <strong>{selectedIngredient.name}</strong>
-          </p>
-          <input
-            type="number"
-            placeholder="Amount (g)"
-            value={ingredientAmount}
-            onChange={(e) => setIngredientAmount(e.target.value)}
-            min="0"
-          />
-          <button
-            type="button"
-            onClick={() => {
-              if (
-                !ingredientAmount ||
-                isNaN(ingredientAmount) ||
-                ingredientAmount <= 0
-              ) {
-                setStatus("Please enter a valid amount.");
-                return;
-              }
-              addIngredientToMeal(selectedIngredient, Number(ingredientAmount));
-              setSelectedIngredient(null);
-              setIngredientAmount("");
-            }}
-          >
-            Add Ingredient
+    <div className="meal-page">
+      <NavBar showButtons={false} />
+      <div className="meal-page-container" style={{ padding: "1rem" }}>
+        <div className="meal-page-left">
+          <header className="meal-page-header">
+            <MealForm meal={currentMeal} setMeal={setCurrentMeal} />
+          </header>
+          <button onClick={saveMeal} className="save-btn">
+            Save
           </button>
+
+          <IngredientSearch
+            query={ingredientQuery}
+            results={ingredientResults}
+            loading={ingredientLoading}
+            error={ingredientError}
+            onQueryChange={(val) => {
+              setIngredientQuery(val);
+              searchIngredients(val);
+            }}
+            onSelect={(ing) => {
+              setSelectedIngredient(ing);
+              setIngredientQuery("");
+              setIngredientResults([]);
+            }}
+          />
+
+          {selectedIngredient && (
+            <div className="selected-ingredient-form">
+              <div className="selected-ingredient-header">
+                Adding: <strong>{selectedIngredient.name}</strong>
+              </div>
+              <input
+                type="number"
+                placeholder="Amount (g)"
+                value={ingredientAmount}
+                onChange={(e) => setIngredientAmount(e.target.value)}
+                min="0"
+              />
+              <button
+                className="add-ingredient-btn"
+                onClick={() => {
+                  if (
+                    !ingredientAmount ||
+                    isNaN(ingredientAmount) ||
+                    ingredientAmount <= 0
+                  ) {
+                    setStatus("Please enter a valid amount.");
+                    return;
+                  }
+                  addIngredientToMeal(
+                    selectedIngredient,
+                    Number(ingredientAmount)
+                  );
+                  setSelectedIngredient(null);
+                  setIngredientAmount("");
+                }}
+              >
+                Add
+              </button>
+              {status && <p className="status-msg">{status}</p>}
+            </div>
+          )}
         </div>
-      )}
 
-      <IngredientCreate onStatus={setStatus} />
-
-      <IngredientList contents={currentMeal.contents} />
-
-      <footer className="meal-page-footer">
-        <p>
-          Date:{" "}
-          {new Date(
-            currentMeal.mealDate || currentMeal.meal_date
-          ).toDateString()}
-        </p>
-        <button onClick={handleSave} className="save-btn">
-          Save
-        </button>
-        {status && <p className="status-msg">{status}</p>}
-      </footer>
+        <div className="meal-page-middle">
+          <div className="meal-page-title-container">
+            <div className="meal-page-title">
+              {currentMeal.mealTypeName?.[0].toUpperCase() +
+                currentMeal.mealTypeName?.slice(1).toLowerCase()}
+            </div>
+          </div>
+          <IngredientList contents={currentMeal.contents} />
+          <div className="meal-summary-container">
+            <div className="meal-summary-title">Summary</div>
+            <div className="meal-summary-content">
+              <div className="meal-summary-calories">
+                {mealInfo?.calories} kcal
+              </div>
+              <div className="meal-summary-macros">
+                <div className="meal-macro-item">
+                  <strong>P:</strong> {mealInfo?.protein || 0} g
+                </div>
+                <div className="meal-macro-item">
+                  <strong>C:</strong> {mealInfo?.carbs || 0} g
+                </div>
+                <div className="meal-macro-item">
+                  <strong>F:</strong> {mealInfo?.fat || 0} g
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="meal-page-right">
+          <IngredientCreate onStatus={setStatus} />
+        </div>
+      </div>
     </div>
   );
 };

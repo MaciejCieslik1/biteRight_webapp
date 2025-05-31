@@ -12,16 +12,19 @@ const NavBar = ({ showButtons = true }) => {
     navigate("/register");
   };
   return (
-    <nav class="navbar">
-      <Link to="/">
+    <nav className="navbar">
+      <Link to="/home">
         <img className="logo" src={logo} alt="Logo" />
       </Link>
       {showButtons && (
-        <div class="button-container">
-          <button class="button login fade-in" onClick={handleLoginClick}>
+        <div className="button-container">
+          <button className="button login fade-in" onClick={handleLoginClick}>
             Login
           </button>
-          <button class="button register fade-in" onClick={handleRegisterClick}>
+          <button
+            className="button register fade-in"
+            onClick={handleRegisterClick}
+          >
             Register
           </button>
         </div>

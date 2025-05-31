@@ -1,4 +1,5 @@
 import React from "react";
+import "./IngredientSearch.css";
 
 const IngredientSearch = ({
   query,
