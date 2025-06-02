@@ -121,7 +121,7 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/forgottenpassword/{email}")
+    @PutMapping("/forgottenpassword/{email}")
     public ResponseEntity<String> manageForgottenPassword(@PathVariable("email") String email) {
         try {
             authService.manageForgottenPassword(email);
