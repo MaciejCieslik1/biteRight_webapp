@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,6 +49,9 @@ public class User {
 
     @Column(name = "is_verified")
     private Boolean isVerified;
+
+    @Column(name = "forgotten_password_code")
+    private String forgottenPasswordCode;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private DailyLimits dailyLimits;
@@ -87,5 +91,12 @@ public class User {
         this.passwordHash = passwordHash;
         this.type = type;
         this.isVerified = false;
+        this.forgottenPasswordCode = this.generatePasswordCode();
+    }
+
+    private String generatePasswordCode(){
+        SecureRandom random = new SecureRandom();
+        int code = random.nextInt(100_000_000); 
+        return String.format("%08d", code); 
     }
 }
