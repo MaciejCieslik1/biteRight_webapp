@@ -191,6 +191,7 @@ public class AuthenticationService {
             throw new RuntimeException("User with email " + email +" was not found.");
         User user = userOpt.get();
         user.setPasswordHash(passwordEncoder.encode(newPassword));
+        user.regeneratePasswordCode();
         userRepository.save(user);
         System.out.println("Succesfully changed user's password.\n");
     }

@@ -99,4 +99,8 @@ public class User {
         int code = random.nextInt(100_000_000); 
         return String.format("%08d", code); 
     }
+
+    public void regeneratePasswordCode(){
+        this.forgottenPasswordCode = generatePasswordCode(); 
+    }
 }
