@@ -22,7 +22,7 @@ const RegisterPage = () => {
       });
       const text = await response.text();
       if (response.ok) {
-        alert("Registration successful! You can now log in.");
+        alert("Registration successful! We have sent you a verification email.\nPlease check your inbox.");
         navigate("/login");
       } else {
         setError(text);

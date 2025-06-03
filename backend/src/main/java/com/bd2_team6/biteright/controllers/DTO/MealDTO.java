@@ -19,6 +19,7 @@ public class MealDTO {
     private String description;
     private LocalDateTime mealDate;
     private String mealTypeName;
+    private Integer mealTypeId;
     private Set<MealContentDTO> contents;
 
     public MealDTO(Meal meal) {
@@ -27,6 +28,7 @@ public class MealDTO {
         this.description = meal.getDescription();
         this.mealDate = meal.getMealDate();
         this.mealTypeName = meal.getMealType().getName();
+        this.mealTypeId = meal.getMealType().getTypeId();
 
         this.contents = meal.getMealContents().stream()
                              .map(MealContentDTO::new)

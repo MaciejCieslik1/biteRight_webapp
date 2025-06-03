@@ -10,11 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MealContentDTO {
+    private Integer mealContentId;
     private Integer ingredientId;
     private String ingredientName;
     private Integer ingredientAmount;
 
     public MealContentDTO(MealContent content) {
+        this.mealContentId = content.getMealContentId();
         this.ingredientId = content.getIngredient().getIngredientId();
         this.ingredientName = content.getIngredient().getName();
         this.ingredientAmount = content.getIngredientAmount();

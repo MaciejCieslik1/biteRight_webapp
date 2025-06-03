@@ -30,7 +30,7 @@ public class MealInfoController {
         }
     }
 
-    @GetMapping("/find/{name}")
+    @GetMapping("/findByName/{name}")
     public ResponseEntity<?> findMealInfoByName(@PathVariable("name") String mealName) {
         try {
             MealInfo mealInfo = mealInfoService.findMealInfoByName(mealName);
@@ -49,7 +49,7 @@ public class MealInfoController {
             return ResponseEntity.ok(mealInfo);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -60,7 +60,7 @@ public class MealInfoController {
             return ResponseEntity.ok(mealInfo);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class MealInfoController {
             return ResponseEntity.ok("Meal info deleted successfully");
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

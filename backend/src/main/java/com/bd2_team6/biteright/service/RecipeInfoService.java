@@ -2,11 +2,8 @@ package com.bd2_team6.biteright.service;
 
 import org.springframework.stereotype.Service;
 
-import com.bd2_team6.biteright.controllers.requests.create_requests.MealInfoCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.create_requests.RecipeInfoCreateRequest;
-import com.bd2_team6.biteright.controllers.requests.update_requests.MealInfoUpdateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.RecipeInfoUpdateRequest;
-import com.bd2_team6.biteright.entities.meal_info.MealInfo;
 import com.bd2_team6.biteright.entities.recipe_info.RecipeInfo;
 import com.bd2_team6.biteright.entities.recipe_info.RecipeInfoRepository;
 

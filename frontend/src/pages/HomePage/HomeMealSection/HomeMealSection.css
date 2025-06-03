@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: fit-content;
 }
 
 .meal-title {
@@ -21,20 +22,20 @@
 }
 
 .meal-calories {
-  margin: 3%;
+  margin-right: 3%;
 }
 
 .meal-products {
   display: flex;
   flex-direction: column;
+  margin-left: 3%;
 }
 
 .meal-content {
-  height: 60%;
-}
-
-.product-item {
-  margin-left: 3%;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .meal-macros {
@@ -42,4 +43,22 @@
   flex-direction: row-reverse;
   margin-right: 5%;
   margin-bottom: 3%;
+}
+
+.add-product-button-container {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  margin-right: 5%;
+  margin-bottom: 3%;
+}
+
+.add-product-button {
+  font-size: 3vh;
+  width: 2vw;
+  font-weight: bold;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(201, 200, 200);
 }

@@ -2,9 +2,10 @@ package com.bd2_team6.biteright.controllers;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +37,26 @@ public class MealController {
         }
     }
 
-    @GetMapping("/findMeal/{name}")
-    public ResponseEntity<?> findMeal(Authentication authentication, @PathVariable("name") String name) {
+    @GetMapping("/findByDate/{date}") 
+    public ResponseEntity<?> findMealsByDate(Authentication authentication, 
+                                             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
-            MealDTO mealDTO = mealService.findMealByName(username, name);
+            Set<MealDTO> mealsDTO = mealService.findMealsByDate(username, date);
+            return ResponseEntity.ok(mealsDTO);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/findByName/{name}")
+    public ResponseEntity<?> findMealByName(Authentication authentication, @PathVariable("name") String mealName) {
+        String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
+
+        try {
+            MealDTO mealDTO = mealService.findMealByName(username, mealName);
             return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
@@ -49,8 +64,8 @@ public class MealController {
         }
     }
 
-    @GetMapping("/findMeal/{id}")
-    public ResponseEntity<?> findMeal(Authentication authentication, @PathVariable("id") Integer mealId) {
+    @GetMapping("/findByID/{id}")
+    public ResponseEntity<?> findMealById(Authentication authentication, @PathVariable("id") Integer mealId) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
@@ -63,7 +78,7 @@ public class MealController {
     }
 
     @PostMapping("/create") 
-    public ResponseEntity<?> findMeal(Authentication authentication, @RequestBody MealCreateRequest request) {
+    public ResponseEntity<?> createMeal(Authentication authentication, @RequestBody MealCreateRequest request) {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
 
         try {
@@ -72,7 +87,7 @@ public class MealController {
             return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -87,7 +102,7 @@ public class MealController {
             return ResponseEntity.ok(mealDTO);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -100,7 +115,7 @@ public class MealController {
             return ResponseEntity.ok("Meal successfully deleted");
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

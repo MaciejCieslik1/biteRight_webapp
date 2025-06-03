@@ -54,7 +54,7 @@ public class RecipeInfoController {
             return ResponseEntity.ok(recipeInfo);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -65,7 +65,7 @@ public class RecipeInfoController {
             return ResponseEntity.ok(recipeInfo);
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ public class RecipeInfoController {
             return ResponseEntity.ok("Recipe info deleted successfully");
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

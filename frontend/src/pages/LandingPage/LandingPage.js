@@ -30,7 +30,7 @@ const LandingPage = () => {
         Start a healthy lifestyle with us
       </div>
       <div className="features-container">
-        <div class="feature calorie">
+        <div className="feature calorie">
           <img
             className="icon calorie fade-in"
             src={calorie_icon}
@@ -40,7 +40,7 @@ const LandingPage = () => {
             Calculate your recommended calorie intake
           </div>
         </div>
-        <div class="feature meal-plan">
+        <div className="feature meal-plan">
           <img
             className="icon meal-plan  fade-in"
             src={meal_plan_icon}
@@ -50,7 +50,7 @@ const LandingPage = () => {
             Track your meals and macros
           </div>
         </div>
-        <div class="feature weight">
+        <div className="feature weight">
           <img
             className="icon scale  fade-in"
             src={scale_icon}
@@ -60,7 +60,7 @@ const LandingPage = () => {
             Monitor your weight and measurements
           </div>
         </div>
-        <div class="feature workout">
+        <div className="feature workout">
           <img
             className="icon workout fade-in"
             src={workout_icon}
@@ -70,7 +70,7 @@ const LandingPage = () => {
             Track your workouts and progress
           </div>
         </div>
-        <div class="feature recipe">
+        <div className="feature recipe">
           <img
             className="icon recipe fade-in"
             src={recipe_icon}
@@ -80,7 +80,7 @@ const LandingPage = () => {
             Get healthy recipes and meal ideas
           </div>
         </div>
-        <div class="feature friend">
+        <div className="feature friend">
           <img
             className="icon friend fade-in"
             src={friend_icon}

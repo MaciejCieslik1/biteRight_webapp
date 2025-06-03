@@ -1,5 +1,5 @@
 -- --> mysql database summary:
--- created tables               17
+-- created tables               18
 -- created indexes               2
 -- created views                 3
 
@@ -20,7 +20,8 @@ create table app_user (
         username                    varchar(64) not null,
         email                       varchar(64) not null,
         password_hash               varchar(255) not null,
-        type                        varchar(64) not null
+        type                        varchar(64) not null,
+        is_verified                 boolean default (false) not null
 );
 
 alter table app_user add constraint user_username_un unique ( username );
@@ -81,8 +82,6 @@ create table meal (
         name                        varchar(64) not null,
         description                 varchar(256)
 );
-
-alter table meal add constraint users_meal_un unique ( name, user_id );
 
 create table meal_content (
         meal_content_id             integer unsigned not null auto_increment primary key,
@@ -178,6 +177,12 @@ create table weight_history (
 
 alter table weight_history add constraint positive_historic_weight CHECK(weight > 0);
 
+create table verification_code (
+        code_id                     integer unsigned not null auto_increment primary key,
+        user_id                     integer unsigned not null,
+        code                        varchar(64) not null,
+        expiration_date             datetime not null
+);
 
 
 
@@ -242,8 +247,9 @@ alter table weight_history
         add constraint weight_history_user_fk foreign key ( user_id )
                 references app_user ( user_id );
 
-
-
+alter table verification_code
+        add constraint verification_code_user_fk foreign key ( user_id )
+                references app_user ( user_id );
 
 
 -- ---------------------------------------->        views     <------------------------------------------
