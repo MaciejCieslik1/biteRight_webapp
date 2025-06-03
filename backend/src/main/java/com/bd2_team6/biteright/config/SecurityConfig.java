@@ -77,6 +77,7 @@ public class SecurityConfig {
                         "/api/auth/getusers",
                         "/api/auth/verifyuser",
                         "/api/auth/forgottenpassword/**",
+                        "/api/auth/forgottenpassword/{email}",
                         "/api/auth/resetforgottenpassword")
                         .permitAll()
                     .anyRequest().authenticated())
