@@ -17,7 +17,9 @@ const FotgottenPasswordPage = () => {
                 alert("Email sent. Please check your inbox.")
             }
             else {
-                alert(response.body.text)
+            const text = await response.text();
+                if (text) alert(text)
+                else alert("An error occured.")
             }
         } catch (error) {
             alert("Invalid request.")
