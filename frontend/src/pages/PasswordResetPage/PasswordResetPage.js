@@ -22,6 +22,7 @@ const PasswordResetPage = () => {
             }
             else {
                 if (text) alert(text);
+                else if (newPassword==="") alert("Please enter the password.")
                 else alert("An error occured.")
             }
         } catch (error) {
