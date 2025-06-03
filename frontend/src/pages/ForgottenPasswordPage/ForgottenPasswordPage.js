@@ -19,6 +19,7 @@ const FotgottenPasswordPage = () => {
             else {
             const text = await response.text();
                 if (text) alert(text)
+                if (email === "") alert("Please enter your email address.")
                 else alert("An error occured.")
             }
         } catch (error) {
