@@ -138,7 +138,7 @@ public class AuthenticationController {
             authService.resetForgottenPassword(request.getEmail(), request.getNewPassword());
             return ResponseEntity.status(HttpStatus.OK).body("You have successfully changed your password.\n");
         }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.OK).body("Failure. " +e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failure. " +e.getMessage());
         }
     }
 }
