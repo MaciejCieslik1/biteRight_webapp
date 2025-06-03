@@ -6,6 +6,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import HomePage from "../pages/HomePage/HomePage";
 import VerificationPage from "../pages/VerificationPage/VerificationPage";
 import ForgottenPasswordPage from "../pages/ForgottenPasswordPage/ForgottenPasswordPage";
+import PasswordResetPage from "../pages/PasswordResetPage/PasswordResetPage";
 import MealPage from "../pages/MealPage/MealPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
 
@@ -19,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/meal" element={<MealPage />} />
       <Route path="/verifyuser/:email/:code" element={<VerificationPage />} />
       <Route path="/forgottenpasswordform" element={<ForgottenPasswordPage />} />
+      <Route path="/passwordreset/:email/:code" element={<PasswordResetPage />} />
       <Route path="/settings" element={<SettingsPage />} />
     </Routes>
   );
