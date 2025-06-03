@@ -7,6 +7,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import VerificationPage from "../pages/VerificationPage/VerificationPage";
 import MealPage from "../pages/MealPage/MealPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
+import ProgressPage from "../pages/ProgressPage/ProgressPage";
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
       <Route path="/meal" element={<MealPage />} />
       <Route path="/verifyuser/:email/:code" element={<VerificationPage />} />
       <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/progress" element={<ProgressPage />} />
     </Routes>
   );
 };
