@@ -13,6 +13,7 @@ import ProgressPage from "../pages/ProgressPage/ProgressPage";
 import RecipeListPage from "../pages/RecipesPage/RecipeListPage";
 import RecipeFormPage from "../pages/RecipesPage/RecipeFormPage";
 import RecipeViewModal from "../pages/RecipesPage/RecipeViewModal";
+import ProgressPage from "../pages/ProgressPage/ProgressPage";
 
 const AppRoutes = () => {
   return (
@@ -31,8 +32,7 @@ const AppRoutes = () => {
       <Route path="/recipes/create" element={<RecipeFormPage />} />
       <Route path="/recipes/view/:id" element={<RecipeViewModal />} />
       <Route path="/recipes/edit/:id" element={<RecipeFormPage />} />
-
-
+      <Route path="/progress" element={<ProgressPage />} />
     </Routes>
   );
 };
