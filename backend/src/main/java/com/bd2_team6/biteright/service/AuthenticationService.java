@@ -166,4 +166,33 @@ public class AuthenticationService {
         userRepository.save(user);
         System.out.println("Password for user with email " + email + " changed successfully.");
     }
+
+    public void manageForgottenPassword(String email) throws RuntimeException {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (!userOpt.isPresent())
+            throw new RuntimeException("User with email " + email +" was not found.");
+        User user = userOpt.get();
+        emailService.sendForgotPasswordEmail(user.getUsername(), email, user.getForgottenPasswordCode());
+    }
+
+    public void verifyForgottenPasswordCode(String email, String ForgottenPasswordCode) throws RuntimeException {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (!userOpt.isPresent())
+            throw new RuntimeException("User with email " + email +" was not found.");
+        User user = userOpt.get();
+
+        if (!ForgottenPasswordCode.equals(user.getForgottenPasswordCode()))
+            throw new RuntimeException("Incorrect reset code provided.\n");
+    }
+
+    public void resetForgottenPassword(String email, String newPassword) {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (!userOpt.isPresent())
+            throw new RuntimeException("User with email " + email +" was not found.");
+        User user = userOpt.get();
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        user.regeneratePasswordCode();
+        userRepository.save(user);
+        System.out.println("Succesfully changed user's password.\n");
+    }
 }

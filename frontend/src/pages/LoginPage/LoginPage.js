@@ -73,9 +73,14 @@ const LoginPage = () => {
                 </button>
               </div>
               <div className="register-text">
-                Don't have an account yet?{" "}
+                  Don't have an account yet?{" "}
                 <Link to="/register" className="register-link">
                   Register here
+                </Link>
+                <br/>
+                    Forgot your password?{" "}
+                <Link to="/forgottenpasswordform" className="forgotten-password-link">
+                  Reset password
                 </Link>
               </div>
             </div>
