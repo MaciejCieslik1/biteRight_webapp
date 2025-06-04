@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.UserDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,11 +27,15 @@ public class UserController {
 
         try {
             User user = userService.getUserByName(username);
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok(mapToDTO(user));
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    
+
+    private UserDTO mapToDTO(User user) {
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPasswordHash(), user.getType(),
+                user.getIsVerified(), user.getForgottenPasswordCode());
+    }
 }
