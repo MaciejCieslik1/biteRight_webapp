@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 import Calendar from "../../components/Calendar";
 import WaterIntake from "../../components/WaterIntake";
 import HomeMeals from "./HomeMeals/HomeMeals";
@@ -17,7 +18,7 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <div className="page-wrapper">
       <NavBar showButtons={false} showLogoutButton={true} logoTarget="/home" />
       <div className="home-container">
         <div className="home-left">
@@ -40,6 +41,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

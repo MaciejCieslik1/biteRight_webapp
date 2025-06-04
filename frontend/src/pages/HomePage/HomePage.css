@@ -1,9 +1,22 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
 .home-container {
+  margin-top: 100px;
+  margin-bottom: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   background-color: white;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .welcome-text-container {
@@ -98,13 +111,26 @@
 .progress-container {
   width: 25vw;
   height: 30vh;
-  background-color: aquamarine;
+  background-color: whitesmoke;
   margin: 1rem;
+  border-radius: 20px;
 }
 
 .exercise-container {
   width: 25vw;
   height: 30vh;
-  background-color: aquamarine;
+  background-color: whitesmoke;
   margin: 1rem;
+  border-radius: 20px;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }

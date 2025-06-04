@@ -39,8 +39,6 @@ const HomeMealSection = ({ title, meal, products }) => {
           fat={mealInfo?.fat}
         />
       </div>
-
-      {error && <div className="meal-error">Error: {error}</div>}
     </div>
   );
 };
