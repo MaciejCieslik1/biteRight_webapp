@@ -78,6 +78,15 @@ export function useMealPage(initialMeal) {
           contents: [...(prev.contents || []), json],
         }));
         setStatus("Ingredient added successfully!");
+        try {
+          const info = await fetchMealInfo(currentMeal.mealId);
+          setMealInfo(info);
+        } catch (e) {
+          console.warn(
+            "Failed to fetch meal info after adding ingredient:",
+            e.message
+          );
+        }
       } else {
         setStatus("Ingredient add failed: " + (json?.message || text));
       }
@@ -156,6 +165,15 @@ export function useMealPage(initialMeal) {
           ),
         }));
         setStatus("Ingredient removed successfully.");
+        try {
+          const info = await fetchMealInfo(currentMeal.mealId);
+          setMealInfo(info);
+        } catch (e) {
+          console.warn(
+            "Failed to fetch meal info after adding ingredient:",
+            e.message
+          );
+        }
       } else {
         const text = await response.text();
         setStatus("Failed to remove ingredient: " + text);
