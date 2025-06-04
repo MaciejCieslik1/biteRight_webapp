@@ -108,7 +108,7 @@ public class UserExerciseController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateWaterIntakeById(Authentication authentication,
+    public ResponseEntity<?> updateExerciseById(Authentication authentication,
                                                    @PathVariable("id") int userExerciseId,
                                                    @RequestBody UserExerciseUpdateRequest request) {
         try {
@@ -123,7 +123,7 @@ public class UserExerciseController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteWaterIntake(Authentication authentication, @PathVariable("id") int userExerciseId) {
+    public ResponseEntity<?> deleteExercise(Authentication authentication, @PathVariable("id") int userExerciseId) {
         try {
             String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
             userExerciseService.deleteUserExerciseById(username, userExerciseId);
