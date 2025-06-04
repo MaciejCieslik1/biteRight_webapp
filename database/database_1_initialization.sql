@@ -22,7 +22,7 @@ create table app_user (
         password_hash               varchar(255) not null,
         type                        varchar(64) not null,
         is_verified                 boolean default (false) not null,
-        forgotten_password_code     varchar(64)
+        forgotten_password_code     varchar(64) not null
 );
 
 alter table app_user add constraint user_username_un unique ( username );
