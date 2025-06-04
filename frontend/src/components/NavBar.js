@@ -2,6 +2,7 @@ import { React, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { UserContext } from "../contexts/UserContext";
+import { FaSignOutAlt } from "react-icons/fa";
 import "./NavBar.css";
 
 const NavBar = ({
@@ -51,8 +52,9 @@ const NavBar = ({
       )}
       {showLogoutButton && (
         <div className="button-container">
-          <button className="button logout" onClick={handleLogoutClick}>
-            Logout
+          <button className="logout-btn" onClick={handleLogoutClick}>
+            <div className="logout-text">Logout</div>
+            <FaSignOutAlt />
           </button>
         </div>
       )}
