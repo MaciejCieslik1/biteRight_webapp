@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { fetchMealInfo } from "../HomePage/HomeMealSection/fetchMealInfo";
 
 export function useMealPage(initialMeal) {
   const { user } = useContext(UserContext);
@@ -13,6 +14,7 @@ export function useMealPage(initialMeal) {
 
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [ingredientAmount, setIngredientAmount] = useState("");
+  const [mealInfo, setMealInfo] = useState(null);
 
   useEffect(() => {
     if (initialMeal) {
@@ -119,6 +121,13 @@ export function useMealPage(initialMeal) {
       if (response.ok && json) {
         setCurrentMeal(json);
         setStatus("Saved successfully!");
+        try {
+          const info = await fetchMealInfo(currentMeal.mealId);
+          console.log("[useMealPage] Fetched meal info:", info);
+          setMealInfo(info);
+        } catch (e) {
+          setStatus("Meal saved, but fetching meal info failed: " + e.message);
+        }
       } else {
         setStatus("Save failed: " + (json?.message || text));
       }
@@ -126,6 +135,49 @@ export function useMealPage(initialMeal) {
       setStatus("Unexpected error occurred.");
     }
   };
+
+  const removeIngredientFromMeal = async (mealContentId) => {
+    const token = localStorage.getItem("jwt");
+    const url = `http://localhost:8080/mealContent/delete/${mealContentId}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        setCurrentMeal((prev) => ({
+          ...prev,
+          contents: prev.contents?.filter(
+            (item) => item.mealContentId !== mealContentId
+          ),
+        }));
+        setStatus("Ingredient removed successfully.");
+      } else {
+        const text = await response.text();
+        setStatus("Failed to remove ingredient: " + text);
+      }
+    } catch (e) {
+      setStatus("Unexpected error while removing ingredient.");
+    }
+  };
+
+  useEffect(() => {
+    const loadMealInfo = async () => {
+      if (!currentMeal?.mealId) return;
+      try {
+        const info = await fetchMealInfo(currentMeal.mealId);
+        setMealInfo(info);
+      } catch (e) {
+        console.error("[useMealPage] Failed to load meal info:", e.message);
+      }
+    };
+
+    loadMealInfo();
+  }, [currentMeal?.mealId]);
 
   return {
     currentMeal,
@@ -145,5 +197,8 @@ export function useMealPage(initialMeal) {
     setIngredientAmount,
     addIngredientToMeal,
     saveMeal,
+    mealInfo,
+    setMealInfo,
+    removeIngredientFromMeal,
   };
 }
