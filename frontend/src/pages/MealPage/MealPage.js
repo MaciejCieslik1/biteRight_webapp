@@ -56,6 +56,9 @@ const MealPage = () => {
           <header className="meal-page-header">
             <MealForm meal={currentMeal} setMeal={setCurrentMeal} />
           </header>
+          <button onClick={saveMeal} className="meal-save-btn">
+            Save
+          </button>
 
           <IngredientSearch
             query={ingredientQuery}
@@ -141,9 +144,6 @@ const MealPage = () => {
               </div>
             </div>
           </div>
-          <button onClick={saveMeal} className="meal-save-btn">
-            Save
-          </button>
         </div>
         <div className="meal-page-right">
           <IngredientCreate onStatus={setStatus} />
