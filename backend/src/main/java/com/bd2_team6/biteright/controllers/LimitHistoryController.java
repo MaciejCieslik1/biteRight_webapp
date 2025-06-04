@@ -1,9 +1,14 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.LimitHistoryDTO;
+import com.bd2_team6.biteright.controllers.DTO.WaterIntakeDTO;
+import com.bd2_team6.biteright.entities.water_intake.WaterIntake;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +29,22 @@ public class LimitHistoryController {
         String username = ControllerHelperClass.getUsernameFromAuthentication(authentication, userRepository);
         try {
             Set<LimitHistory> limitHistories = limitHistoryService.findLimitHistoryByUsername(username);
-            return ResponseEntity.ok(limitHistories);
+            return ResponseEntity.ok(mapToDTOSet(limitHistories));
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private LimitHistoryDTO mapToDTO(LimitHistory limitHistory) {
+        return new LimitHistoryDTO(limitHistory.getHistoryId(), limitHistory.getDateChanged(),
+                limitHistory.getCalorieLimit(), limitHistory.getProteinLimit(), limitHistory.getFatLimit(),
+                limitHistory.getCarbLimit(), limitHistory.getWaterGoal());
+    }
+
+    private Set<LimitHistoryDTO> mapToDTOSet(Set<LimitHistory> set) {
+        return set.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toSet());
     }
 }
