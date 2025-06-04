@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { fetchMealInfo } from "./fetchMealInfo";
 import "./HomeMealSection.css";
 
 const useMealInfo = (mealId) => {
@@ -8,35 +9,18 @@ const useMealInfo = (mealId) => {
   useEffect(() => {
     if (!mealId) return;
 
-    const fetchMealInfoById = async (id) => {
-      const token = localStorage.getItem("jwt");
-      if (!token) {
-        setError("No JWT token found");
-        return;
-      }
-
+    const loadMealInfo = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/mealInfo/find/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!res.ok) {
-          const errText = await res.text();
-          throw new Error(`Failed to fetch meal info: ${errText}`);
-        }
-
-        const data = await res.json();
+        const data = await fetchMealInfo(mealId);
         setMealInfo(data);
         setError(null);
       } catch (err) {
         setError(err.message);
+        setMealInfo(null);
       }
     };
 
-    fetchMealInfoById(mealId);
+    loadMealInfo();
   }, [mealId]);
 
   return { mealInfo, error };

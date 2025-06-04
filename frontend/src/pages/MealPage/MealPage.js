@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useMealPage } from "./useMealPage";
+
 import MealForm from "./MealForm";
 import IngredientSearch from "./IngredientSearch";
 import IngredientCreate from "./IngredientCreate";
 import IngredientList from "./IngredientList";
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
+
 import "./MealPage.css";
 
 const MealPage = () => {
   const location = useLocation();
-  const { meal, mealInfo } = location.state || {};
+  const { meal } = location.state || {};
   console.log("[MealPage] Received meal:", meal);
-  console.log("[MealPage] Received mealInfo:", mealInfo);
+
   const {
     currentMeal,
     setCurrentMeal,
@@ -31,7 +34,11 @@ const MealPage = () => {
     setIngredientAmount,
     addIngredientToMeal,
     saveMeal,
+    mealInfo,
+    setMealInfo,
+    removeIngredientFromMeal,
   } = useMealPage(meal);
+  console.log("[MealPage] Received mealInfo:", mealInfo);
 
   useEffect(() => {
     if (meal) {
@@ -49,9 +56,6 @@ const MealPage = () => {
           <header className="meal-page-header">
             <MealForm meal={currentMeal} setMeal={setCurrentMeal} />
           </header>
-          <button onClick={saveMeal} className="meal-save-btn">
-            Save
-          </button>
 
           <IngredientSearch
             query={ingredientQuery}
@@ -114,7 +118,10 @@ const MealPage = () => {
                 currentMeal.mealTypeName?.slice(1).toLowerCase()}
             </div>
           </div>
-          <IngredientList contents={currentMeal.contents} />
+          <IngredientList
+            contents={currentMeal.contents}
+            onDelete={removeIngredientFromMeal}
+          />
           <div className="meal-summary-container">
             <div className="meal-summary-title">Summary</div>
             <div className="meal-summary-content">
@@ -134,11 +141,15 @@ const MealPage = () => {
               </div>
             </div>
           </div>
+          <button onClick={saveMeal} className="meal-save-btn">
+            Save
+          </button>
         </div>
         <div className="meal-page-right">
           <IngredientCreate onStatus={setStatus} />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
