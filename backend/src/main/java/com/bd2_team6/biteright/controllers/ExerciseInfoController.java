@@ -1,5 +1,6 @@
 package com.bd2_team6.biteright.controllers;
 
+import com.bd2_team6.biteright.controllers.DTO.ExerciseInfoDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.ExerciseInfoCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.ExerciseInfoUpdateRequest;
 import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfo;
@@ -20,7 +21,7 @@ public class ExerciseInfoController {
     @GetMapping("/find/{name}")
     public ResponseEntity<?> findExerciseInfo(@PathVariable("name") String exerciseName) {
         try {
-            Set<ExerciseInfo> info = exerciseInfoService.findExerciseInfoByName(exerciseName);
+            Set<ExerciseInfoDTO> info = exerciseInfoService.findExerciseInfoByName(exerciseName);
             return ResponseEntity.ok(info);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
