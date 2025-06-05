@@ -4,6 +4,9 @@ import com.bd2_team6.biteright.controllers.requests.create_requests.ExerciseInfo
 import com.bd2_team6.biteright.controllers.requests.update_requests.ExerciseInfoUpdateRequest;
 import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfo;
 import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfoRepository;
+
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +20,8 @@ public class ExerciseInfoService {
         this.exerciseInfoRepository = exerciseInfoRepository;
     }
 
-    public ExerciseInfo findExerciseInfoByName(String name) {
-        return exerciseInfoRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Exercise with name '" + name + "' not found"));
+    public Set<ExerciseInfo> findExerciseInfoByName(String name) {
+        return exerciseInfoRepository.findByNameContainingIgnoreCase(name);
     }
 
     public ExerciseInfo createExerciseInfo(ExerciseInfoCreateRequest request) {
