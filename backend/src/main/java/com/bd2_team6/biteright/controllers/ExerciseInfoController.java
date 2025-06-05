@@ -5,6 +5,9 @@ import com.bd2_team6.biteright.controllers.requests.update_requests.ExerciseInfo
 import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfo;
 import com.bd2_team6.biteright.service.ExerciseInfoService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Set;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +20,7 @@ public class ExerciseInfoController {
     @GetMapping("/find/{name}")
     public ResponseEntity<?> findExerciseInfo(@PathVariable("name") String exerciseName) {
         try {
-            ExerciseInfo info = exerciseInfoService.findExerciseInfoByName(exerciseName);
+            Set<ExerciseInfo> info = exerciseInfoService.findExerciseInfoByName(exerciseName);
             return ResponseEntity.ok(info);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
