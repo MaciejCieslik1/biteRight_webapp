@@ -2,7 +2,7 @@
 -- created tables               18
 -- created indexes               2
 -- created views                 3
-
+drop database mysql_database;
 create database if not exists mysql_database;
 use mysql_database;
 -- ------------------------------------->        tables, primary keys, indexes & unique constraints    <---------------------------------------
@@ -258,14 +258,13 @@ create or replace view meal_info  as
 select meal.meal_id as meal_id,
         meal.user_id as user_id,
     meal.name as meal_name,
-    sum(ingredient.calories * meal_content.ingredient_amount / 100) as calories,
-    sum(ingredient.protein * meal_content.ingredient_amount / 100) as protein,
-    sum(ingredient.fat * meal_content.ingredient_amount / 100) as fat,
-    sum(ingredient.carbs * meal_content.ingredient_amount / 100) as carbs
-from meal_content
-    inner join ingredient on ingredient.ingredient_id =
-        meal_content.ingredient_id
-    inner join meal on meal.meal_id = meal_content.meal_id
+    IFNULL(sum(ingredient.calories * meal_content.ingredient_amount / 100), 0) as calories,
+    IFNULL(sum(ingredient.protein * meal_content.ingredient_amount / 100), 0) as protein,
+    IFNULL(sum(ingredient.fat * meal_content.ingredient_amount / 100), 0) as fat,
+    IFNULL(sum(ingredient.carbs * meal_content.ingredient_amount / 100), 0) as carbs
+from meal
+    left join meal_content on meal.meal_id = meal_content.meal_id
+    left join ingredient on ingredient.ingredient_id = meal_content.ingredient_id
 group by meal.meal_id,
     meal.user_id,
     meal.name
@@ -325,20 +324,18 @@ UNION
         SELECT 1 FROM meal m 
         WHERE m.user_id = e.user_id AND m.meal_date = e.summary_date);
 
-
 create or replace view recipe_info ( recipe_id, recipe_name, calories, protein, fat, carbs ) as
 select
         recipe.recipe_id   as recipe_id,
         recipe.name  as recipe_name,
-        sum(ingredient.calories * recipe_content.ingredient_amount / 100) as calories,
-        sum(ingredient.protein * recipe_content.ingredient_amount / 100)    as protein,
-        sum(ingredient.fat * recipe_content.ingredient_amount / 100)            as fat,
-        sum(ingredient.carbs * recipe_content.ingredient_amount / 100)        as carbs
+	IFNULL(sum(ingredient.calories * recipe_content.ingredient_amount / 100), 0) as calories,
+	IFNULL(sum(ingredient.protein * recipe_content.ingredient_amount / 100), 0) as protein,
+	IFNULL(sum(ingredient.fat * recipe_content.ingredient_amount / 100), 0) as fat,
+	IFNULL(sum(ingredient.carbs * recipe_content.ingredient_amount / 100), 0) as carbs
 from
-        ingredient
-        inner join recipe_content on ingredient.ingredient_id = recipe_content.ingredient_id
-        inner join recipe on recipe.recipe_id = recipe_content.recipe_id
+        recipe
+        left join recipe_content on recipe.recipe_id = recipe_content.recipe_id
+        left join ingredient on ingredient.ingredient_id = recipe_content.ingredient_id
 group by
-        recipe.recipe_id,
-        recipe.name
-;
+    recipe.recipe_id,
+    recipe.name;
