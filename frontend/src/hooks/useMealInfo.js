@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchMealInfo } from "./fetchMealInfo";
-import "./HomeMealSection.css";
+import { fetchMealInfo } from "../api/apiMealInfo";
 
 const useMealInfo = (mealId) => {
   const [mealInfo, setMealInfo] = useState(null);

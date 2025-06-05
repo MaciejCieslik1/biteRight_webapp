@@ -1,5 +1,5 @@
 import React from "react";
-import "./HomeMealSection.css";
+import "../styles/HomeMealSection.css";
 
 const MAX_VISIBLE_PRODUCTS = 3;
 

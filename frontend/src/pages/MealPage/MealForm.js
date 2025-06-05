@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./MealForm.css";
+import "./styles/MealForm.css";
 
 const MealForm = ({ meal, setMeal }) => {
   const [editingField, setEditingField] = useState(null);

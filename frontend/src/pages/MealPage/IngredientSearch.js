@@ -1,5 +1,5 @@
 import React from "react";
-import "./IngredientSearch.css";
+import "./styles/IngredientSearch.css";
 
 const IngredientSearch = ({
   query,

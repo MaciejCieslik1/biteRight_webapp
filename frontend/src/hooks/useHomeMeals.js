@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../../contexts/UserContext";
+import { UserContext } from "../contexts/UserContext";
 import dayjs from "dayjs";
 
 const DEFAULT_MEALS = [
