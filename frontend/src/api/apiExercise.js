@@ -101,3 +101,22 @@ export async function createUserExercise(userExerciseData) {
     console.debug("[createUserExercise] === END ===");
   }
 }
+
+export const fetchExerciseInfoByName = async (name) => {
+  const token = localStorage.getItem("jwt");
+
+  const response = await fetch(
+    `http://localhost:8080/exerciseInfo/find/${encodeURIComponent(name)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Exercise not found or server error");
+  }
+
+  return await response.json();
+};

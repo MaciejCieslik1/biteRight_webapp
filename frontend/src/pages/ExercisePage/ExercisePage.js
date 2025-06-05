@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import ExerciseInfoForm from "./ExerciseInfoForm";
 import ExerciseList from "./ExerciseList";
 import UserExerciseForm from "./UserExerciseForm";
+import ExerciseSearch from "./ExerciseSearch";
 
 const ExercisePage = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const ExercisePage = () => {
       <ExerciseInfoForm onSuccess={handleRefresh} />
       <UserExerciseForm dateStr={dateStr} onSuccess={handleRefresh} />
       <ExerciseList dateStr={dateStr} refreshTrigger={refreshKey} />
+      <ExerciseSearch />
     </div>
   );
 };
