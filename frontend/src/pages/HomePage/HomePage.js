@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import Calendar from "../../components/Calendar";
 import WaterIntake from "../../components/WaterIntake";
 import HomeMeals from "./HomeMeals/HomeMeals";
+import HomeExerciseSection from "./HomeExerciseSection/HomeExerciseSection";
 import { UserContext } from "../../contexts/UserContext";
 import "./HomePage.css";
 
@@ -26,7 +27,9 @@ const HomePage = () => {
             <h1>Hello {user?.email}</h1>
           </div>
           <div className="progress-container"></div>
-          <div className="exercise-container"></div>
+          <div className="exercise-container">
+            <HomeExerciseSection selectedDate={selectedDate} />
+          </div>
         </div>
         <div className="home-middle">
           <HomeMeals selectedDate={selectedDate} />

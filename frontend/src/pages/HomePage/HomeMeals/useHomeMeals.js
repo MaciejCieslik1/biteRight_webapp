@@ -17,25 +17,23 @@ const emptyMealsState = {
 };
 
 async function fetchMealsForUser(token, dateStr) {
-  console.debug(`[fetchMealsForUser] Fetching meals for date: ${dateStr}`);
+  // console.debug(`[fetchMealsForUser] Fetching meals for date: ${dateStr}`);
   const res = await fetch(`http://localhost:8080/meal/findByDate/${dateStr}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
   if (!res.ok) {
     const errorText = await res.text();
-    console.error(`[fetchMealsForUser] Error response: ${errorText}`);
+    // console.error(`[fetchMealsForUser] Error response: ${errorText}`);
     throw new Error(errorText);
   }
   const data = await res.json();
-  console.debug(`[fetchMealsForUser] Fetched meals:`, data);
+  // console.debug(`[fetchMealsForUser] Fetched meals:`, data);
   return data;
 }
 
 async function createDefaultMeals(token, dateStr) {
-  console.debug(
-    `[createDefaultMeals] Creating default meals for date: ${dateStr}`
-  );
+  // console.debug(`[createDefaultMeals] Creating default meals for date: ${dateStr}`);
   await Promise.all(
     DEFAULT_MEALS.map(async (meal) => {
       const body = {
@@ -46,7 +44,7 @@ async function createDefaultMeals(token, dateStr) {
         contents: [],
       };
 
-      console.debug(`[createDefaultMeals] Creating meal:`, body);
+      // console.debug(`[createDefaultMeals] Creating meal:`, body);
       const res = await fetch(`http://localhost:8080/meal/create`, {
         method: "POST",
         headers: {
@@ -58,22 +56,16 @@ async function createDefaultMeals(token, dateStr) {
 
       if (!res.ok) {
         const errorText = await res.text();
-        console.warn(
-          `[createDefaultMeals] Failed to create ${meal.name}:`,
-          errorText
-        );
+        // console.warn(`[createDefaultMeals] Failed to create ${meal.name}:`, errorText);
       } else {
-        console.debug(`[createDefaultMeals] Successfully created ${meal.name}`);
+        // console.debug(`[createDefaultMeals] Successfully created ${meal.name}`);
       }
     })
   );
 }
 
 async function getMealsWithContents(token, mealList) {
-  console.debug(
-    `[getMealsWithContents] Fetching contents for meals:`,
-    mealList
-  );
+  // console.debug(`[getMealsWithContents] Fetching contents for meals:`, mealList);
   const mealsByType = {
     BREAKFAST: null,
     LUNCH: null,
@@ -83,13 +75,11 @@ async function getMealsWithContents(token, mealList) {
 
   for (const meal of mealList) {
     if (!meal.mealId || !meal.mealTypeName) {
-      console.warn(`[getMealsWithContents] Skipping invalid meal:`, meal);
+      // console.warn(`[getMealsWithContents] Skipping invalid meal:`, meal);
       continue;
     }
 
-    console.debug(
-      `[getMealsWithContents] Fetching contents for mealId ${meal.mealId}`
-    );
+    // console.debug(`[getMealsWithContents] Fetching contents for mealId ${meal.mealId}`);
     const res = await fetch(
       `http://localhost:8080/mealContent/findById/${meal.mealId}`,
       {
@@ -98,21 +88,16 @@ async function getMealsWithContents(token, mealList) {
     );
 
     if (!res.ok) {
-      console.warn(
-        `[getMealsWithContents] Failed to fetch contents for mealId ${meal.mealId}`
-      );
+      // console.warn(`[getMealsWithContents] Failed to fetch contents for mealId ${meal.mealId}`);
       continue;
     }
 
     const contents = await res.json();
-    console.debug(
-      `[getMealsWithContents] Contents for mealId ${meal.mealId}:`,
-      contents
-    );
+    // console.debug(`[getMealsWithContents] Contents for mealId ${meal.mealId}:`, contents);
     mealsByType[meal.mealTypeName] = { ...meal, contents };
   }
 
-  console.debug(`[getMealsWithContents] Completed mealsByType:`, mealsByType);
+  // console.debug(`[getMealsWithContents] Completed mealsByType:`, mealsByType);
   return mealsByType;
 }
 
@@ -126,47 +111,41 @@ export function useHomeMeals(selectedDate) {
   const dateStr = parsedDate.format("YYYY-MM-DD");
 
   useEffect(() => {
-    console.debug(
-      `[useHomeMeals] Effect triggered for dateStr: ${dateStr} and user:`,
-      user
-    );
+    // console.debug(`[useHomeMeals] Effect triggered for dateStr: ${dateStr} and user:`, user);
 
     if (!user) {
-      console.debug("[useHomeMeals] No user found, skipping fetch");
+      // console.debug("[useHomeMeals] No user found, skipping fetch");
       return;
     }
 
     const token = localStorage.getItem("jwt");
     if (!token) {
-      console.debug("[useHomeMeals] No JWT token found, skipping fetch");
+      // console.debug("[useHomeMeals] No JWT token found, skipping fetch");
       return;
     }
 
     const loadMeals = async () => {
-      console.debug("[useHomeMeals] Loading meals...");
+      // console.debug("[useHomeMeals] Loading meals...");
       setLoading(true);
       setError(null);
       try {
         let mealList = await fetchMealsForUser(token, dateStr);
-        console.debug("[useHomeMeals] Initial mealList:", mealList);
+        // console.debug("[useHomeMeals] Initial mealList:", mealList);
         if (mealList.length === 0) {
-          console.debug("[useHomeMeals] No meals found, creating defaults");
+          // console.debug("[useHomeMeals] No meals found, creating defaults");
           await createDefaultMeals(token, dateStr);
           mealList = await fetchMealsForUser(token, dateStr);
-          console.debug(
-            "[useHomeMeals] Reloaded mealList after defaults created:",
-            mealList
-          );
+          // console.debug("[useHomeMeals] Reloaded mealList after defaults created:", mealList);
         }
         const mealsByType = await getMealsWithContents(token, mealList);
-        console.debug("[useHomeMeals] Setting meals state:", mealsByType);
+        // console.debug("[useHomeMeals] Setting meals state:", mealsByType);
         setMeals(mealsByType);
       } catch (e) {
-        console.error("[useHomeMeals] Error loading meals:", e.message);
+        // console.error("[useHomeMeals] Error loading meals:", e.message);
         setError(e.message);
       } finally {
         setLoading(false);
-        console.debug("[useHomeMeals] Finished loading meals");
+        // console.debug("[useHomeMeals] Finished loading meals");
       }
     };
 
