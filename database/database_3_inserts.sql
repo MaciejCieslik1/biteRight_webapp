@@ -1,7 +1,7 @@
 -- ----------->   MEAL TYPES   <--------------------------------
 INSERT INTO meal_type (name) VALUES ('BREAKFAST'), ( 'LUNCH'),  ('DINNER'), ('SUPPER'), ('SNACKS');
 
--- ----------->   INGREDIENTS   <--------------------------------
+-- ----------->   EXMAPLE INGREDIENTS   <--------------------------------
 INSERT INTO ingredient (name, brand, portion_size, calories, protein, fat, carbs) VALUES
     ('Cows'' milk', 'Generic Dairy', 100, 68, 3, 4, 5),
     ('Milk skim', 'Generic Dairy', 100, 37, 4, 0, 5),
@@ -109,8 +109,6 @@ INSERT INTO ingredient (name, brand, portion_size, calories, protein, fat, carbs
     ('Root beer', 'A&W', 100, 275, 0, 0, 70),
     ('Coffee', NULL, 100, 250, 0, 0, 65),
     ('Tea', 'Lipton', 100, 225, 0, 0, 55);
-
-
 
 INSERT INTO ingredient (name, portion_size, calories, protein, fat, carbs) VALUES
     ('cornstarch', 100, 111, 4, 4, 16),
@@ -291,61 +289,77 @@ INSERT INTO ingredient (name, portion_size, calories, protein, fat, carbs) VALUE
     ('Brown, firm-packed, dark sugar', 100, 187, 6, 6, 28),
     ('Syrup', 100, 275, 8, 0, 58);
 
-
-
 -- ----------->   EXMAPLE USER DATA   <--------------------------------
--- Anna's password: haslo
-INSERT INTO app_user  (USERNAME, EMAIL, PASSWORD_HASH, TYPE, IS_VERIFIED) VALUES ('anowakforever', 'annanowak@gmail.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser', true);
-INSERT INTO verification_code (USER_ID, CODE, EXPIRATION_DATE) VALUES (1, "123456", '2025-01-01 00:00:00');
-INSERT INTO user_goal (GOAL_TYPE, GOAL_WEIGHT, DEADLINE) VALUES ("Get skinny", 55.5, '2025-01-01');
-INSERT INTO user_info 
-    (USER_ID, USER_GOAL_ID, NAME, SURNAME, AGE, WEIGHT, HEIGHT, LIFESTYLE) VALUES
-    (1, 1, "Anna", "Nowak", 18,  60.0, 165, "Active" );
 
--- ----------->   EXAMPLE DAILY LIMITS FOR ANNA NOWAK <-------------------------------
-INSERT INTO daily_limits 
-    (CALORIE_LIMIT, PROTEIN_LIMIT, FAT_LIMIT, CARB_LIMIT, WATER_GOAL, USER_ID) 
-VALUES 
-    (2000, 100, 70, 250, 3000, 1);
-   
+-- All example users have password: 'haslo'
+INSERT INTO app_user (username, email, password_hash, type, is_verified, forgotten_password_code) VALUES
+    ('anowakforever', 'annanowak@gmail.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser', true, '000000'),
+    ('jan_kowalski', 'jan.kowalski@email.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser', true, 'F8G1H3I5J'),
+    ('ewa_nowak', 'ewa.nowak@email.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser', true, 'Q4R7S9T1U'),
+    ('piotr_wisniewski', 'piotr.wisniewski@email.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser', true, 'B2C4D6E8F'),
+    ('maria_dabrowska', 'maria.dabrowska@email.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser', true, 'L9M0N2P4Q'),
+    ('tomasz_lewandowski', 'tomasz.lewandowski@email.com', '$2a$10$gBuZYzI9c3GtU8exqV6O4ugkQehletVzjs.kjJhun3W4qu17dEU.C', 'exampleuser', true, 'W4X7Y9Z1A');
+
+INSERT INTO user_goal (goal_type, goal_weight, deadline) VALUES
+    ("Get skinny", 55.5, '2025-01-01'), ('weight_loss', 75.0, '2025-12-31'), ('muscle_gain', 65.0, '2025-10-15'),
+    ('maintenance', 80.0, '2025-09-30'), ('weight_loss', 58.0, '2025-11-20'), ('muscle_gain', 85.0, '2026-01-15');
+
+INSERT INTO user_info (user_id, user_goal_id, name, surname, age, weight, height, lifestyle) VALUES
+    (1, 1, "Anna", "Nowak", 18,  60.0, 165, "Active" ),  (2, 2, 'Jan', 'Kowalski', 28, 82.5, 178, 'Active'), (3, 3, 'Ewa', 'Nowak', 24, 58.0, 165, 'Moderate'),
+    (4, 4, 'Piotr', 'Wiśniewski', 35, 88.0, 185, 'Sedentary'), (5, 5, 'Maria', 'Dąbrowska', 29, 62.5, 170, 'Very Active'), (6, 6, 'Tomasz', 'Lewandowski', 31, 78.0, 180, 'Active');
+
+INSERT INTO user_preferences (user_id, language, darkmode, font, notifications) VALUES
+    (1, 'eng', false, 'Arial', true), (2, 'eng', true, 'Arial', true), (3, 'eng', false, 'Helvetica', false),
+    (4, 'eng', true, 'Times New Roman', true), (5, 'eng', false, 'Calibri', true), (6, 'eng', true, 'Verdana', false);
+
+INSERT INTO verification_code (user_id, code, expiration_date) VALUES
+    (1, "123456", '2025-01-01 00:00:00'),    (2, 'M8N0P2Q4R', '2025-06-05 23:49:00'),  (3, 'S6T8U0V2W', '2025-06-05 23:49:00'),
+    (4, 'X4Y6Z8A0B', '2025-06-05 23:49:00'), (5, 'C2D4E6F8G', '2025-06-05 23:49:00'), (6, 'H0I2J4K6L', '2025-06-05 23:49:00');
+
 -- ----------->   EXMAPLE MEAL DATA   <--------------------------------
 
-INSERT INTO meal (user_id, meal_type_id, meal_date, name, description)
-VALUES 
-    (1, 1, '2025-10-02 00:00:00', 'Oatmeal Breakfast', 'Oatmeal with milk and banana'),
-    (1, 2, '2025-02-01 01:00:00', 'Chicken Salad', 'Chicken breast, lettuce, tomato, olive oil'),
-    (1, 3, '2025-05-06 02:00:00', 'Vegetable Rice', 'Rice with broccoli and carrots'),
-    (1, 4, '2025-03-17 03:00:00', 'Grilled Salmon Supper', 'Salmon fillet with asparagus and quinoa'),
-    (1, 5, '2025-02-21 04:00:00', 'Protein Snack Pack', 'Almonds, Greek yogurt, and blueberries'),
-    (1, 2, '2025-01-09 05:00:00', 'Turkey Club Lunch', 'Whole wheat sandwich with turkey bacon and avocado');
-
-insert into water_intake  (intake_date, user_id, water_amount) VALUES
-	('2025-03-17 00:00:00', 1, 200),
-    ('2025-10-02 01:00:00', 1, 50),
-    ('2025-02-01 02:00:00', 1, 1500),
-    ('2025-01-09 03:00:00', 1, 200);
+INSERT INTO meal (user_id, meal_type_id, meal_date, name, description) VALUES 
+    (1, 1, '2025-06-12 00:00:00', 'Oatmeal Breakfast', 'Oatmeal with milk and banana'),
+    (1, 2, '2025-06-12 01:00:00', 'Chicken Salad', 'Chicken breast, lettuce, tomato, olive oil'),
+    (1, 3, '2025-06-12 02:00:00', 'Vegetable Rice', 'Rice with broccoli and carrots'),
+    (1, 4, '2025-06-12 03:00:00', 'Grilled Salmon Supper', 'Salmon fillet with asparagus and quinoa'),
+    (1, 5, '2025-06-11 04:00:00', 'Protein Snack Pack', 'Almonds, Greek yogurt, and blueberries'),
+    (1, 2, '2025-06-08 05:00:00', 'Turkey Club Lunch', 'Whole wheat sandwich with turkey bacon and avocado'),
+    (1, 1, '2025-06-10 08:00:00', 'Protein Breakfast', 'High protein morning meal with eggs and cheese'),
+	(1, 2, '2025-06-10 13:00:00', 'Mediterranean Lunch', 'Light lunch with olive oil and ham'),
+	(1, 3, '2025-06-10 19:00:00', 'Hearty Dinner', 'Satisfying evening meal with bacon and vegetables'),
+	(1, 1, '2025-06-09 07:30:00', 'Dairy Morning', 'Calcium rich breakfast with milk and cheese'),
+	(1, 2, '2025-06-09 12:30:00', 'Fish Lunch', 'Healthy seafood lunch with tuna and vegetables'),
+	(1, 3, '2025-06-09 18:30:00', 'Comfort Dinner', 'Traditional dinner with sausage and sides'),
+	(1, 1, '2025-06-11 08:30:00', 'Quick Breakfast', 'Fast morning meal with processed foods'),
+	(1, 2, '2025-06-11 14:00:00', 'Snack Lunch', 'Light lunch with chips and juice'),
+	(1, 3, '2025-06-11 20:00:00', 'Simple Dinner', 'Easy dinner with canned foods'),
+	(1, 1, '2025-06-07 07:00:00', 'Healthy Start', 'Nutritious breakfast with skim milk and fruit'),
+	(1, 2, '2025-06-07 12:00:00', 'Gourmet Lunch', 'Refined lunch with specialty cheeses'),
+	(1, 3, '2025-06-07 18:00:00', 'Seafood Dinner', 'Ocean-fresh dinner with sardines and sides'),
+	(1, 1, '2025-06-06 09:00:00', 'Energy Breakfast', 'High-energy morning meal with cream and oils'),
+	(1, 2, '2025-06-06 13:30:00', 'Meat Lunch', 'Protein-packed lunch with various meats'),
+	(1, 3, '2025-06-06 19:30:00', 'Vegetable Dinner', 'Plant-based dinner with mushrooms and peppers'),
+	(1, 5, '2025-06-12 08:00:00', 'Chocolate Musse', 'quick snack'),
+    (1, 1, '2025-06-13 08:00:00', 'Morning Energy Bowl', 'Nutritious breakfast with cereals and milk'),
+    (1, 2, '2025-06-13 13:00:00', 'Hearty Lunch Combo', 'Satisfying midday meal with soup and bread'),
+    (1, 3, '2025-06-13 19:00:00', 'Classic Dinner Plate', 'Traditional evening meal with meat and vegetables'),
+    (1, 4, '2025-06-13 21:30:00', 'Light Evening Bite', 'Simple supper with cheese and crackers'),
+    (1, 5, '2025-06-13 15:30:00', 'Sweet Afternoon Treat', 'Delicious snack with nuts and chocolate');
     
 INSERT INTO meal_content (ingredient_id, meal_id, ingredient_amount) VALUES
-    (192, 1, 50),
-    (1, 1, 150),
-    (168, 1, 100),
-    (120, 2, 100),
-    (150, 2, 50), 
-    (162, 2, 50), 
-    (48, 2, 10),
-    (190, 3, 100), 
-    (137, 3, 50),  
-    (140, 3, 50),
-    (131, 4, 150),
-    (137, 4, 100),
-    (190, 4, 80),
-    (220, 5, 50),
-    (2, 5, 200),
-    (177, 5, 100),
-    (122, 6, 100),
-    (15, 6, 80),
-    (212, 6, 50);
+    (192, 1, 50),   (1, 1, 150),    (168, 1, 100), (120, 2, 100), (150, 2, 50),  (162, 2, 50),  (48, 2, 10), (190, 3, 100),  (137, 3, 50),  
+    (140, 3, 50),   (131, 4, 150),  (137, 4, 100), (190, 4, 80), (220, 5, 50), (2, 5, 200), (177, 5, 100), (122, 6, 100), (15, 6, 80), (212, 6, 50),
+    (12, 1, 150),   (13, 1, 100),   (1, 1, 200), (24, 2, 50), (30, 2, 120), (38, 2, 80), (28, 3, 100), (39, 3, 150), (40, 3, 100), (2, 4, 250),
+	(14, 4, 80),    (10, 4, 100),   (37, 5, 150), (43, 5, 200), (42, 5, 150), (33, 6, 120), (46, 6, 100), (44, 6, 200), (16, 7, 100), (41, 7, 150),
+	(45, 7, 100),   (35, 8, 120),   (34, 8, 100), (27, 8, 80), (7, 9, 200), (43, 9, 180), (17, 10, 100), (18, 10, 80), (36, 11, 150), (31, 11, 100),
+	(11, 12, 150),  (23, 12, 50),   (32, 12, 120), (19, 13, 80), (20, 13, 60), (29, 14, 150), (32, 14, 100), (39, 15, 200), (40, 15, 150),
+    (50, 23, 100),  (1, 23, 250),   (48, 23, 150), (10, 23, 100), (58, 24, 200), (51, 24, 80), (28, 24, 120), (39, 24, 100), (30, 25, 150), (38, 25, 120), 
+    (40, 25, 100),  (24, 25, 50),   (12, 26, 100), (51, 26, 60), (42, 26, 150), (70, 27, 80), (85, 27, 60), (72, 27, 100), (79, 27, 50), (77, 22, 76);
 
+INSERT INTO daily_limits (user_id, calorie_limit, protein_limit, fat_limit, carb_limit, water_goal) VALUES
+    (1, 2100, 105, 70, 263, 2500), (2, 2800, 140, 93, 350, 3200), (3, 1900, 95, 63, 238, 2300),
+    (4, 2200, 110, 73, 275, 2800), (5, 2300, 115, 77, 288, 2600), (6, 2600, 130, 87, 325, 3000);
 
 -- ----------->   EXMAPLE RECIPE DATA   <--------------------------------
 
@@ -354,11 +368,81 @@ INSERT INTO recipe (name, description) VALUES
     ('Chicken Stir-Fry', 'Asian-style chicken with vegetables'),
     ('Greek Salad', 'Fresh Mediterranean salad with feta'),
     ('Beef Chili', 'Spicy chili con carne with beans'),
-    ('Fruit Smoothie', 'Refreshing mixed fruit drink');
+    ('Fruit Smoothie', 'Refreshing mixed fruit drink'),
+    ('Bacon & Eggs Breakfast', 'Classic American breakfast with crispy bacon'),
+    ('Tuna Salad Sandwich', 'Protein-rich lunch with canned tuna'),
+    ('Creamy Mushroom Soup', 'Rich and hearty soup with mushrooms'),
+    ('Chocolate Chip Cookies', 'Sweet homemade cookies with chocolate'),
+    ('Ham & Cheese Omelet', 'Fluffy eggs with ham and melted cheese'),
+    ('Sardine Toast', 'Nutritious open-faced sandwich'),
+    ('Peanut Butter Smoothie', 'Protein-packed drink with nuts'),
+    ('Beef Chili Supreme', 'Spicy meat dish with beans'),
+    ('Caesar Salad', 'Classic salad with cheese and dressing'),
+    ('Apple Pie Delight', 'Traditional American dessert'),
+    ('Chicken Noodle Soup', 'Comforting soup with tender chicken'),
+    ('Chocolate Fudge Cake', 'Rich dessert with chocolate layers'),
+    ('Greek Yogurt Bowl', 'Healthy breakfast with nuts and honey'),
+    ('Fish & Chips', 'Crispy fried fish with potato chips'),
+    ('Vegetable Stir-Fry', 'Fresh mixed vegetables with oil');
 
 INSERT INTO recipe_content (recipe_id, ingredient_id, ingredient_amount) VALUES
-    (1, 192, 200), (1, 1, 300),   (1, 6, 2),     (1, 206, 10),  (1, 168, 50),
-    (2, 120, 400), (2, 137, 200), (2, 140, 150), (2, 162, 100), (2, 48, 20),
-    (3, 150, 200), (3, 162, 100), (3, 212, 150), (3, 12, 100),  (3, 48, 50),
-    (4, 110, 500), (4, 133, 300), (4, 158, 200), (4, 162, 100), (4, 205, 10), 
-    (5, 1, 200),   (5, 168, 100), (5, 177, 150), (5, 173, 100), (5, 182, 50); 
+    (1, 192, 200),  (1, 1, 300),    (1, 6, 2),      (1, 206, 10),   (1, 168, 50),
+    (2, 120, 400),  (2, 137, 200),  (2, 140, 150),  (2, 162, 100),  (2, 48, 20),
+    (3, 150, 200),  (3, 162, 100),  (3, 212, 150),  (3, 12, 100),   (3, 48, 50),
+    (4, 110, 500),  (4, 133, 300),  (4, 158, 200),  (4, 162, 100),  (4, 205, 10), 
+    (5, 1, 200),    (5, 168, 100),  (5, 177, 150),  (5, 173, 100),  (5, 182, 50),
+    (6, 28, 150),   (6, 12, 100),   (6, 1, 200),    (6, 20, 10),    (6, 51, 80),
+    (7, 37, 200),   (7, 22, 50),    (7, 51, 60),    (7, 12, 80),    (7, 26, 30),
+    (8, 39, 300),   (8, 11, 150),   (8, 1, 200),    (8, 20, 15),    (8, 51, 40),
+    (9, 72, 120),   (9, 1, 100),    (9, 20, 20),    (9, 74, 80),    (9, 75, 60),
+    (10, 30, 200),  (10, 13, 120),  (10, 1, 150),   (10, 20, 15),   (10, 51, 50),
+    (11, 36, 180),  (11, 51, 80),   (11, 24, 20),   (11, 40, 100),  (11, 26, 40),
+    (12, 86, 150),  (12, 1, 250),   (12, 85, 100),  (12, 76, 80),   (12, 42, 100),
+    (13, 58, 300),  (13, 30, 250),  (13, 57, 200),  (13, 40, 150),  (13, 24, 30),
+    (14, 13, 150),  (14, 26, 60),   (14, 40, 200),  (14, 24, 40),   (14, 51, 100),
+    (15, 42, 200),  (15, 76, 150),  (15, 78, 100),  (15, 65, 120),  (15, 75, 80),
+    (16, 59, 250),  (16, 39, 200),  (16, 1, 150),   (16, 40, 100),  (16, 51, 60),
+    (17, 63, 200),  (17, 72, 150),  (17, 1, 200),   (17, 20, 25),   (17, 74, 100),
+    (18, 1, 300),   (18, 85, 120),  (18, 76, 100),  (18, 83, 80),   (18, 42, 150),
+    (19, 34, 200),  (19, 41, 150),  (19, 24, 30),   (19, 26, 40),   (19, 51, 80),
+    (20, 39, 250),  (20, 40, 200),  (20, 24, 40),   (20, 26, 30),   (20, 38, 150);
+
+-- ----------->   EXMAPLE WATER INTAKE DATA   <--------------------------------
+
+INSERT INTO water_intake (intake_date, user_id, water_amount) VALUES
+	('2025-06-13 08:00:00', 1, 500), ('2025-06-02 16:45:00', 1, 600),  ('2025-06-01 12:30:00', 1, 750), ('2025-06-01 20:15:00', 1, 400), ('2025-06-02 07:30:00', 1, 650),
+	('2025-06-12 11:00:00', 1, 800), ('2025-06-03 15:30:00', 1, 550),  ('2025-06-02 19:45:00', 1, 450), ('2025-06-03 08:15:00', 1, 700), ('2025-06-03 13:00:00', 1, 900),
+	('2025-06-11 17:30:00', 1, 350), ('2025-06-04 21:00:00', 1, 300),  ('2025-06-09 09:00:00', 1, 850), ('2025-06-04 14:15:00', 1, 600), ('2025-06-04 18:30:00', 1, 500),
+	('2025-06-10 07:45:00', 1, 750), ('2025-06-01 09:30:00', 2, 300),  ('2025-06-01 14:00:00', 2, 400), ('2025-06-01 18:30:00', 2, 250), ('2025-06-02 08:15:00', 2, 350),
+	('2025-06-09 13:45:00', 2, 450), ('2025-06-02 19:00:00', 2, 200),  ('2025-06-03 10:00:00', 2, 500), ('2025-06-03 15:30:00', 2, 300), ('2025-06-01 10:15:00', 3, 250),
+	('2025-06-08 15:30:00', 3, 350), ('2025-06-01 20:00:00', 3, 200),  ('2025-06-02 08:45:00', 3, 300), ('2025-06-02 14:30:00', 3, 400), ('2025-06-02 18:15:00', 3, 150),
+	('2025-06-07 11:00:00', 4, 200), ('2025-06-01 16:15:00', 4, 300),  ('2025-06-01 21:30:00', 4, 150), ('2025-06-02 09:30:00', 4, 250), ('2025-06-01 12:30:00', 5, 180),
+	('2025-06-06 17:45:00', 5, 280), ('2025-06-01 22:00:00', 5, 120),  ('2025-06-02 10:15:00', 5, 220), ('2025-06-02 11:00:00', 6, 200), ('2025-06-02 17:15:00', 6, 300),
+	('2025-06-05 21:30:00', 6, 50),  ('2025-06-03 14:30:00', 6, 350),  ('2025-06-03 19:45:00', 6, 150);
+
+-- ----------->   EXMAPLE EXERCISE DATA   <--------------------------------
+
+INSERT INTO exercise_info (metabolic_equivalent, name) VALUES
+	(1.5, 'Writing, desk work, using computer'), (2.0, 'Walking slowly'), (2.5, 'Walking (3.2 km/h)'), (2.3, 'Playing piano'), (1.5, 'Light seated work'),
+	(1.0, 'Driving a car'), (1.0, 'Lying down'), (3.0, 'Walking (4.8 km/h)'), (3.3, 'Yoga session with asanas and pranayama'), (3.5, 'Light cycling'),
+	(3.5, 'Housework'), (2.9, 'Volleyball (recreational)'), (3.5, 'Slow cycling'), (3.0, 'Sweeping or mopping floors, vacuuming carpets'), (4.5, 'March (6.4 km/h)'),
+	(4.5, 'Lawn mowing'), (4.5, 'Slow swimming'), (4.9, 'Wood chopping'), (5.0, 'Tennis doubles'), (5.0, 'Weight lifting (moderate intensity)'),
+	(5.5, 'Ice skating'), (5.7, 'Fast cycling'), (5.8, 'Sexual activity, aged 22'), (6.0, 'Aerobic dancing, medium effort'), (6.0, 'Aerobics'),
+	(6.9, 'Mountain walking without load'), (7.0, 'Fast swimming'), (7.4, 'Sun salutation (vigorous with transition jumps)'), (8.0, 'Basketball game'), (8.0, 'Brisk walking (8 km/h)'),
+	(8.0, 'Swimming moderately to hard'), (8.8, 'Jogging (9.0 km/h)'), (9.8, 'Football'), (10.3, 'Football (from English list)'),
+	(10.5, 'Rope jumping (84/min)'), (11.0, 'Rope jumping (100/min)'), (11.2, 'Jogging (10.9 km/h)');
+
+
+INSERT INTO user_exercise (user_id, exercise_id, activity_date, duration) VALUES
+	(1, 1,  '2025-06-11 08:30:00', 30), (1, 2,  '2025-06-12 18:00:00', 45), (1, 3, '2025-06-13 07:15:00', 60),  (1, 4, '2025-06-13 12:00:00', 40),  (1, 5, '2025-06-12 09:00:00', 50),      
+	(1, 6,  '2025-06-11 17:30:00', 35), (1, 7,  '2025-06-10 10:00:00', 30), (1, 8, '2025-06-08 15:45:00', 25),  (1, 9, '2025-06-09 19:00:00', 30),  (1, 10, '2025-06-10 08:00:00', 60),
+	(1, 15, '2025-06-10 07:00:00', 45), (1, 22, '2025-06-12 19:30:00', 60), (2, 8, '2025-06-03 06:45:00', 30),  (2, 33, '2025-06-04 20:15:00', 40), (2, 12, '2025-06-05 08:30:00', 35),
+	(1, 28, '2025-06-10 18:00:00', 50), (1, 5,  '2025-06-12 07:30:00', 25), (2, 19, '2025-06-08 16:45:00', 55), (2, 31, '2025-06-09 09:15:00', 40), (2, 14, '2025-06-10 17:00:00', 35), 
+	(1, 17, '2025-06-02 18:45:00', 35), (3, 25, '2025-06-03 08:00:00', 45), (3, 9, '2025-06-04 19:30:00', 30),  (3, 21, '2025-06-05 07:15:00', 60), (3, 36, '2025-06-06 16:30:00', 40),
+	(1, 11, '2025-06-07 09:45:00', 25), (3, 27, '2025-06-08 20:00:00', 50), (3, 4, '2025-06-09 06:00:00', 35),  (3, 18, '2025-06-10 15:30:00', 45), (4, 7, '2025-06-01 08:15:00', 40),
+	(1, 24, '2025-06-06 17:30:00', 55), (4, 13, '2025-06-03 09:30:00', 30), (4, 32, '2025-06-04 18:15:00', 45), (4, 6, '2025-06-05 07:45:00', 35),  (4, 20, '2025-06-06 19:45:00', 50),
+	(1, 29, '2025-06-08 08:00:00', 25), (4, 16, '2025-06-08 17:15:00', 40), (4, 35, '2025-06-09 10:30:00', 60), (4, 23, '2025-06-10 16:00:00', 30), (5, 26, '2025-06-01 05:45:00', 65),
+	(5, 10, '2025-06-02 20:30:00', 35), (5, 34, '2025-06-03 06:15:00', 50), (5, 1, '2025-06-04 19:00:00', 40),  (5, 30, '2025-06-05 08:45:00', 45), (5, 37, '2025-06-06 17:45:00', 30),
+	(5, 8,  '2025-06-07 07:00:00', 55), (5, 22, '2025-06-08 18:30:00', 25), (5, 15, '2025-06-09 09:00:00', 40), (5, 31, '2025-06-10 20:15:00', 50), (6, 29, '2025-06-01 10:00:00', 30),
+	(6, 2,  '2025-06-02 16:45:00', 45), (6, 33, '2025-06-03 08:30:00', 35), (6, 12, '2025-06-04 21:00:00', 60), (6, 25, '2025-06-05 06:30:00', 40), (6, 17, '2025-06-06 18:45:00', 50),
+	(6, 31, '2025-06-07 09:15:00', 25), (6, 4,  '2025-06-08 19:30:00', 35), (6, 28, '2025-06-09 07:30:00', 45), (3, 3, '2025-06-01 06:30:00', 50),  (6, 14, '2025-06-10 15:45:00', 55);

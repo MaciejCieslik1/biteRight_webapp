@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +16,6 @@ public class UserExerciseDTO {
     private int exerciseInfoId;
     private LocalDateTime activityDate;
     private int duration;
-    private int caloriesBurnt;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Integer caloriesBurnt;
 }

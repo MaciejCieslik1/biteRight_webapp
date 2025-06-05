@@ -46,4 +46,10 @@ public class UserExercise {
         this.duration = duration;
         this.caloriesBurnt = caloriesBurnt;
     }
+        public UserExercise(User user, ExerciseInfo exerciseInfo, LocalDateTime activityDate, Integer duration) {
+        this.user = user;
+        this.exerciseInfo = exerciseInfo;
+        this.activityDate = activityDate;
+        this.duration = duration;
+    }
 }

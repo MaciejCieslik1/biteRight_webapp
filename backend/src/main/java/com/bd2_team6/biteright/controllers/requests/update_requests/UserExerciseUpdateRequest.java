@@ -12,5 +12,4 @@ import java.time.LocalDateTime;
 public class UserExerciseUpdateRequest {
     private LocalDateTime activityDate;
     private int duration;
-    private int caloriesBurnt;
 }

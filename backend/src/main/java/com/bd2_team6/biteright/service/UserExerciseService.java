@@ -6,12 +6,15 @@ import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfo;
 import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfoRepository;
 import com.bd2_team6.biteright.entities.user.User;
 import com.bd2_team6.biteright.entities.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bd2_team6.biteright.entities.user_exercise.UserExercise;
 import com.bd2_team6.biteright.entities.user_exercise.UserExerciseRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,16 +25,21 @@ public class UserExerciseService {
     private final UserRepository userRepository;
     private final ExerciseInfoRepository exerciseInfoRepository;
     private final UserExerciseRepository userExerciseRepository;
+    @Autowired
+    private EntityManager entityManager;
 
+    @Transactional
     public UserExercise createUserExercise(String username, UserExerciseCreateRequest request) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found"));
         ExerciseInfo exerciseInfo = exerciseInfoRepository.findById(request.getExerciseInfoId()).orElseThrow(() ->
                 new IllegalArgumentException("Exercise info not found"));
-        UserExercise userExercise = new UserExercise(user, exerciseInfo, request.getActivityDate(), request.getDuration(),
-                request.getCaloriesBurnt());
+        UserExercise userExercise = new UserExercise(user, exerciseInfo, request.getActivityDate(), request.getDuration());
+        UserExercise savedUserExercise = userExerciseRepository.save(userExercise);
 
-        userExerciseRepository.save(userExercise);
-        return userExercise;
+        userExerciseRepository.flush();
+        entityManager.refresh(savedUserExercise);
+
+        return savedUserExercise;
     }
 
     public Page<UserExercise> findUserExercisesByUsername(String username, Pageable pageable) {
@@ -86,7 +94,6 @@ public class UserExerciseService {
         if (userExercise.getUser().getId().equals(userId)) {
             userExercise.setActivityDate(request.getActivityDate());
             userExercise.setDuration(request.getDuration());
-            userExercise.setCaloriesBurnt(request.getCaloriesBurnt());
             userExerciseRepository.save(userExercise);
             return userExercise;
         }
