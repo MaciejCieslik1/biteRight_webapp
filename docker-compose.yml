@@ -43,6 +43,7 @@ services:
       - back-network
     command:
       - --mysql-native-password=ON
+      - --transaction-isolation=READ-COMMITTED
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
       interval: 10s

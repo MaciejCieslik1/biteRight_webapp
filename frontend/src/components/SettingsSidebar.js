@@ -1,11 +1,12 @@
 import React from 'react'
 import { FaUser, FaIdBadge, FaTrophy, FaCog } from 'react-icons/fa'
+import { useNavigate } from "react-router-dom";
 import './SettingsSidebar.css'
 
 const SettingsSidebar = ({ setActiveTab, activeTab }) => {
-
+  const navigate = useNavigate();
   const handleBack = () => {
-    // navigation logic 
+    navigate("/home");
   }
 
   return (
