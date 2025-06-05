@@ -13,5 +13,4 @@ public class UserExerciseCreateRequest {
     private int exerciseInfoId;
     private LocalDateTime activityDate;
     private int duration;
-    private int caloriesBurnt;
 }
