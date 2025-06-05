@@ -1,13 +1,14 @@
 package com.bd2_team6.biteright.service;
 
+import com.bd2_team6.biteright.controllers.DTO.ExerciseInfoDTO;
 import com.bd2_team6.biteright.controllers.requests.create_requests.ExerciseInfoCreateRequest;
 import com.bd2_team6.biteright.controllers.requests.update_requests.ExerciseInfoUpdateRequest;
 import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfo;
 import com.bd2_team6.biteright.entities.exercise_info.ExerciseInfoRepository;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,13 +16,15 @@ public class ExerciseInfoService {
 
     private final ExerciseInfoRepository exerciseInfoRepository;
 
-    @Autowired
     public ExerciseInfoService(ExerciseInfoRepository exerciseInfoRepository) {
         this.exerciseInfoRepository = exerciseInfoRepository;
     }
 
-    public Set<ExerciseInfo> findExerciseInfoByName(String name) {
-        return exerciseInfoRepository.findByNameContainingIgnoreCase(name);
+    public Set<ExerciseInfoDTO> findExerciseInfoByName(String name) {
+        Set<ExerciseInfo> info = exerciseInfoRepository.findByNameContainingIgnoreCase(name);
+        return info.stream() 
+                .map(ExerciseInfoDTO::new)
+                .collect(Collectors.toSet());
     }
 
     public ExerciseInfo createExerciseInfo(ExerciseInfoCreateRequest request) {
