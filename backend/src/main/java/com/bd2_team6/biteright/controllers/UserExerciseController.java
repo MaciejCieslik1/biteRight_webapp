@@ -137,7 +137,7 @@ public class UserExerciseController {
     private UserExerciseDTO mapToDTO(UserExercise userExercise) {
         return new UserExerciseDTO(userExercise.getUserExerciseId(), userExercise.getUser().getId(),
                 userExercise.getExerciseInfo().getExerciseId(), userExercise.getActivityDate(),
-                userExercise.getDuration(), userExercise.getCaloriesBurnt());
+                userExercise.getDuration(), userExercise.getCaloriesBurnt(), userExercise.getExerciseInfo().getName());
     }
 
     private Page<UserExerciseDTO> mapToDTOPage(Page<UserExercise> page) {
