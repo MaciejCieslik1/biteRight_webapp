@@ -18,4 +18,5 @@ public class UserExerciseDTO {
     private int duration;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer caloriesBurnt;
+    private String activityName;
 }
