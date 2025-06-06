@@ -14,38 +14,48 @@ const ExerciseInfoForm = () => {
     handleSubmit,
   } = useExerciseInfoForm();
 
+  const handleLocalSubmit = async () => {
+    await handleSubmit();
+  };
+
   return (
-    <div className="exercise-form-container">
-      <h2>Create Exercise Info</h2>
-      <form onSubmit={handleSubmit} className="exercise-form">
-        <label htmlFor="name">Exercise Name</label>
+    <div className="exercise-create">
+      <div className="exercise-create-header">
+        <strong>Your exercise is not in the database?</strong>
+      </div>
+      <div className="exercise-create-header">You can create it here!</div>
+      <div className="exercise-create-content">
+        <div className="exercise-create-title">Create new exercise</div>
+
         <input
-          id="name"
           type="text"
+          placeholder="Exercise Name*"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          placeholder="e.g. Running"
         />
 
-        <label htmlFor="met">Metabolic Equivalent (MET)</label>
         <input
-          id="met"
           type="number"
           step="0.1"
+          placeholder="Metabolic Equivalent (MET)*"
           value={metabolicEquivalent}
           onChange={(e) => setMetabolicEquivalent(e.target.value)}
           required
-          placeholder="e.g. 7.5"
         />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Submitting..." : "Create Exercise Info"}
+        <button
+          className="create-exercise-btn"
+          type="button"
+          onClick={handleLocalSubmit}
+          disabled={loading}
+        >
+          {loading ? "Creating..." : "Create Exercise"}
         </button>
 
         {successMsg && <p className="success">{successMsg}</p>}
         {errorMsg && <p className="error">{errorMsg}</p>}
-      </form>
+      </div>
     </div>
   );
 };

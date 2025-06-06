@@ -3,6 +3,7 @@ import { UserContext } from "../../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useHomeExercises } from "../../../hooks/useHomeExercises";
+import "../styles/HomeExerciseSection.css";
 
 const ExerciseSection = ({ selectedDate }) => {
   const navigate = useNavigate();
@@ -16,34 +17,45 @@ const ExerciseSection = ({ selectedDate }) => {
   };
 
   return (
-    <section>
-      <h1>Twoje ćwiczenia</h1>
-
-      {loading && <p>Ładowanie ćwiczeń...</p>}
-      {error && <p className="error">Błąd: {error}</p>}
+    <div className="home-exercise-section">
+      <div className="exercise-section-title">Exercise</div>
 
       {!loading && !error && (
         <>
-          <h2>Ćwiczenia z dnia: {dateStr}</h2>
           {exercises.length === 0 ? (
-            <p>Brak ćwiczeń dla wybranego dnia.</p>
+            <div className="exercise-section-text"> No exercises added yet</div>
           ) : (
-            <ul>
-              {exercises.map((ex) => (
-                <li key={ex.userExerciseId}>
-                  <strong>ID ćwiczenia:</strong> {ex.exerciseId} |{" "}
-                  <strong>Data:</strong> {ex.activityDate} |{" "}
-                  <strong>Czas trwania:</strong> {ex.duration} min |{" "}
-                  <strong>Kalorie:</strong> {ex.caloriesBurnt}
-                </li>
-              ))}
-            </ul>
+            <div className="exercise-section-content">
+              <div className="exercise-section-items">
+                {exercises.map((ex) => (
+                  <div
+                    className="exercise-section-item"
+                    key={ex.userExerciseId}
+                  >
+                    <div className="exercise-section-item-name">
+                      <strong>name:</strong>
+                    </div>
+                    <div className="exercise-section-item-description">
+                      <strong>duration:</strong> {ex.duration} min
+                    </div>
+                    <div className="exercise-section-item-description">
+                      <strong>calories burnt:</strong> {ex.caloriesBurnt}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button
+                className="exercise-section-button"
+                onClick={goToExercisePage}
+              >
+                {" "}
+                +{" "}
+              </button>
+            </div>
           )}
         </>
       )}
-
-      <button onClick={goToExercisePage}>Go to Exercise Page</button>
-    </section>
+    </div>
   );
 };
 

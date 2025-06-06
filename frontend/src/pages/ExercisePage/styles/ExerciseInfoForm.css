@@ -1,54 +1,46 @@
-/* ExerciseInfoForm.css */
-
-.exercise-form-container {
-  max-width: 500px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #f9fafb;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+.exercise-create {
+  margin-top: 5rem;
 }
 
-.exercise-form-container h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
+.exercise-create-content {
+  background-color: rgb(243, 193, 205);
+  padding: 5%;
+  border-radius: 30px;
+  margin-top: 3%;
 }
 
-.exercise-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.exercise-create-header {
+  font-size: 1.2rem;
+  margin-left: 5%;
+  color: #333;
 }
 
-.exercise-form input {
+.exercise-create-title {
+  font-weight: bold;
+  margin-bottom: 2%;
+  color: #333;
+}
+
+.exercise-create-content input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  padding: 3%;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 30px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
-.exercise-form button {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 4px;
+.create-exercise-btn {
+  background-color: #fdf28e;
+  border: solid 1px #ccc;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+}
+
+.create-exercise-btn:hover {
+  background-color: #f8e751;
   cursor: pointer;
-}
-
-.exercise-form button:hover {
-  background-color: #1e40af;
-}
-
-.exercise-form .success {
-  color: #16a34a;
-  margin-top: 1rem;
-}
-
-.exercise-form .error {
-  color: #dc2626;
-  margin-top: 1rem;
 }

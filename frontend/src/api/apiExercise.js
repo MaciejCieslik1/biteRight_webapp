@@ -120,3 +120,44 @@ export const fetchExerciseInfoByName = async (name) => {
 
   return await response.json();
 };
+
+export async function deleteUserExercise(userExerciseId) {
+  const token = localStorage.getItem("jwt");
+
+  if (!token) {
+    throw new Error("JWT token not found");
+  }
+
+  const url = `http://localhost:8080/userExercise/delete/${userExerciseId}`;
+
+  console.debug("[deleteUserExercise] === START ===");
+  console.debug("[deleteUserExercise] URL:", url);
+  console.debug("[deleteUserExercise] JWT token:", token);
+
+  try {
+    const res = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.debug("[deleteUserExercise] Response status:", res.status);
+
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error("[deleteUserExercise] Error response:", errText);
+      throw new Error(`Failed to delete user exercise: ${errText}`);
+    }
+
+    const text = await res.text();
+    console.debug("[deleteUserExercise] Success response:", text);
+
+    return text;
+  } catch (error) {
+    console.error("[deleteUserExercise] Exception caught:", error);
+    throw error;
+  } finally {
+    console.debug("[deleteUserExercise] === END ===");
+  }
+}

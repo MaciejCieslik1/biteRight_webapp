@@ -1,28 +1,40 @@
-.exercise-list-container {
-  padding: 1rem;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+.exercise-list {
+  margin-top: 2rem;
+  border-radius: 30px;
+  background-color: whitesmoke;
+  min-height: 400px;
 }
 
-.exercise-list-container h2 {
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
+.exercise-list-title {
+  padding: 5% 5% 0 5%;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
-.exercise-list-container ul {
-  list-style: none;
-  padding-left: 0;
+.exercise-list ul {
+  margin-left: 5%;
+  padding-left: 1.2rem;
 }
 
-.exercise-list-container li {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  background: #fff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+.exercise-list-item {
+  font-size: 1.2rem;
 }
 
-.error {
-  color: red;
+.exercise-list-item:last-child {
+  border-bottom: none;
+}
+
+.exercise-delete-btn {
+  background: none;
+  border: none;
+  color: #d9534f;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.exercise-delete-btn:hover {
+  color: #c9302c;
 }

@@ -2,19 +2,19 @@ import { useState } from "react";
 import { createUserExercise } from "../api/apiExercise";
 
 export function useUserExerciseForm(dateStr, onSuccess) {
-  const [exerciseInfoId, setExerciseInfoId] = useState("");
+  const [exerciseId, setExerciseId] = useState("");
   const [duration, setDuration] = useState("");
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // zatrzymujemy domyślne submitowanie formularza
     setError(null);
     setSuccessMsg(null);
 
     const isoDateTime = `${dateStr}T00:00:00`;
     const data = {
-      exerciseInfoId: parseInt(exerciseInfoId),
+      exerciseInfoId: parseInt(exerciseId),
       activityDate: isoDateTime,
       duration: parseInt(duration),
     };
@@ -22,7 +22,7 @@ export function useUserExerciseForm(dateStr, onSuccess) {
     try {
       const response = await createUserExercise(data);
       setSuccessMsg("Ćwiczenie zostało dodane!");
-      setExerciseInfoId("");
+      setExerciseId("");
       setDuration("");
       if (onSuccess) onSuccess(response);
     } catch (err) {
@@ -31,8 +31,8 @@ export function useUserExerciseForm(dateStr, onSuccess) {
   };
 
   return {
-    exerciseInfoId,
-    setExerciseInfoId,
+    exerciseId,
+    setExerciseId,
     duration,
     setDuration,
     error,

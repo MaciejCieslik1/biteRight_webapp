@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useUserExerciseForm } from "../../hooks/useUserExerciseForm";
 import "./styles/UserExerciseForm.css";
 
-const UserExerciseForm = ({ onSuccess, dateStr }) => {
+const UserExerciseForm = ({
+  exerciseId: initialExerciseId,
+  onSuccess,
+  dateStr,
+}) => {
   const {
-    exerciseInfoId,
-    setExerciseInfoId,
+    exerciseId,
+    setExerciseId,
     duration,
     setDuration,
     error,
@@ -13,31 +17,35 @@ const UserExerciseForm = ({ onSuccess, dateStr }) => {
     handleSubmit,
   } = useUserExerciseForm(dateStr, onSuccess);
 
+  useEffect(() => {
+    if (initialExerciseId) {
+      setExerciseId(initialExerciseId);
+    }
+  }, [initialExerciseId, setExerciseId]);
+
   return (
-    <form className="user-exercise-form" onSubmit={handleSubmit}>
-      <h2>Dodaj Ćwiczenie</h2>
+    <div className="user-exercise-form-wrapper">
+      <form className="selected-exercise-form" onSubmit={handleSubmit}>
+        <div className="selected-exercise-header">
+          Adding: <strong>{"name"}</strong>
+        </div>
 
-      <label>ID ćwiczenia:</label>
-      <input
-        type="number"
-        value={exerciseInfoId}
-        onChange={(e) => setExerciseInfoId(e.target.value)}
-        required
-      />
+        <input
+          type="number"
+          placeholder="Duration (min)"
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+          min="0"
+        />
 
-      <label>Czas trwania (minuty):</label>
-      <input
-        type="number"
-        value={duration}
-        onChange={(e) => setDuration(e.target.value)}
-        required
-      />
+        <button type="submit" className="add-exercise-btn">
+          Add
+        </button>
 
-      <button type="submit">Zapisz ćwiczenie</button>
-
-      {error && <p className="error">{error}</p>}
-      {successMsg && <p className="success">{successMsg}</p>}
-    </form>
+        {error && <p className="status-msg error">{error}</p>}
+        {successMsg && <p className="status-msg success">{successMsg}</p>}
+      </form>
+    </div>
   );
 };
 

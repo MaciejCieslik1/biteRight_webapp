@@ -1,24 +1,36 @@
 import React from "react";
+import { FaTrash } from "react-icons/fa";
 import { useExerciseList } from "../../hooks/useExerciseList";
 import "./styles/ExerciseList.css";
 
 const ExerciseList = ({ dateStr, refreshTrigger }) => {
-  const { exercises, loading, error } = useExerciseList(
+  const { exercises, loading, error, deleteExercise } = useExerciseList(
     dateStr,
     refreshTrigger
   );
 
+  if (loading) return <p>Loading exercises...</p>;
+  if (error) return <p className="error">{error}</p>;
+  if (!exercises.length) return <p>No exercises added yet.</p>;
+
+  console.log("[ExerciseList] Rendering exercises:", exercises);
+
   return (
-    <div className="exercise-list-container">
-      <h2>Ćwiczenia z dnia: {dateStr}</h2>
-      {loading && <p>Ładowanie ćwiczeń...</p>}
-      {error && <p className="error">{error}</p>}
-      {exercises.length === 0 && !loading && !error && <p>Brak ćwiczeń.</p>}
+    <div className="exercise-list">
+      <div className="exercise-list-title">Exercises:</div>
       <ul>
-        {exercises.map((exercise, index) => (
-          <li key={exercise.id || index}>
-            <strong>name</strong> - {exercise.duration} min -{" "}
-            {exercise.caloriesBurnt} kcal
+        {exercises.map((exercise, idx) => (
+          <li key={exercise.id || idx} className="exercise-list-item">
+            <strong>{exercise.name}</strong>{" "}
+            {exercise.duration ? `– ${exercise.duration} min` : ""}{" "}
+            {exercise.caloriesBurnt ? `– ${exercise.caloriesBurnt} kcal` : ""}
+            <button
+              className="exercise-delete-btn"
+              onClick={() => deleteExercise(exercise.id)}
+              title="Delete exercise"
+            >
+              <FaTrash />
+            </button>
           </li>
         ))}
       </ul>

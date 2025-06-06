@@ -4,27 +4,37 @@ import ExerciseInfoForm from "./ExerciseInfoForm";
 import ExerciseList from "./ExerciseList";
 import UserExerciseForm from "./UserExerciseForm";
 import ExerciseSearch from "./ExerciseSearch";
+import Navbar from "../../components/NavBar";
+import Footer from "../../components/Footer";
+import "./styles/ExercisePage.css";
 
 const ExercisePage = () => {
   const location = useLocation();
   const dateStr = location.state?.dateStr || "";
-  console.debug("[ExercisePage] dateStr:", dateStr);
-
-  // Dodajemy trigger do przeładowania listy
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // Funkcja do wywołania po dodaniu ćwiczenia
-  const handleRefresh = () => setRefreshKey((prev) => prev + 1);
+  const handleRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   return (
-    <div>
-      <h1>Exercise Page</h1>
-      <p>Tu pojawi się szczegółowa lista ćwiczeń lub inne informacje.</p>
+    <div className="exercise-page">
+      <Navbar showButtons={false} showLogoutButton={true} />
+      <div className="exercise-page-container">
+        <div className="exercise-page-left">
+          <ExerciseSearch dateStr={dateStr} onSuccess={handleRefresh} />
+        </div>
 
-      <ExerciseInfoForm onSuccess={handleRefresh} />
-      <UserExerciseForm dateStr={dateStr} onSuccess={handleRefresh} />
-      <ExerciseList dateStr={dateStr} refreshTrigger={refreshKey} />
-      <ExerciseSearch />
+        <div className="exercise-page-middle">
+          <ExerciseList dateStr={dateStr} refreshTrigger={refreshKey} />
+        </div>
+
+        <div className="exercise-page-right">
+          <ExerciseInfoForm onSuccess={handleRefresh} />
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 };
