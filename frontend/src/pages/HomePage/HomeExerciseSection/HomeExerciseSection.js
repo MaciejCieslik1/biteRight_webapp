@@ -33,7 +33,7 @@ const ExerciseSection = ({ selectedDate }) => {
                     key={ex.userExerciseId}
                   >
                     <div className="exercise-section-item-name">
-                      <strong>name:</strong>
+                      <strong>{ex.activityName}</strong>
                     </div>
                     <div className="exercise-section-item-description">
                       <strong>duration:</strong> {ex.duration} min

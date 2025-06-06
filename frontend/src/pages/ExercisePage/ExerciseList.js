@@ -21,7 +21,7 @@ const ExerciseList = ({ dateStr, refreshTrigger }) => {
       <ul>
         {exercises.map((exercise, idx) => (
           <li key={exercise.id || idx} className="exercise-list-item">
-            <strong>{exercise.name}</strong>{" "}
+            <strong>{exercise.activityName}</strong>{" "}
             {exercise.duration ? `– ${exercise.duration} min` : ""}{" "}
             {exercise.caloriesBurnt ? `– ${exercise.caloriesBurnt} kcal` : ""}
             <button
