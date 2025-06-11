@@ -9,6 +9,11 @@ import ForgottenPasswordPage from "../pages/ForgottenPasswordPage/ForgottenPassw
 import PasswordResetPage from "../pages/PasswordResetPage/PasswordResetPage";
 import MealPage from "../pages/MealPage/MealPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
+import ProgressPage from "../pages/ProgressPage/ProgressPage";
+import RecipeListPage from "../pages/RecipesPage/RecipeListPage";
+import RecipeFormPage from "../pages/RecipesPage/RecipeFormPage";
+import RecipeViewModal from "../pages/RecipesPage/RecipeViewModal";
+
 
 const AppRoutes = () => {
   return (
@@ -22,6 +27,13 @@ const AppRoutes = () => {
       <Route path="/forgottenpasswordform" element={<ForgottenPasswordPage />} />
       <Route path="/passwordreset/:email/:code" element={<PasswordResetPage />} />
       <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/progress" element={<ProgressPage />} />
+      <Route path="/recipes" element={<RecipeListPage />} />
+      <Route path="/recipes/create" element={<RecipeFormPage />} />
+      <Route path="/recipes/view/:id" element={<RecipeViewModal />} />
+      <Route path="/recipes/edit/:id" element={<RecipeFormPage />} />
+
+
     </Routes>
   );
 };
