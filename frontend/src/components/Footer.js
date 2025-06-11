@@ -1,6 +1,6 @@
 import React from "react";
 import "./Footer.css";
-import { FaHome, FaReadme, FaCog } from "react-icons/fa";
+import { FaHome, FaReadme, FaCog, FaChartLine } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -20,6 +20,13 @@ const Footer = () => {
         onClick={() => navigate("/recipes")}
         >
           <FaReadme size={20} />
+        </button>
+        <button
+          className="footer-btn"
+          title="Progress"
+          onClick={() => navigate("/progress")}
+        >
+          <FaChartLine size={20} />
         </button>
         <button
           className="footer-btn"
