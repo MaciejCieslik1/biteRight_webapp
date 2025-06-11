@@ -2,6 +2,7 @@
   padding: 2rem;
   background-color: whitesmoke;
   font-family: 'Segoe UI', sans-serif;
+  margin-top: 70px;
 }
 
 .recipe-list-header {
@@ -14,13 +15,13 @@
 .create-btn {
   padding: 0.5rem 1rem;
   font-weight: bold;
-  background-color: #fdf28e;
+  background-color: #f3c1cd;
   border: 1px solid #ccc;
   border-radius: 10px;
   cursor: pointer;
 }
 .create-btn:hover {
-  background-color: #f8e751;
+  background-color: #f48fb1;
 }
 
 .search-input {

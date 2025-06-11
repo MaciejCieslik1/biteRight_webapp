@@ -7,6 +7,7 @@ import NavBar from "../../components/NavBar";
 import "./RecipePage.css";
 import "../MealPage/MealForm.css";
 import "../MealPage/MealPage.css";
+import Footer from "../../components/Footer";
 
 const RecipeFormPage = () => {
   const { id } = useParams();
@@ -249,6 +250,7 @@ const RecipeFormPage = () => {
           <RecipeIngredientCreate onStatus={(msg) => msg && alert(msg)} />
         </div>
       </div>
+      <Footer />
     </>
   );
 };

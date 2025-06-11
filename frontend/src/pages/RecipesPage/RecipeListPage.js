@@ -4,6 +4,7 @@ import RecipeCard from "./RecipeCard";
 import RecipeViewModal from "./RecipeViewModal";
 import "./RecipePage.css";
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 
 const RecipeListPage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const RecipeListPage = () => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const RECIPES_PER_PAGE = 10;
+  const RECIPES_PER_PAGE = 12;
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -114,6 +115,7 @@ const RecipeListPage = () => {
           onDelete={handleDelete}
         />
       )}
+      <Footer />
     </div>
   );
 };
