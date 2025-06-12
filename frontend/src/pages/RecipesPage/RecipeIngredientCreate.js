@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../MealPage/IngredientCreate.css";
+import "../MealPage/styles/IngredientCreate.css";
 
 const RecipeIngredientCreate = ({ onStatus }) => {
   const [name, setName] = useState("");
@@ -64,54 +64,57 @@ const RecipeIngredientCreate = ({ onStatus }) => {
       <div className="ingredient-create-header">You can create it here!</div>
       <div className="ingredient-create-content">
         <div className="ingredient-create-title">Create Ingredient</div>
-      <input
-        placeholder="Name*"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        placeholder="Brand"
-        value={brand}
-        onChange={(e) => setBrand(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Portion size (g)"
-        value={portionSize}
-        onChange={(e) => setPortionSize(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Calories"
-        value={calories}
-        onChange={(e) => setCalories(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Protein"
-        value={protein}
-        onChange={(e) => setProtein(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Fat"
-        value={fat}
-        onChange={(e) => setFat(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Carbs"
-        value={carbs}
-        onChange={(e) => setCarbs(e.target.value)}
-      />
+        <input
+          placeholder="Name*"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          placeholder="Brand"
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Portion size (g)"
+          value={portionSize}
+          onChange={(e) => setPortionSize(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Calories"
+          value={calories}
+          onChange={(e) => setCalories(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Protein"
+          value={protein}
+          onChange={(e) => setProtein(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Fat"
+          value={fat}
+          onChange={(e) => setFat(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Carbs"
+          value={carbs}
+          onChange={(e) => setCarbs(e.target.value)}
+        />
 
-      <button className="create-ingredient-btn" onClick={handleCreate} disabled={loading}>
-        {loading ? "Creating..." : "Create"}
-      </button>
+        <button
+          className="create-ingredient-btn"
+          onClick={handleCreate}
+          disabled={loading}
+        >
+          {loading ? "Creating..." : "Create"}
+        </button>
 
-      {error && <p className="error">{error}</p>}
+        {error && <p className="error">{error}</p>}
       </div>
-      
     </div>
   );
 };

@@ -5,8 +5,8 @@ import RecipeIngredientCreate from "./RecipeIngredientCreate";
 import RecipeIngredientList from "./RecipeIngredientList";
 import NavBar from "../../components/NavBar";
 import "./RecipePage.css";
-import "../MealPage/MealForm.css";
-import "../MealPage/MealPage.css";
+import "../MealPage/styles/MealForm.css";
+import "../MealPage/styles/MealPage.css";
 import Footer from "../../components/Footer";
 
 const RecipeFormPage = () => {
@@ -24,7 +24,6 @@ const RecipeFormPage = () => {
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [ingredientAmount, setIngredientAmount] = useState("");
   const [editingField, setEditingField] = useState(null);
-
 
   const isEditing = !!id;
 
@@ -71,9 +70,12 @@ const RecipeFormPage = () => {
     });
 
     if (res.ok) {
-      const updated = await fetch(`http://localhost:8080/recipe/findById/${recipe.recipeId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const updated = await fetch(
+        `http://localhost:8080/recipe/findById/${recipe.recipeId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const json = await updated.json();
       setRecipe(json);
       alert("Ingredient added!");
@@ -90,15 +92,21 @@ const RecipeFormPage = () => {
 
   const deleteIngredientFromRecipe = async (contentId) => {
     const token = localStorage.getItem("jwt");
-    const res = await fetch(`http://localhost:8080/recipeContent/delete/${contentId}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      `http://localhost:8080/recipeContent/delete/${contentId}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     if (res.ok) {
-      const refreshed = await fetch(`http://localhost:8080/recipe/findById/${recipe.recipeId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const refreshed = await fetch(
+        `http://localhost:8080/recipe/findById/${recipe.recipeId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const json = await refreshed.json();
       setRecipe(json);
       alert("Ingredient removed.");
@@ -107,7 +115,6 @@ const RecipeFormPage = () => {
       alert("Failed to remove: " + text);
     }
   };
-
 
   const handleSave = async () => {
     const token = localStorage.getItem("jwt");
@@ -137,7 +144,8 @@ const RecipeFormPage = () => {
 
     if (res.ok && json) {
       alert("Recipe saved!");
-      if (!isEditing) navigate(`/recipes/edit/${json.recipeId}`, { state: json });
+      if (!isEditing)
+        navigate(`/recipes/edit/${json.recipeId}`, { state: json });
       else setRecipe(json);
     } else {
       alert("Save failed: " + (json?.message || text));
@@ -158,13 +166,17 @@ const RecipeFormPage = () => {
                   <input
                     id="name"
                     value={recipe.name}
-                    onChange={(e) => setRecipe({ ...recipe, name: e.target.value })}
+                    onChange={(e) =>
+                      setRecipe({ ...recipe, name: e.target.value })
+                    }
                     onBlur={() => setEditingField(null)}
                     autoFocus
                   />
                 ) : (
                   <div className="display-field">
-                    <div className="meal-page-name">{recipe.name || <em>Unnamed</em>}</div>
+                    <div className="meal-page-name">
+                      {recipe.name || <em>Unnamed</em>}
+                    </div>
                     <button
                       className="edit-btn"
                       type="button"
@@ -182,7 +194,9 @@ const RecipeFormPage = () => {
                   <textarea
                     id="description"
                     value={recipe.description}
-                    onChange={(e) => setRecipe({ ...recipe, description: e.target.value })}
+                    onChange={(e) =>
+                      setRecipe({ ...recipe, description: e.target.value })
+                    }
                     onBlur={() => setEditingField(null)}
                     autoFocus
                   />
@@ -204,7 +218,9 @@ const RecipeFormPage = () => {
             </div>
           </header>
 
-          <button onClick={handleSave} className="meal-save-btn">Save</button>
+          <button onClick={handleSave} className="meal-save-btn">
+            Save
+          </button>
 
           <RecipeIngredientSearch
             query={ingredientQuery}
@@ -231,8 +247,12 @@ const RecipeFormPage = () => {
               <button
                 className="add-ingredient-btn"
                 onClick={() => {
-                  if (!ingredientAmount || isNaN(ingredientAmount)) return alert("Invalid amount");
-                  addIngredientToRecipe(selectedIngredient, Number(ingredientAmount));
+                  if (!ingredientAmount || isNaN(ingredientAmount))
+                    return alert("Invalid amount");
+                  addIngredientToRecipe(
+                    selectedIngredient,
+                    Number(ingredientAmount)
+                  );
                 }}
               >
                 Add
@@ -243,7 +263,10 @@ const RecipeFormPage = () => {
 
         <div className="meal-page-middle">
           {/* Pass the deleteIngredientFromRecipe function to the onDelete prop */}
-          <RecipeIngredientList contents={recipe.contents || []} onDelete={deleteIngredientFromRecipe} />
+          <RecipeIngredientList
+            contents={recipe.contents || []}
+            onDelete={deleteIngredientFromRecipe}
+          />
         </div>
 
         <div className="meal-page-right">
