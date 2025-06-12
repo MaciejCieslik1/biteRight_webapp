@@ -200,22 +200,27 @@ Groups the following data:
 
 
 ## Database Triggers
-All 6 of the triggers described below are defined in the following file: *database_2_functions.sql*.
-### 🗄️ DAILY_LIMIT_HISTORY
-This trigger automatically creates a backup record in the limit_history table whenever a user's daily nutritional limits are modified. Before any changes are made to the daily_limits table, it saves the current values (calories, protein, fat, carbs, and water goals) along with the timestamp, ensuring you never lose track of how a user's dietary targets have evolved over time.
+All 8 of the triggers described below are defined in the following file: *database_2_functions.sql*.
+### 📝 INSERT_HISTORICAL_LIMITS
+Saves nutritional values to limit_history when new daily limits are created. Captures calories, protein, fat, carbs, and water goals with timestamp and user ID.
+
+### 🗄️ UPDATE_HISTORICAL_LIMITS
+Creates backup in limit_history when daily limits are modified. Preserves previous values before changes are applied.
+
+### 📝 INSERT_USER_WEIGHT_HISTORY
+Records initial weight in weight_history when new user profile is created. Captures starting point for weight tracking.
 
 ### ⚖️ UPDATE_USER_WEIGHT
-When a new weight measurement is added to the weight_history table, this trigger immediately updates the user's current weight in their main profile (user_info table). This ensures that the user's most recent weight is always reflected in their primary profile data, keeping everything synchronized automatically.
+Updates user_info.weight when new weight_history record is added. Keeps current weight synchronized in user profile.
 
 ### 📊 CALC_NEW_USER_BMI
-This trigger calculates the Body Mass Index (BMI) automatically when a new user profile is created in the user_info table. It uses the standard BMI formula (**weight in kg divided by height in meters squared**) to compute the value, so the application doesn't need to calculate this manually every time a new user registers.
+Calculates BMI (weight/height² in meters) when new user profile is created. Formula: **BMI = weight / (height/100)²**.
 
 ### 📈 UPDATE_USER_BMI
-Similar to the previous trigger, this one recalculates BMI whenever a user's weight or height is updated in their profile. It ensures that the BMI value is always accurate and up-to-date based on the user's current physical measurements, maintaining data consistency across the application.
+Recalculates BMI when user's weight or height changes. Maintains accurate BMI value across profile updates.
 
 ### 🔥 CALC_CALORIES_BURNT
-This trigger automatically calculates calories burned when a new exercise session is logged. It retrieves the user's current weight and the exercise's metabolic equivalent (MET) value, then applies the standard formula: **MET × weight × duration ÷ 60 minutes**. This eliminates the need for manual calorie calculations and ensures accurate tracking of energy expenditure.
+Calculates calories burned for new exercise entries using formula: **calories = MET × weight × duration ÷ 60**. Retrieves user weight and exercise MET value automatically.
 
 ### 🔄 CALC_CALORIES_BURNT_UPDATE
-This is the update version of the calories calculation trigger, working exactly like the previous one but activating when an existing exercise record is modified. Whether a user changes the duration, exercise type, or any other details of their workout, the calories burned will be automatically recalculated to maintain accuracy in their fitness tracking data.
-
+Recalculates calories burned when exercise details are modified. Ensures accurate energy expenditure data after workout record changes.
