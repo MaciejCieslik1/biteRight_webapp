@@ -51,7 +51,7 @@ public class UserInfoService {
         userInfoRepository.save(userInfo);
 
         if (!oldWeight.equals(request.getWeight())) {
-            WeightHistory weightHistory = new WeightHistory(user, LocalDateTime.now(), oldWeight);
+            WeightHistory weightHistory = new WeightHistory(user, LocalDateTime.now(), request.getWeight());
             weightHistoryRepository.save(weightHistory);
         }
 
