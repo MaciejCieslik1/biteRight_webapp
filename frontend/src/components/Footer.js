@@ -15,8 +15,18 @@ const Footer = () => {
         >
           <FaHome size={20} />
         </button>
-        <button className="footer-btn" title="Guide">
+        <button className="footer-btn" 
+        title="Guide"
+        onClick={() => navigate("/recipes")}
+        >
           <FaReadme size={20} />
+        </button>
+        <button
+          className="footer-btn"
+          title="Progress"
+          onClick={() => navigate("/progress")}
+        >
+          <FaChartLine size={20} />
         </button>
         <button
           className="footer-btn"
