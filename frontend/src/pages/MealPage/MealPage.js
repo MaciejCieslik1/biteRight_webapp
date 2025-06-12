@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useMealPage } from "./useMealPage";
+import { useMealPage } from "../../hooks/useMealPage";
 
 import MealForm from "./MealForm";
 import IngredientSearch from "./IngredientSearch";
@@ -9,7 +9,7 @@ import IngredientList from "./IngredientList";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 
-import "./MealPage.css";
+import "./styles/MealPage.css";
 
 const MealPage = () => {
   const location = useLocation();

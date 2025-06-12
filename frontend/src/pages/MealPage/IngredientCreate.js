@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./IngredientCreate.css";
+import "./styles/IngredientCreate.css";
 
 const IngredientCreate = ({ onStatus }) => {
   const [newIngredientName, setNewIngredientName] = useState("");

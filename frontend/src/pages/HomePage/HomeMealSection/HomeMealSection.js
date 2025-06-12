@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ProductList from "./ProductList";
 import MealMacros from "./MealMacros";
-import useMealInfo from "./useMealInfo";
-import "./HomeMealSection.css";
+import useMealInfo from "../../../hooks/useMealInfo";
+import "../styles/HomeMealSection.css";
 
 const HomeMealSection = ({ title, meal, products }) => {
   const navigate = useNavigate();

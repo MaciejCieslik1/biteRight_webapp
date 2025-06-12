@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTrash } from "react-icons/fa";
-import "./IngredientList.css";
+import "./styles/IngredientList.css";
 
 const IngredientList = ({ contents = [], onDelete }) => {
   if (!contents.length) return <p>No ingredients added yet.</p>;

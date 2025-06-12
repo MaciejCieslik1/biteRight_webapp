@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Calendar.css";
+import "./styles/Calendar.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";

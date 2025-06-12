@@ -2,7 +2,7 @@ export const calculateDailyTotals = (meals) => {
   const allContents = Object.values(meals)
     .filter(Boolean)
     .flatMap((meal) => meal.contents || []);
-
+  console.debug("[calculateDailyTotals] All meal contents:", allContents);
   return allContents.reduce(
     (totals, item) => {
       totals.calories += item.calories || 0;

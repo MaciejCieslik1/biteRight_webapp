@@ -1,5 +1,5 @@
-import React from 'react'
-import './PasswordModal.css'
+import React from "react";
+import "./styles/PasswordModal.css";
 
 const ChangePasswordModal = ({ passwords, setPasswords, onSave, onCancel }) => {
   return (
@@ -10,7 +10,9 @@ const ChangePasswordModal = ({ passwords, setPasswords, onSave, onCancel }) => {
           type="password"
           placeholder="Current password"
           value={passwords.current}
-          onChange={(e) => setPasswords({ ...passwords, current: e.target.value })}
+          onChange={(e) =>
+            setPasswords({ ...passwords, current: e.target.value })
+          }
         />
         <input
           type="password"
@@ -22,15 +24,21 @@ const ChangePasswordModal = ({ passwords, setPasswords, onSave, onCancel }) => {
           type="password"
           placeholder="Confirm new password"
           value={passwords.confirm}
-          onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
+          onChange={(e) =>
+            setPasswords({ ...passwords, confirm: e.target.value })
+          }
         />
         <div className="modal-buttons">
-          <button className="save" onClick={onSave}>Save</button>
-          <button className="cancel" onClick={onCancel}>Cancel</button>
+          <button className="save" onClick={onSave}>
+            Save
+          </button>
+          <button className="cancel" onClick={onCancel}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChangePasswordModal
+export default ChangePasswordModal;

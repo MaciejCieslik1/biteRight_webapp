@@ -1,16 +1,19 @@
 import React from "react";
 import MealSection from "../HomeMealSection/HomeMealSection";
-import { useHomeMeals } from "./useHomeMeals";
-import { calculateDailyTotals, getWeekdayName } from "./HomeMealsUtils";
-import "./HomeMeals.css";
+import { useHomeMeals } from "../../../hooks/useHomeMeals";
+import { getWeekdayName } from "./HomeMealsUtils";
+import DailySummary from "./DailySummary";
+import "../styles/HomeMeals.css";
 
 const HomeMeals = ({ selectedDate = new Date() }) => {
   const { meals, loading, error, parsedDate } = useHomeMeals(selectedDate);
 
-  const totals = calculateDailyTotals(meals);
-
   if (loading) return <div>Loading meals...</div>;
   if (error) return <div>Error: {error}</div>;
+
+  const mealIds = Object.values(meals)
+    .filter(Boolean)
+    .map((meal) => meal.mealId);
 
   return (
     <div className="mealplan-container">
@@ -41,23 +44,7 @@ const HomeMeals = ({ selectedDate = new Date() }) => {
         />
       </div>
 
-      <div className="daily-summary-container">
-        <div className="daily-summary-header">Total</div>
-        <div className="daily-summary-content-container">
-          <div className="total-calories-text">{totals.calories} kcal</div>
-          <div className="total-macros-container">
-            <div className="total-macros-text">
-              P: {totals.protein.toFixed(1)} g
-            </div>
-            <div className="total-macros-text">
-              C: {totals.carbs.toFixed(1)} g
-            </div>
-            <div className="total-macros-text">
-              F: {totals.fat.toFixed(1)} g
-            </div>
-          </div>
-        </div>
-      </div>
+      <DailySummary mealIds={mealIds} />
     </div>
   );
 };

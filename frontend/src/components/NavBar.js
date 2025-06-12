@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { UserContext } from "../contexts/UserContext";
 import { FaSignOutAlt } from "react-icons/fa";
-import "./NavBar.css";
+import "./styles/NavBar.css";
 
 const NavBar = ({
   showButtons = true,

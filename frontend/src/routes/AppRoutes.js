@@ -8,6 +8,7 @@ import VerificationPage from "../pages/VerificationPage/VerificationPage";
 import ForgottenPasswordPage from "../pages/ForgottenPasswordPage/ForgottenPasswordPage";
 import PasswordResetPage from "../pages/PasswordResetPage/PasswordResetPage";
 import MealPage from "../pages/MealPage/MealPage";
+import ExercisePage from "../pages/ExercisePage/ExercisePage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import ProgressPage from "../pages/ProgressPage/ProgressPage";
 import RecipeListPage from "../pages/RecipesPage/RecipeListPage";
@@ -23,9 +24,16 @@ const AppRoutes = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/meal" element={<MealPage />} />
+      <Route path="/exercises" element={<ExercisePage />} />
       <Route path="/verifyuser/:email/:code" element={<VerificationPage />} />
-      <Route path="/forgottenpasswordform" element={<ForgottenPasswordPage />} />
-      <Route path="/passwordreset/:email/:code" element={<PasswordResetPage />} />
+      <Route
+        path="/forgottenpasswordform"
+        element={<ForgottenPasswordPage />}
+      />
+      <Route
+        path="/passwordreset/:email/:code"
+        element={<PasswordResetPage />}
+      />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/progress" element={<ProgressPage />} />
       <Route path="/recipes" element={<RecipeListPage />} />
