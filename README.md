@@ -53,7 +53,7 @@ Meal tracking
 ![meal-tracking](/readme_images/image-3.png)
 Healthy recipes for our users \
 ![example-recipes](/readme_images/image-4.png)
-Visualising user progress
+Visualising user progress \
 ![user_progress_statistics](/readme_images/image-5.png)
 
 #### 🏃‍♂️ Exercise & Fitness Integration
