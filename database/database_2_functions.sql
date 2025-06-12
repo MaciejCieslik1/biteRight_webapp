@@ -1,41 +1,43 @@
 Use mysql_database;
 DELIMITER $$
+CREATE TRIGGER INSERT_HISTORICAL_LIMITS
+BEFORE INSERT ON daily_limits
+FOR EACH ROW
+BEGIN
+    INSERT INTO limit_history 
+        (date_changed, user_id, calorie_limit, protein_limit, fat_limit, carb_limit, water_goal) 
+    VALUES 
+        (NOW(), NEW.user_id, NEW.calorie_limit, NEW.protein_limit, NEW.fat_limit, NEW.carb_limit, NEW.water_goal);
+END $$
+
 CREATE TRIGGER DAILY_LIMIT_HISTORY
     BEFORE UPDATE ON daily_limits
     FOR EACH ROW
     BEGIN
-        INSERT INTO limit_history (
-            date_changed, 
-            user_id, 
-            calorie_limit, 
-            protein_limit, 
-            fat_limit, 
-            carb_limit, 
-            water_goal
-        ) 
-        VALUES (
-            NOW(), 
-            OLD.user_id, 
-            OLD.calorie_limit, 
-            OLD.protein_limit, 
-            OLD.fat_limit, 
-            OLD.carb_limit, 
-            OLD.water_goal
-        );
+        INSERT INTO limit_history 
+            (date_changed, user_id, calorie_limit, protein_limit, fat_limit, carb_limit, water_goal) 
+        VALUES 
+            (NOW(), OLD.user_id, OLD.calorie_limit, OLD.protein_limit, OLD.fat_limit, OLD.carb_limit, OLD.water_goal );
     END $$
 
--- jak się wstawi nowy weight_history to od razu ustawić odpowiedni user_info.weight
-CREATE TRIGGER UPDATE_USER_WEIGHT
-BEFORE INSERT ON weight_history
+CREATE TRIGGER CHANGE_USER_WEIGHT_HISTORY
+BEFORE INSERT ON user_info
 FOR EACH ROW
 BEGIN
-    UPDATE user_info
-    SET weight = NEW.weight
-    WHERE user_id = NEW.user_id;
+    INSERT INTO weight_history ( user_id, measurement_date, weight) 
+    VALUES ( NEW.user_id, NOW(), NEW.weight );
 END $$
 
 
--- jak się zmnienia waga w user_info, to za pomocą wzrostu i wagi wyliczyć BMI
+CREATE TRIGGER UPDATE_USER_WEIGHT_HISTORY
+BEFORE UPDATE ON user_info
+FOR EACH ROW
+BEGIN
+    IF OLD.weight != NEW.weight THEN
+        INSERT INTO weight_history ( user_id,  measurement_date,  weight ) 
+        VALUES ( NEW.user_id,  NOW(),  NEW.weight);
+    END IF;
+END $$
 
 CREATE TRIGGER CALC_NEW_USER_BMI
 BEFORE INSERT ON user_info
