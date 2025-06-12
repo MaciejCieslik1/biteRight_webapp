@@ -10,7 +10,7 @@ BEGIN
         (NOW(), NEW.user_id, NEW.calorie_limit, NEW.protein_limit, NEW.fat_limit, NEW.carb_limit, NEW.water_goal);
 END $$
 
-CREATE TRIGGER DAILY_LIMIT_HISTORY
+CREATE TRIGGER UPDATE_HISTORICAL_LIMITS
     BEFORE UPDATE ON daily_limits
     FOR EACH ROW
     BEGIN
@@ -20,7 +20,7 @@ CREATE TRIGGER DAILY_LIMIT_HISTORY
             (NOW(), OLD.user_id, OLD.calorie_limit, OLD.protein_limit, OLD.fat_limit, OLD.carb_limit, OLD.water_goal );
     END $$
 
-CREATE TRIGGER CHANGE_USER_WEIGHT_HISTORY
+CREATE TRIGGER INSERT_USER_WEIGHT_HISTORY
 BEFORE INSERT ON user_info
 FOR EACH ROW
 BEGIN
