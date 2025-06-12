@@ -1,26 +1,101 @@
-## BiteRight!
 
-Uczestnicy projektu:
-- Hanna Biegacz
-- Anna Wierzbik
-- Keira Kabongo-Barazzoli
-- Maciej Cieślik
-- Michał Iwanow-Kołakowski
+# BiteRight!
+![Avocado](/readme_images/image.png)
+BiteRight is a comprehensive nutrition and fitness application designed to help users achieve their personal health goals through an intuitive and enjoyable experience. Whether you're looking to lose weight, build muscle, increase strength, or improve your mental well-being, BiteRight provides the tools and support needed to make your health journey both effective and sustainable. 
 
-## Wybrany temat --- Aplikacja do Śledzenia i Planowania Diety
-Użytkownicy mogą tworzyć dzienniki posiłków, przeliczać kalorie oraz wartości odżywcze, ustawiać cele dietetyczne, oraz monitorować swoje postępy.
+## 🥑Why BiteRight?
+This project serves as a comprehensive tool for managing nutrition and meal planning. 
+- 🍽️ Comprehensive Meal Tracking: Easily log meals and ingredients to monitor dietary intake.
+- 📊 Nutritional Calculations: Automatically calculate calories and nutritional values for informed choices.
+- 📈 Progress Monitoring: Visualize your health journey with detailed charts and reports.
+- 🔥 Exercise & Calorie Burn Tracking: Log your workouts and automatically calculate calories burned to balance your energy intake and expenditure.
 
-## Link do tablicy z wstępnym planem bazy danych
-https://miro.com/welcomeonboard/UWQxcno4bmIzUUlFbzkzU25uWHR2azA5R1dnNXNHdDdiRlJEalVXQnhYdThiQ05UN250YmJQVVRGOTBSMnhXck8vbjFtcHFlKzRjblk1K1hVRnlEN0JCZXBmTGt1QmVBWlhjWkt5bEZ2R1lmdWJpTGIxNytkSTZ1b1pBblBkNkpQdGo1ZEV3bUdPQWRZUHQzSGl6V2NBPT0hdjE=?share_link_id=503795444197
+## 👥 Authors
+We are a team of dedicated students from Warsaw University of Technology (Politechnika Warszawska) who have collaborated to create the BiteRight application as part of our academic project.
 
-## Zaplanowane funkcjonalności aplikacji:
-- logowanie (także z zewnętrznych platform),
-- kalkulator dziennego limitu kalorii na podstawie podanego przez użytkownika celu i stylu życia, 
-- dziennik posiłków użytkownika,
-- wyświetlanie wykresów zmian wagi użytkownika w czasie, 
-- pokazywanie dziennych, tygodniowych, miesięcznych statystyk spożytych kalorii, białka, tłuszczy, węglowodanów.
-- obliczanie spalonych kalorii podczas różnych ćwiczeń,
-- eksport spożytych posiłków do pdf,
-- wysyłanie wiadomości do innych użytkowników, 
-- dostosowanie 
-- dodawanie przepisów i udostępnienie ich użytkownikom
+### 🚀 Meet the Development Team
+**🖥️ Backend Development**
+* 🔐 Hanna Biegacz \
+    *Backend Developer & Database Architect*\
+    Managed server-side authentication logic with JWT implementation and crafted the MySQL database schema
+
+* 🐳 Maciej Cieślik \
+    *Backend Developer & Docker Configuration Specialist* \
+    Designed Docker containerization architecture, developed core API functionalities as well as application-wide testing
+
+* ⚙️ Michał Iwanow-Kołakowski \
+    *Backend Developer* \
+    Built core API endpoints and server-side functionality
+
+**🎨 Frontend Development**
+* 🌟 Keira Kabongo-Barazzoli \
+    *Frontend Developer* \
+    Developed responsive web pages and user interface components 
+
+* 💻 Anna Wierzbik \
+    *Frontend Developer* \
+    Architected the React frontend and connected it to Spring Boot APIs.
+
+
+## Features
+#### 🔐 User Authentication & Security 
+- Secure user login and registration system with *JWT* token-based authentication
+- Protected user profiles with encrypted data storage
+- *Password recovery* system with secure email-based reset links
+- *Email verification* for account activation and security confirmation
+![login-page](/readme_images/image-1.png)
+
+#### 📊 Smart Calorie Management
+- *Daily Calorie Calculator:* Intelligent calorie limit calculation based on user goals and lifestyle
+- *Meal Diary:* Comprehensive food logging with detailed ingredient tracking
+- *Weight Progress Charts:* Visual weight change tracking over time with interactive graphs \
+Meal tracking
+![meal-tracking](/readme_images/image-3.png)
+Healthy recipes for our users \
+![example-recipes](/readme_images/image-4.png)
+Visualising user progress \
+![user_progress_statistics](/readme_images/image-5.png)
+
+#### 🏃‍♂️ Exercise & Fitness Integration
+- *Calorie Burn Calculator:* Accurate calorie expenditure tracking for various exercises
+- *Balance Tracking:* Monitor calories consumed vs. calories burned
+
+## 🚀 Run Locally
+Getting started with BiteRight is simple and straightforward. Follow these steps to get the application running on your local machine in just a few minutes.
+
+First, download the project source code to your local machine:
+
+```bash
+git clone https://gitlab-stud.elka.pw.edu.pl/miwanow/bd2-25l-z06.git
+```
+
+Move into the project folder:
+```bash
+cd bd2-25l-z06
+```
+
+Start the entire application stack with a single command:
+```bash
+docker-compose up --build
+```
+
+Stop and clean the environment:
+```bash
+docker compose down -v
+```
+
+## 🛠️ Technologies
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+
+##### 🖥️ **Backend**
+- *Java* with *Spring Boot* - API endpoints, application logic, database integration, and authentication services
+- *MySQL* - relational database management system with Oracle Data Modeler for schema design
+
+##### 🎨 **Frontend**  
+- *React.js* -JavaScript library for building dynamic and responsive user interfaces
+- *HTML5 & CSS3* - structure and styling for an aesthetically pleasing user experience
+
+##### 🔧 **DevOps & Version Control**
+- *Docker* -  application containerization for consistent development
+- *Git* - version control system for collaborative development and code management
