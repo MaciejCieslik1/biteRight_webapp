@@ -255,13 +255,13 @@ alter table verification_code
 
 -- ---------------------------------------->        views     <------------------------------------------
 create or replace view meal_info  as
-select meal.meal_id as meal_id,
-        meal.user_id as user_id,
-    meal.name as meal_name,
-    IFNULL(sum(ingredient.calories * meal_content.ingredient_amount / 100), 0) as calories,
-    IFNULL(sum(ingredient.protein * meal_content.ingredient_amount / 100), 0) as protein,
-    IFNULL(sum(ingredient.fat * meal_content.ingredient_amount / 100), 0) as fat,
-    IFNULL(sum(ingredient.carbs * meal_content.ingredient_amount / 100), 0) as carbs
+select meal.meal_id                                                                     as meal_id,
+        meal.user_id                                                                    as user_id,
+    meal.name                                                                           as meal_name,
+    ROUND(IFNULL(sum(ingredient.calories * meal_content.ingredient_amount / 100), 0))   as calories,
+    ROUND(IFNULL(sum(ingredient.protein * meal_content.ingredient_amount / 100), 0))    as protein,
+    ROUND(IFNULL(sum(ingredient.fat * meal_content.ingredient_amount / 100), 0))        as fat,
+    ROUND(IFNULL(sum(ingredient.carbs * meal_content.ingredient_amount / 100), 0))      as carbs
 from meal
     left join meal_content on meal.meal_id = meal_content.meal_id
     left join ingredient on ingredient.ingredient_id = meal_content.ingredient_id
@@ -289,13 +289,13 @@ exercise_info AS
 
 SELECT 
         u.user_id as user_id,
-        COALESCE(m.meal_date, w.summary_date, e.summary_date) AS summary_date,
-        COALESCE(SUM(mi.calories), 0) AS calories,
-        COALESCE(SUM(mi.protein), 0) AS protein,
-        COALESCE(SUM(mi.fat), 0) AS fat,
-        COALESCE(SUM(mi.carbs), 0) AS carbs,
-        COALESCE(SUM(w.water_drank), 0) AS water_drank,
-        COALESCE(SUM(e.calories_burnt), 0) AS calories_burnt
+        COALESCE(m.meal_date, w.summary_date, e.summary_date)   AS summary_date,
+        ROUND(IFNULL(SUM(mi.calories), 0))                    AS calories,
+        ROUND(IFNULL(SUM(mi.protein), 0))                     AS protein,
+        ROUND(IFNULL(SUM(mi.fat), 0))                         AS fat,
+        ROUND(IFNULL(SUM(mi.carbs), 0))                       AS carbs,
+        ROUND(IFNULL(SUM(w.water_drank), 0))                  AS water_drank,
+        ROUND(IFNULL(SUM(e.calories_burnt), 0))               AS calories_burnt
 FROM app_user u
         LEFT JOIN meal m ON u.user_id = m.user_id
         LEFT JOIN meal_info mi ON m.meal_id = mi.meal_id
@@ -324,14 +324,15 @@ UNION
         SELECT 1 FROM meal m 
         WHERE m.user_id = e.user_id AND m.meal_date = e.summary_date);
 
+
 create or replace view recipe_info ( recipe_id, recipe_name, calories, protein, fat, carbs ) as
 select
         recipe.recipe_id   as recipe_id,
         recipe.name  as recipe_name,
-	IFNULL(sum(ingredient.calories * recipe_content.ingredient_amount / 100), 0) as calories,
-	IFNULL(sum(ingredient.protein * recipe_content.ingredient_amount / 100), 0) as protein,
-	IFNULL(sum(ingredient.fat * recipe_content.ingredient_amount / 100), 0) as fat,
-	IFNULL(sum(ingredient.carbs * recipe_content.ingredient_amount / 100), 0) as carbs
+	ROUND(IFNULL(sum(ingredient.calories * recipe_content.ingredient_amount / 100), 0))    as calories,
+	ROUND(IFNULL(sum(ingredient.protein * recipe_content.ingredient_amount / 100), 0))     as protein,
+	ROUND(IFNULL(sum(ingredient.fat * recipe_content.ingredient_amount / 100), 0))         as fat,
+	ROUND(IFNULL(sum(ingredient.carbs * recipe_content.ingredient_amount / 100), 0))       as carbs
 from
         recipe
         left join recipe_content on recipe.recipe_id = recipe_content.recipe_id
