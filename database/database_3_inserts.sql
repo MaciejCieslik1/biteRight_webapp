@@ -305,7 +305,7 @@ INSERT INTO user_goal (goal_type, goal_weight, deadline) VALUES
     ('maintenance', 80.0, '2025-09-30'), ('weight_loss', 58.0, '2025-11-20'), ('muscle_gain', 85.0, '2026-01-15');
 
 INSERT INTO user_info (user_id, user_goal_id, name, surname, age, weight, height, lifestyle) VALUES
-    (1, 1, "Anna", "Nowak", 18,  60.0, 165, "Active" ),  (2, 2, 'Jan', 'Kowalski', 28, 82.5, 178, 'Active'), (3, 3, 'Ewa', 'Nowak', 24, 58.0, 165, 'Moderate'),
+    (1, 1, "Anna", "Nowak", 18,  58.40, 165, "Active" ),  (2, 2, 'Jan', 'Kowalski', 28, 82.5, 178, 'Active'), (3, 3, 'Ewa', 'Nowak', 24, 58.0, 165, 'Moderate'),
     (4, 4, 'Piotr', 'Wiśniewski', 35, 88.0, 185, 'Sedentary'), (5, 5, 'Maria', 'Dąbrowska', 29, 62.5, 170, 'Very Active'), (6, 6, 'Tomasz', 'Lewandowski', 31, 78.0, 180, 'Active');
 
 INSERT INTO user_preferences (user_id, language, darkmode, font, notifications) VALUES
@@ -358,7 +358,7 @@ INSERT INTO meal_content (ingredient_id, meal_id, ingredient_amount) VALUES
     (40, 25, 100),  (24, 25, 50),   (12, 26, 100), (51, 26, 60), (42, 26, 150), (70, 27, 80), (85, 27, 60), (72, 27, 100), (79, 27, 50), (77, 22, 76);
 
 INSERT INTO daily_limits (user_id, calorie_limit, protein_limit, fat_limit, carb_limit, water_goal) VALUES
-    (1, 2100, 105, 70, 263, 2500), (2, 2800, 140, 93, 350, 3200), (3, 1900, 95, 63, 238, 2300),
+    (1, 1500, 105, 70, 263, 2500), (2, 2800, 140, 93, 350, 3200), (3, 1900, 95, 63, 238, 2300),
     (4, 2200, 110, 73, 275, 2800), (5, 2300, 115, 77, 288, 2600), (6, 2600, 130, 87, 325, 3000);
 
 -- ----------->   EXMAPLE RECIPE DATA   <--------------------------------
@@ -446,3 +446,22 @@ INSERT INTO user_exercise (user_id, exercise_id, activity_date, duration) VALUES
 	(5, 8,  '2025-06-07 07:00:00', 55), (5, 22, '2025-06-08 18:30:00', 25), (5, 15, '2025-06-09 09:00:00', 40), (5, 31, '2025-06-10 20:15:00', 50), (6, 29, '2025-06-01 10:00:00', 30),
 	(6, 2,  '2025-06-02 16:45:00', 45), (6, 33, '2025-06-03 08:30:00', 35), (6, 12, '2025-06-04 21:00:00', 60), (6, 25, '2025-06-05 06:30:00', 40), (6, 17, '2025-06-06 18:45:00', 50),
 	(6, 31, '2025-06-07 09:15:00', 25), (6, 4,  '2025-06-08 19:30:00', 35), (6, 28, '2025-06-09 07:30:00', 45), (3, 3, '2025-06-01 06:30:00', 50),  (6, 14, '2025-06-10 15:45:00', 55);
+
+-- ----------->   EXMAPLE LIMIT AND WEIGHT HISTORY DATA   <--------------------------------
+
+
+-- January 2024
+INSERT INTO weight_history (user_id, measurement_date, weight) VALUES 
+(1, '2024-01-15 08:30:00', 65.50), (1, '2024-01-29 08:15:00', 64.80), (1, '2024-02-12 08:45:00', 64.20), (1, '2024-02-26 08:20:00', 63.60), 
+(1, '2024-03-11 08:35:00', 63.00), (1, '2024-03-25 08:25:00', 62.40), (1, '2024-04-08 08:40:00', 61.90), (1, '2024-04-22 08:15:00', 61.20), 
+(1, '2024-05-06 08:30:00', 60.90), (1, '2024-05-14 08:45:00', 60.0), (1, '2024-05-18 08:25:00', 59.60), (1, '2024-05-23 08:30:00', 59.5),
+(1, '2024-05-27 08:25:00', 59.60), (1, '2024-05-30 08:30:00', 61.80), (1, '2024-06-06 08:45:00', 59.20), (1, '2024-06-09 08:25:00', 58.60);
+UPDATE user_info SET weight=55.0 WHERE user_id = 1;
+
+UPDATE daily_limits 
+    SET calorie_limit = 1800, protein_limit = 120, fat_limit = 60, carb_limit = 200, water_goal = 2500
+WHERE user_id = 1;
+UPDATE daily_limits 
+    SET calorie_limit = 1900, protein_limit = 150, fat_limit = 65, carb_limit = 180, water_goal = 3000
+WHERE user_id = 1;
+
