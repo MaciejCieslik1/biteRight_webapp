@@ -14,10 +14,6 @@ const ExerciseInfoForm = () => {
     handleSubmit,
   } = useExerciseInfoForm();
 
-  const handleLocalSubmit = async () => {
-    await handleSubmit();
-  };
-
   return (
     <div className="exercise-create">
       <div className="exercise-create-header">
@@ -27,34 +23,32 @@ const ExerciseInfoForm = () => {
       <div className="exercise-create-content">
         <div className="exercise-create-title">Create new exercise</div>
 
-        <input
-          type="text"
-          placeholder="Exercise Name*"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Exercise Name*"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-        <input
-          type="number"
-          step="0.1"
-          placeholder="Metabolic Equivalent (MET)*"
-          value={metabolicEquivalent}
-          onChange={(e) => setMetabolicEquivalent(e.target.value)}
-          required
-        />
+          <input
+            type="number"
+            step="0.1"
+            placeholder="Metabolic Equivalent (MET)*"
+            value={metabolicEquivalent}
+            onChange={(e) => setMetabolicEquivalent(e.target.value)}
+            required
+          />
 
-        <button
-          className="create-exercise-btn"
-          type="button"
-          onClick={handleLocalSubmit}
-          disabled={loading}
-        >
-          {loading ? "Creating..." : "Create Exercise"}
-        </button>
-
-        {successMsg && <p className="success">{successMsg}</p>}
-        {errorMsg && <p className="error">{errorMsg}</p>}
+          <button
+            className="create-exercise-btn"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Creating..." : "Create Exercise"}
+          </button>
+        </form>
       </div>
     </div>
   );

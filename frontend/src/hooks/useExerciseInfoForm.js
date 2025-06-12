@@ -23,7 +23,7 @@ export function useExerciseInfoForm() {
       setName("");
       setMetabolicEquivalent("");
     } catch (err) {
-      setErrorMsg(err.message || "Wystąpił błąd.");
+      setErrorMsg(err.message || "Error occured.");
     } finally {
       setLoading(false);
     }

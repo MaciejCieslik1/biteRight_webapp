@@ -5,6 +5,7 @@
   justify-content: space-between;
   background-color: whitesmoke;
   width: 100%;
+  min-height: 11vh;
 }
 
 .logo {
