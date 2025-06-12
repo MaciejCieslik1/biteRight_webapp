@@ -12,6 +12,10 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const handleRegister = async () => {
+    if (!email || !username || !password) {
+      setError("All fields are required.");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:8080/api/auth/register", {
         method: "POST",

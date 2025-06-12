@@ -15,6 +15,10 @@ const LoginPage = () => {
   const { setUser } = useContext(UserContext);
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      setError("All fields are required.");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
@@ -73,13 +77,16 @@ const LoginPage = () => {
                 </button>
               </div>
               <div className="register-text">
-                  Don't have an account yet?{" "}
+                Don't have an account yet?{" "}
                 <Link to="/register" className="register-link">
                   Register here
                 </Link>
-                <br/>
-                    Forgot your password?{" "}
-                <Link to="/forgottenpasswordform" className="forgotten-password-link">
+                <br />
+                Forgot your password?{" "}
+                <Link
+                  to="/forgottenpasswordform"
+                  className="forgotten-password-link"
+                >
                   Reset password
                 </Link>
               </div>
