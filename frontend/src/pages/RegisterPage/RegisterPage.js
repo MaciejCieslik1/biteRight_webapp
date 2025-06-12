@@ -22,7 +22,9 @@ const RegisterPage = () => {
       });
       const text = await response.text();
       if (response.ok) {
-        alert("Registration successful! We have sent you a verification email.\nPlease check your inbox.");
+        alert(
+          "Registration successful! We have sent you a verification email.\nPlease check your inbox."
+        );
         navigate("/login");
       } else {
         setError(text);
@@ -71,6 +73,7 @@ const RegisterPage = () => {
                   required
                 />
               </div>
+              {error && <div className="error-message">{error}</div>}
               <div className="register-button-conatainer">
                 <button className="register-button" onClick={handleRegister}>
                   Register
