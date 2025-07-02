@@ -37,7 +37,7 @@ public class JwtService {
     }
 
     public String generateToken(String email) {
-        String token = Jwts
+        return Jwts
                 .builder()
                 .claim("email", email)
                 .issuedAt(new Date(System.currentTimeMillis()))
@@ -45,7 +45,6 @@ public class JwtService {
                 .issuer("biteRightApplication")
                 .signWith(getSecretKey())
                 .compact();
-        return token;
     }
     
     private SecretKey getSecretKey() {
