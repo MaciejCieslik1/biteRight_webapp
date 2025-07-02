@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,9 +26,7 @@ public class AuthenticationController {
     
     @GetMapping("/testtoken")
     public ResponseEntity<String> test(Authentication authentication) {
-        String email = authentication.getName();
-        System.out.println("Email associated with given token: " + email);
-        return ResponseEntity.status(HttpStatus.OK).body("The token provided is valid :>>");
+        return ResponseEntity.status(HttpStatus.OK).body("The token provided is valid");
     }
 
     @PostMapping("/register")
@@ -110,8 +107,6 @@ public class AuthenticationController {
     public ResponseEntity<String> changePassword(Authentication authentication, @RequestBody PasswordUpdateRequest request) {
         String email = authentication.getName();
         try {
-            System.out.println(email);
-            System.out.println(request.getOldPassword());
             authService.changePassword(email, request.getOldPassword(), request.getNewPassword());
             return ResponseEntity.status(HttpStatus.OK).body("Password changed successfully.");
         }

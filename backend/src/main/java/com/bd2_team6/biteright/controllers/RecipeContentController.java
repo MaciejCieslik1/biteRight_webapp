@@ -27,7 +27,7 @@ public class RecipeContentController {
     private final RecipeContentService recipeContentService;
 
     @GetMapping("/findByName/{name}")
-    public ResponseEntity<?> findRecipeContentByName(@PathVariable("id") String recipeName) {
+    public ResponseEntity<?> findRecipeContentByName(@PathVariable("name") String recipeName) {
         try {
             Set<RecipeContentDTO> recipeContent = recipeContentService.findRecipeContentByName(recipeName);
             return ResponseEntity.ok(recipeContent);

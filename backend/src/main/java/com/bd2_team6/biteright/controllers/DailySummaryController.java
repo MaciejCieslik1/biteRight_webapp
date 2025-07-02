@@ -31,18 +31,15 @@ public class DailySummaryController {
 
         try {
             if (date != null) {
-                // Pojedyncza data
                 LocalDate summaryDate = LocalDate.parse(date);
                 DailySummary dailySummary = dailySummaryService.findDailySummaryByUsernameAndDate(username, summaryDate);
                 return ResponseEntity.ok(dailySummary);
             } else if (startDate != null && endDate != null) {
-                // Zakres dat
                 LocalDate start = LocalDate.parse(startDate);
                 LocalDate end = LocalDate.parse(endDate);
                 List<DailySummary> summaries = dailySummaryService.findDailySummariesByUsernameBetweenDates(username, start, end);
                 return ResponseEntity.ok(summaries);
             } else {
-                // Domyślnie dzisiejsza data
                 DailySummary dailySummary = dailySummaryService.findDailySummaryByUsernameAndDate(username, LocalDate.now());
                 return ResponseEntity.ok(dailySummary);
             }
