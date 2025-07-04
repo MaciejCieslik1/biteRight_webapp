@@ -20,8 +20,8 @@ We are a team of dedicated students from Warsaw University of Technology (Polite
     Managed server-side authentication logic with JWT implementation and crafted the MySQL database schema
 
 * 🐳 Maciej Cieślik \
-    *Backend Developer & Docker Configuration Specialist* \
-    Designed Docker containerization architecture, developed core API functionalities as well as application-wide testing
+    *Backend Developer & Docker Configurator* \
+    Designed Docker containerization architecture, Built API endpoints and server-side functionality
 
 * ⚙️ Michał Iwanow-Kołakowski \
     *Backend Developer* \
